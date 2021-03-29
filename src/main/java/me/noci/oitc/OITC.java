@@ -1,9 +1,11 @@
 package me.noci.oitc;
 
 import me.noci.noclib.api.NocAPI;
+import me.noci.oitc.commands.MapSetupCommand;
 import me.noci.oitc.commands.StartCommand;
 import me.noci.oitc.listener.ProtectionListener;
 import me.noci.oitc.listener.lobbyphase.LobbyPlayerConnectionListener;
+import me.noci.oitc.listener.mapconfigphase.MapAsyncPlayerChatListener;
 import me.noci.oitc.state.StateManager;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -46,6 +48,7 @@ public class OITC extends JavaPlugin {
 
     private void registerCommands() {
         NocAPI.registerCommand(new StartCommand(this, stateManager));
+        NocAPI.registerCommand(new MapSetupCommand(this, stateManager));
     }
 
 }

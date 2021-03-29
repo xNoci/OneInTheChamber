@@ -11,6 +11,7 @@ public class StateManager {
     public static final State LOBBY_STATE = new LobbyState();
     public static final State GAME_STATE = new GameState();
     public static final State ENDING_STATE = new EndingState();
+    public static final State MAP_CONFIG_STATE = new MapConfigState();
 
     @Getter private State currentState;
     private BukkitRunnable bukkitRunnable;
