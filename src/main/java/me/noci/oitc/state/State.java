@@ -1,21 +1,17 @@
 package me.noci.oitc.state;
 
+import lombok.AccessLevel;
+import lombok.Setter;
 import me.noci.noclib.api.scoreboard.Scoreboard;
 import me.noci.noclib.api.user.User;
 import me.noci.oitc.Game;
+import org.bukkit.plugin.java.JavaPlugin;
 
 public abstract class State {
 
-    private StateManager stateManager;
-    protected Game game;
-
-    public void setStateManager(StateManager stateManager) {
-        this.stateManager = stateManager;
-    }
-
-    public void setGame(Game game) {
-        this.game = game;
-    }
+    @Setter(AccessLevel.PROTECTED) private StateManager stateManager;
+    @Setter(AccessLevel.PROTECTED) protected JavaPlugin plugin;
+    @Setter(AccessLevel.PROTECTED) protected Game game;
 
     protected void changeState(State state) {
         stateManager.changeState(state);

@@ -13,18 +13,25 @@ public class StateManager {
     public static final State ENDING_STATE = new EndingState();
     public static final State MAP_CONFIG_STATE = new MapConfigState();
 
+    private final JavaPlugin plugin;
+    private final Game game;
     @Getter private State currentState;
     private BukkitRunnable bukkitRunnable;
 
-    public StateManager(Game game) {
-        LOBBY_STATE.setGame(game);
-        LOBBY_STATE.setStateManager(this);
+    public StateManager(JavaPlugin plugin, Game game) {
+        this.plugin = plugin;
+        this.game = game;
 
-        GAME_STATE.setGame(game);
-        GAME_STATE.setStateManager(this);
+        initialiseState(LOBBY_STATE);
+        initialiseState(GAME_STATE);
+        initialiseState(ENDING_STATE);
+        initialiseState(MAP_CONFIG_STATE);
+    }
 
-        ENDING_STATE.setGame(game);
-        ENDING_STATE.setStateManager(this);
+    private void initialiseState(State state) {
+        state.setStateManager(this);
+        state.setPlugin(this.plugin);
+        state.setGame(this.game);
     }
 
     public void start(JavaPlugin plugin) {
