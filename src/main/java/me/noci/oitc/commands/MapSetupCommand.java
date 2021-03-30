@@ -3,14 +3,13 @@ package me.noci.oitc.commands;
 import me.noci.noclib.command.Command;
 import me.noci.noclib.command.CommandData;
 import me.noci.oitc.OITC;
-import me.noci.oitc.mapmanager.MapConfigPhase;
 import me.noci.oitc.state.MapConfigState;
 import me.noci.oitc.state.StateManager;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-@CommandData(name = "mapsetup")
+@CommandData(name = "setupmap")
 public class MapSetupCommand extends Command {
 
     private final StateManager stateManager;
