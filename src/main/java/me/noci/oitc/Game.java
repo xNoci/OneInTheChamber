@@ -9,12 +9,12 @@ import java.util.Set;
 
 public class Game {
 
+    @Getter private final Set<Player> playerSet = Sets.newHashSet();
+    @Getter private final Set<Player> spectatorSet = Sets.newHashSet();
     @Getter private final int maxPlayers;
     @Getter private final int playersNeeded;
     @Getter private final int timeToStart;
     @Getter @Setter private int forceTime = 10;
-    @Getter private final Set<Player> playerSet = Sets.newHashSet();
-    @Getter private final Set<Player> spectatorSet = Sets.newHashSet();
 
     public Game(int maxPlayers, int timeToStart) {
         this.maxPlayers = maxPlayers;
