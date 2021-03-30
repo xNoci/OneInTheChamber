@@ -40,7 +40,7 @@ public class MapConfigState extends State {
     @Override
     void update() {
         int currentPhase = phase.ordinal();
-        int lastPhase = MapConfigPhase.values().length;
+        int lastPhase = MapConfigPhase.values().length - 1;
         NocAPI.getOnlineUsers().forEach(user -> {
             user.sendActionbar(String.format("%sPhase §a%s§8/§2%s", OITC.PREFIX_ACTIONBAR, currentPhase, lastPhase));
             user.setLevelValue(currentPhase, lastPhase);
@@ -73,6 +73,7 @@ public class MapConfigState extends State {
     }
 
     public void switchPhase() {
+        NocAPI.getUser(configurator).clearChat();
         this.phase = MapConfigPhase.getNextPhase(phase);
         this.phase.getPhaseInfo().sendInfo(configurator);
     }

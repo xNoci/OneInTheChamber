@@ -8,6 +8,7 @@ import me.noci.oitc.state.StateManager;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 @CommandData(name = "setupmap")
 public class MapSetupCommand extends Command {
@@ -42,7 +43,13 @@ public class MapSetupCommand extends Command {
         player.sendMessage("");
 
         state.setConfigurator(player);
-        state.switchPhase();
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                state.switchPhase();
+            }
+        }.runTaskLaterAsynchronously(getPlugin(), 40);
+
     }
 
     @Override
