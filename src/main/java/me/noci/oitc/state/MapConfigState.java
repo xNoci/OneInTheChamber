@@ -16,6 +16,7 @@ public class MapConfigState extends State {
 
     @Override
     void start() {
+        this.phase = MapConfigPhase.CONFIG_START;
         map = new Map(null);
     }
 
@@ -51,8 +52,8 @@ public class MapConfigState extends State {
         return this.phase != null && this.phase == phase;
     }
 
-    public void setPhase(MapConfigPhase phase) {
-        this.phase = phase;
+    public void switchPhase() {
+        this.phase = MapConfigPhase.getNextPhase(phase);
         this.phase.getPhaseInfo().sendInfo(configurator);
     }
 }

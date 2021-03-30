@@ -40,8 +40,9 @@ public class MapSetupCommand extends Command {
         MapConfigState state = (MapConfigState) stateManager.getCurrentState();
         player.sendMessage(String.format("%s§aDu kannst nun eine Map einrichten.", OITC.PREFIX));
         player.sendMessage("");
+
         state.setConfigurator(player);
-        state.setPhase(MapConfigPhase.MAP_NAME);
+        state.switchPhase();
     }
 
     @Override
