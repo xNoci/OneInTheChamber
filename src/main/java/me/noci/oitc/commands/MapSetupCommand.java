@@ -10,7 +10,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-@CommandData(name = "setupmap")
+@CommandData(name = "mapsetup")
 public class MapSetupCommand extends Command {
 
     private final StateManager stateManager;
