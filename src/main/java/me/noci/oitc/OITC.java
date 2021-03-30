@@ -13,6 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class OITC extends JavaPlugin {
 
     public static final String PREFIX = "§9OITC §8» §7";
+    public static final String PREFIX_ACTIONBAR = "§9OITC §8| §7";
     public static final String NO_PERMISSION = "§cI'm sorry, but you do not have permission to perform this command. Please contact the server administrators if you believe that this is in error.";
 
     private final StateManager stateManager;
@@ -44,6 +45,7 @@ public class OITC extends JavaPlugin {
         PluginManager pluginManager = getServer().getPluginManager();
         pluginManager.registerEvents(new ProtectionListener(), this);
         pluginManager.registerEvents(new LobbyPlayerConnectionListener(stateManager, game), this);
+        pluginManager.registerEvents(new MapAsyncPlayerChatListener(stateManager), this);
     }
 
     private void registerCommands() {
