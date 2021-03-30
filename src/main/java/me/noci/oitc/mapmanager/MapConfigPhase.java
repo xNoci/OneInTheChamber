@@ -2,19 +2,28 @@ package me.noci.oitc.mapmanager;
 
 import lombok.Getter;
 import me.noci.oitc.OITC;
+import me.noci.oitc.state.MapConfigState;
 
 public enum MapConfigPhase {
 
     CONFIG_START("Start"),
     MAP_NAME("Map Name", player -> player.sendMessage(String.format("%sBitte gebe den §cName §7der Map ein.", OITC.PREFIX))),
     BUILDER_NAME("Builder Name", player -> player.sendMessage(String.format("%sBitte gebe den §cName §7des Builder ein.", OITC.PREFIX))),
-    SPECTATOR_SPAWN("Lobby Spawn", player -> player.sendMessage(String.format("%sBitte setzt den §cSpectator-Spawn§7, indem du Sneakst.", OITC.PREFIX)));
+    SPECTATOR_SPAWN("Lobby Spawn", player -> player.sendMessage(String.format("%sBitte setzt den §cSpectator-Spawn§7, indem du Sneakst.", OITC.PREFIX))),
+    PLAYER_SPAWNS("Player Spawns", player -> {
+        player.sendMessage("");
+        player.sendMessage(String.format("%sBitte setzt die §cSpieler-Spawn§7, indem du Sneakst.", OITC.PREFIX));
+        player.sendMessage(String.format("%s§cDu musst mindestens %s Spawns platzieren.", OITC.PREFIX, MapConfigState.MIN_PLAYER_SPAWNS));
+        player.sendMessage(String.format("%s§aWenn du Fertig bist benutze §c/setupend§7.", OITC.PREFIX));
+        player.sendMessage("");
+    });
 
     @Getter private final String phaseName;
     @Getter private final MapPhaseInfo phaseInfo;
 
     MapConfigPhase(String phaseName) {
-        this(phaseName, player -> {});
+        this(phaseName, player -> {
+        });
     }
 
     MapConfigPhase(String phaseName, MapPhaseInfo phaseInfo) {

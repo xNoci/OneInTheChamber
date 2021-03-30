@@ -5,7 +5,9 @@ import me.noci.oitc.commands.MapSetupCommand;
 import me.noci.oitc.commands.StartCommand;
 import me.noci.oitc.listener.ProtectionListener;
 import me.noci.oitc.listener.lobbyphase.LobbyPlayerConnectionListener;
+import me.noci.oitc.listener.mapconfigphase.MapArmorStandDamageListener;
 import me.noci.oitc.listener.mapconfigphase.MapAsyncPlayerChatListener;
+import me.noci.oitc.listener.mapconfigphase.MapPlayerToggleSneakListener;
 import me.noci.oitc.state.StateManager;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -46,6 +48,8 @@ public class OITC extends JavaPlugin {
         pluginManager.registerEvents(new ProtectionListener(), this);
         pluginManager.registerEvents(new LobbyPlayerConnectionListener(stateManager, game), this);
         pluginManager.registerEvents(new MapAsyncPlayerChatListener(stateManager), this);
+        pluginManager.registerEvents(new MapPlayerToggleSneakListener(stateManager), this);
+        pluginManager.registerEvents(new MapArmorStandDamageListener(stateManager), this);
     }
 
     private void registerCommands() {

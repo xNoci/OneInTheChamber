@@ -1,5 +1,6 @@
 package me.noci.oitc.state;
 
+import com.google.common.collect.Sets;
 import lombok.Getter;
 import lombok.Setter;
 import me.noci.noclib.api.NocAPI;
@@ -8,16 +9,24 @@ import me.noci.noclib.api.user.User;
 import me.noci.oitc.OITC;
 import me.noci.oitc.mapmanager.Map;
 import me.noci.oitc.mapmanager.MapConfigPhase;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+
+import java.util.Set;
 
 public class MapConfigState extends State {
 
+    public static final int MIN_PLAYER_SPAWNS = 16;
+
+    private final Set<ArmorStand> armorStandSet = Sets.newHashSet();
+    @Getter private MapConfigPhase phase;
     @Setter private Player configurator;
     @Getter private Map map;
-    @Getter private MapConfigPhase phase;
 
     @Override
     void start() {
+        armorStandSet.clear();
         this.phase = MapConfigPhase.CONFIG_START;
         map = new Map(null);
     }
@@ -25,6 +34,7 @@ public class MapConfigState extends State {
     @Override
     void stop() {
         NocAPI.getOnlineUsers().forEach(User::resetLevelValue);
+        armorStandSet.forEach(Entity::remove);
     }
 
     @Override
@@ -65,5 +75,9 @@ public class MapConfigState extends State {
     public void switchPhase() {
         this.phase = MapConfigPhase.getNextPhase(phase);
         this.phase.getPhaseInfo().sendInfo(configurator);
+    }
+
+    public void addArmorStand(ArmorStand armorStand) {
+        this.armorStandSet.add(armorStand);
     }
 }
