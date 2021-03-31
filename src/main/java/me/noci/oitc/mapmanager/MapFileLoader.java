@@ -33,7 +33,7 @@ public class MapFileLoader {
     }
 
     public String getString(MapFilePath path, String def) {
-        return getValue(String.class, path);
+        return getValue(String.class, path, def);
     }
 
     public Location getLocation(MapFilePath path) {
@@ -77,8 +77,8 @@ public class MapFileLoader {
         return (List<T>) config.getList(path.getFilePath(), def);
     }
 
-    private <T> T getValue(Class<T> clazz, MapFilePath path) {
-        return (T) config.get(path.getFilePath());
+    private <T> T getValue(Class<T> clazz, MapFilePath path, T def) {
+        return (T) config.get(path.getFilePath(), def);
     }
 
     private void setValue(MapFilePath path, Object list) {
