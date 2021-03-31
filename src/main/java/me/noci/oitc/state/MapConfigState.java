@@ -33,6 +33,7 @@ public class MapConfigState extends State {
     void stop() {
         NocAPI.getOnlineUsers().forEach(User::resetLevelValue);
         armorStandSet.forEach(Entity::remove);
+        configurator = null;
     }
 
     @Override
@@ -78,5 +79,12 @@ public class MapConfigState extends State {
 
     public void addArmorStand(ArmorStand armorStand) {
         this.armorStandSet.add(armorStand);
+    }
+
+    public boolean finishSetup(MapManager mapManager) {
+        if (map.getPlayerSpawns().size() < Game.MIN_PLAYER_SPAWNS || map.getSpectatorSpawn() == null || map.getMapName().equals(Map.DEFAULT_MAP_NAME))
+            return false;
+        switchPhase();
+        return true;
     }
 }
