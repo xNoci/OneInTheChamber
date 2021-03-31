@@ -43,5 +43,4 @@ public class LobbyPlayerConnectionListener implements Listener {
         lobbyState.checkTimer();
     }
 
-
 }

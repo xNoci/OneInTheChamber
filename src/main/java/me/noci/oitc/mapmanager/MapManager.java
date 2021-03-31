@@ -1,6 +1,5 @@
 package me.noci.oitc.mapmanager;
 
-import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.common.io.Files;
@@ -69,7 +68,7 @@ public class MapManager {
 
         for (File mapFile : maps) {
             Map map = loadMap(mapFile);
-            if (map == null || !map.isValid()) return;
+            if (!map.isValid()) return;
             loadedMaps.add(map);
         }
     }
@@ -107,7 +106,7 @@ public class MapManager {
 
     public Map getRandomMap() {
         List<Map> maps = Lists.newArrayList(loadedMaps);
-        if(maps.size() == 0) return null;
+        if (maps.size() == 0) return null;
         Collections.shuffle(maps);
         return maps.get(0);
     }

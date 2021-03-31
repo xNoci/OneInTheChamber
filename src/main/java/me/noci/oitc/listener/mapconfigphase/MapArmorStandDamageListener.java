@@ -20,4 +20,5 @@ public class MapArmorStandDamageListener implements Listener {
         if (!(event.getEntity() instanceof ArmorStand)) return;
         event.setCancelled(true);
     }
+
 }

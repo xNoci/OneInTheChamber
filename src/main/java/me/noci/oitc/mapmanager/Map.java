@@ -3,7 +3,6 @@ package me.noci.oitc.mapmanager;
 import com.google.common.collect.Lists;
 import lombok.Getter;
 import lombok.Setter;
-import me.noci.noclib.utils.LocationUtils;
 import me.noci.oitc.Game;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Location;
@@ -29,7 +28,6 @@ public class Map {
             this.mapName = mapName;
         }
     }
-
 
     public boolean isValid() {
         if (mapName.equals(DEFAULT_MAP_NAME)) return false;
