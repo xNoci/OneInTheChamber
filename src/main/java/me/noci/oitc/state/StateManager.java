@@ -2,6 +2,7 @@ package me.noci.oitc.state;
 
 import lombok.Getter;
 import me.noci.noclib.api.NocAPI;
+import me.noci.noclib.api.scoreboard.Scoreboard;
 import me.noci.oitc.Game;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -40,7 +41,11 @@ public class StateManager {
             public void run() {
                 if (currentState == null) return;
                 currentState.update();
-                NocAPI.getOnlineUsers().forEach(user -> currentState.updatePlayerScoreboard(NocAPI.getScoreboard(user.getBase()), user));
+                NocAPI.getOnlineUsers().forEach(user -> {
+                    Scoreboard scoreboard = NocAPI.getScoreboard(user.getBase());
+                    scoreboard.removeLines();
+                    currentState.updatePlayerScoreboard(scoreboard, user);
+                });
             }
         };
         bukkitRunnable.runTaskTimerAsynchronously(plugin, 0, 20);
@@ -48,6 +53,8 @@ public class StateManager {
 
     public void stop() {
         bukkitRunnable.cancel();
+        currentState.stop();
+        currentState = null;
     }
 
     public void changeState(State state) {
