@@ -1,8 +1,8 @@
 package me.noci.oitc.mapmanager;
 
 import lombok.Getter;
+import me.noci.oitc.Game;
 import me.noci.oitc.OITC;
-import me.noci.oitc.state.MapConfigState;
 
 public enum MapConfigPhase {
 
@@ -13,7 +13,7 @@ public enum MapConfigPhase {
     PLAYER_SPAWNS("Player Spawns", player -> {
         player.sendMessage("");
         player.sendMessage(String.format("%sBitte setzt die §cSpieler-Spawn§7, indem du Sneakst.", OITC.PREFIX));
-        player.sendMessage(String.format("%s§cDu musst mindestens %s Spawns platzieren.", OITC.PREFIX, MapConfigState.MIN_PLAYER_SPAWNS));
+        player.sendMessage(String.format("%s§cDu musst mindestens %s Spawns platzieren.", OITC.PREFIX, Game.MIN_PLAYER_SPAWNS));
         player.sendMessage(String.format("%s§aWenn du Fertig bist benutze §c/setupend§7.", OITC.PREFIX));
         player.sendMessage("");
     });

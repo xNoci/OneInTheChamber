@@ -17,8 +17,6 @@ import java.util.Set;
 
 public class MapConfigState extends State {
 
-    public static final int MIN_PLAYER_SPAWNS = 16;
-
     private final Set<ArmorStand> armorStandSet = Sets.newHashSet();
     @Getter private MapConfigPhase phase;
     @Setter private Player configurator;
