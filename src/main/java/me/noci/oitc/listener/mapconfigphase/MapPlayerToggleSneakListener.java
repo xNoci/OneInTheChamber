@@ -1,6 +1,7 @@
 package me.noci.oitc.listener.mapconfigphase;
 
 import me.noci.oitc.OITC;
+import me.noci.oitc.listener.OITCListener;
 import me.noci.oitc.mapmanager.MapConfigPhase;
 import me.noci.oitc.state.MapConfigState;
 import me.noci.oitc.state.StateManager;
@@ -9,20 +10,17 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 
-public class MapPlayerToggleSneakListener implements Listener {
-
-    private final StateManager stateManager;
+public class MapPlayerToggleSneakListener extends OITCListener {
 
     public MapPlayerToggleSneakListener(StateManager stateManager) {
-        this.stateManager = stateManager;
+        super(stateManager);
     }
 
     @EventHandler
     public void handlePlayerToggleSneak(PlayerToggleSneakEvent event) {
-        if (!stateManager.isState(StateManager.MAP_CONFIG_STATE)) return;
+        if (!isState(StateManager.MAP_CONFIG_STATE)) return;
         Player player = event.getPlayer();
         MapConfigState state = (MapConfigState) stateManager.getCurrentState();
         if (!state.isConfigurator(player)) return;
