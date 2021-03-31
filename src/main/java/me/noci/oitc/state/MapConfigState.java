@@ -6,9 +6,11 @@ import lombok.Setter;
 import me.noci.noclib.api.NocAPI;
 import me.noci.noclib.api.scoreboard.Scoreboard;
 import me.noci.noclib.api.user.User;
+import me.noci.oitc.Game;
 import me.noci.oitc.OITC;
 import me.noci.oitc.mapmanager.Map;
 import me.noci.oitc.mapmanager.MapConfigPhase;
+import me.noci.oitc.mapmanager.MapManager;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -26,7 +28,7 @@ public class MapConfigState extends State {
     void start() {
         armorStandSet.clear();
         this.phase = MapConfigPhase.CONFIG_START;
-        map = new Map(null);
+        map = MapManager.createNewMap();
     }
 
     @Override
@@ -85,6 +87,16 @@ public class MapConfigState extends State {
         if (map.getPlayerSpawns().size() < Game.MIN_PLAYER_SPAWNS || map.getSpectatorSpawn() == null || map.getMapName().equals(Map.DEFAULT_MAP_NAME))
             return false;
         switchPhase();
+        mapManager.saveMap(map, (savedSuccessfully, reason) -> {
+            if (savedSuccessfully) {
+                configurator.sendMessage(String.format("%s§aDie Map '%s' wurde erfolgreich gespeichert.", OITC.PREFIX, map.getMapName()));
+            } else {
+                configurator.sendMessage(String.format("%s§cEin Fehler beim Speichern der Map '%s' ist aufgetreten.", OITC.PREFIX, map.getMapName()));
+                configurator.sendMessage(String.format("%s§cGrund§8: §7%s", OITC.PREFIX, reason));
+            }
+
+            changeState(StateManager.LOBBY_STATE);
+        });
         return true;
     }
 }

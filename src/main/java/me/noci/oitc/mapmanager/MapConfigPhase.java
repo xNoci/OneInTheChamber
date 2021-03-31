@@ -16,7 +16,8 @@ public enum MapConfigPhase {
         player.sendMessage(String.format("%s§cDu musst mindestens %s Spawns platzieren.", OITC.PREFIX, Game.MIN_PLAYER_SPAWNS));
         player.sendMessage(String.format("%s§aWenn du Fertig bist benutze §c/setupend§7.", OITC.PREFIX));
         player.sendMessage("");
-    });
+    }),
+    SAVING("Speichern", player -> player.sendMessage(String.format("%s§a§lDie Map wird nun gespeichert...", OITC.PREFIX)));
 
     @Getter private final String phaseName;
     @Getter private final MapPhaseInfo phaseInfo;
