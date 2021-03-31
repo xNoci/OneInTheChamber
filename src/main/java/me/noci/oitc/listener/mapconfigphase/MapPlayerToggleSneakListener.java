@@ -41,6 +41,7 @@ public class MapPlayerToggleSneakListener implements Listener {
         if (state.isPhase(MapConfigPhase.PLAYER_SPAWNS)) {
             Location location = player.getLocation().clone();
             state.getMap().getPlayerSpawns().add(location);
+            state.getMap().setWorldName(location.getWorld().getName());
 
             ArmorStand armorStand = spawnLocationStand(location, String.format("%sSpieler-Spawn §8» §c%s", OITC.PREFIX_ACTIONBAR, state.getMap().getPlayerSpawns().size()));
             state.addArmorStand(armorStand);
