@@ -1,10 +1,16 @@
 package me.noci.oitc.state;
 
+import me.noci.noclib.api.NocAPI;
 import me.noci.noclib.api.scoreboard.Scoreboard;
 import me.noci.noclib.api.user.User;
+import me.noci.noclib.utils.items.AdvancedItemStack;
 import me.noci.oitc.gameutils.PlayerData;
+import org.bukkit.GameMode;
+import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 
 import java.util.List;
+import java.util.UUID;
 
 public class GameState extends State {
 
@@ -13,6 +19,17 @@ public class GameState extends State {
     @Override
     public void start() {
         timeRemaining = game.getGameDuration();
+        for (UUID uuid : game.getPlayerSet()) {
+            User user = NocAPI.getUser(uuid);
+
+            user.clearInventoryAndArmor();
+            user.getBase().setFoodLevel(20);
+            user.getBase().setHealth(user.getBase().getMaxHealth());
+            user.getBase().setGameMode(GameMode.SURVIVAL);
+            user.getBase().getInventory().addItem(new AdvancedItemStack(Material.WOOD_SWORD).addItemFlags().setUnbreakable(true));
+            user.getBase().getInventory().addItem(new AdvancedItemStack(Material.BOW).addItemFlags().setUnsafeEnchantment(Enchantment.ARROW_INFINITE, 1).setUnbreakable(true));
+            user.getBase().getInventory().addItem(new AdvancedItemStack(Material.ARROW).addItemFlags());
+        }
     }
 
     @Override
