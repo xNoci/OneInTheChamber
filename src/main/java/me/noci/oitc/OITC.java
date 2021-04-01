@@ -12,6 +12,7 @@ import me.noci.oitc.listener.mapconfigphase.MapAsyncPlayerChatListener;
 import me.noci.oitc.listener.mapconfigphase.MapPlayerToggleSneakListener;
 import me.noci.oitc.mapmanager.MapManager;
 import me.noci.oitc.state.StateManager;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -47,6 +48,7 @@ public class OITC extends JavaPlugin {
     @Override
     public void onDisable() {
         stateManager.stop();
+        Bukkit.getOnlinePlayers().forEach(player -> player.kickPlayer(String.format("%s§cDer Server wurde geschlossen!", PREFIX)));
     }
 
     private void registerListener() {
