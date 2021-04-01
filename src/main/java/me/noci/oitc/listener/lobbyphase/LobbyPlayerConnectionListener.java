@@ -2,22 +2,20 @@ package me.noci.oitc.listener.lobbyphase;
 
 import me.noci.noclib.api.NocAPI;
 import me.noci.noclib.api.user.User;
-import me.noci.oitc.gameutils.Game;
 import me.noci.oitc.OITC;
+import me.noci.oitc.gameutils.Game;
 import me.noci.oitc.listener.OITCListener;
 import me.noci.oitc.state.LobbyState;
 import me.noci.oitc.state.StateManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.plugin.java.JavaPlugin;
 
 public class LobbyPlayerConnectionListener extends OITCListener {
 
-    private final Game game;
-
-    public LobbyPlayerConnectionListener(StateManager stateManager, Game game) {
-        super(stateManager);
-        this.game = game;
+    public LobbyPlayerConnectionListener(JavaPlugin plugin, StateManager stateManager, Game game) {
+        super(plugin, stateManager, game);
     }
 
     @EventHandler
