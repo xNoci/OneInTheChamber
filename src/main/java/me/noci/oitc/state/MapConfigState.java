@@ -6,7 +6,7 @@ import lombok.Setter;
 import me.noci.noclib.api.NocAPI;
 import me.noci.noclib.api.scoreboard.Scoreboard;
 import me.noci.noclib.api.user.User;
-import me.noci.oitc.Game;
+import me.noci.oitc.gameutils.Game;
 import me.noci.oitc.OITC;
 import me.noci.oitc.mapmanager.Map;
 import me.noci.oitc.mapmanager.MapConfigPhase;

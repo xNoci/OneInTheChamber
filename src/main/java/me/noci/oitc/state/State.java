@@ -4,7 +4,7 @@ import lombok.AccessLevel;
 import lombok.Setter;
 import me.noci.noclib.api.scoreboard.Scoreboard;
 import me.noci.noclib.api.user.User;
-import me.noci.oitc.Game;
+import me.noci.oitc.gameutils.Game;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public abstract class State {

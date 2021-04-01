@@ -3,7 +3,7 @@ package me.noci.oitc.state;
 import lombok.Getter;
 import me.noci.noclib.api.NocAPI;
 import me.noci.noclib.api.scoreboard.Scoreboard;
-import me.noci.oitc.Game;
+import me.noci.oitc.gameutils.Game;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 

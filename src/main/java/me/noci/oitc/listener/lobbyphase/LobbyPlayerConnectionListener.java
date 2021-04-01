@@ -2,7 +2,7 @@ package me.noci.oitc.listener.lobbyphase;
 
 import me.noci.noclib.api.NocAPI;
 import me.noci.noclib.api.user.User;
-import me.noci.oitc.Game;
+import me.noci.oitc.gameutils.Game;
 import me.noci.oitc.OITC;
 import me.noci.oitc.listener.OITCListener;
 import me.noci.oitc.state.LobbyState;
@@ -27,7 +27,7 @@ public class LobbyPlayerConnectionListener extends OITCListener {
         LobbyState lobbyState = (LobbyState) stateManager.getCurrentState();
 
         event.setJoinMessage(String.format("%sDer Spieler §c%s §7hat das Spiel betreten.", OITC.PREFIX, user.getName()));
-        game.getPlayerSet().add(event.getPlayer());
+        game.getPlayerSet().add(user.getUUID());
         lobbyState.checkTimer();
     }
 
@@ -38,7 +38,7 @@ public class LobbyPlayerConnectionListener extends OITCListener {
         LobbyState lobbyState = (LobbyState) stateManager.getCurrentState();
 
         event.setQuitMessage(String.format("%sDer Spieler §c%s §7hat das Spiel verlassen.", OITC.PREFIX, user.getName()));
-        game.getPlayerSet().remove(event.getPlayer());
+        game.getPlayerSet().remove(user.getUUID());
         lobbyState.checkTimer();
     }
 

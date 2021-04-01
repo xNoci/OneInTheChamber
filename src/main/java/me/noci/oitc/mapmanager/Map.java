@@ -3,7 +3,7 @@ package me.noci.oitc.mapmanager;
 import com.google.common.collect.Lists;
 import lombok.Getter;
 import lombok.Setter;
-import me.noci.oitc.Game;
+import me.noci.oitc.gameutils.Game;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Location;
 

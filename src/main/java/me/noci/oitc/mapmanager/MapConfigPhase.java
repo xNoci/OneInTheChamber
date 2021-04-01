@@ -1,7 +1,7 @@
 package me.noci.oitc.mapmanager;
 
 import lombok.Getter;
-import me.noci.oitc.Game;
+import me.noci.oitc.gameutils.Game;
 import me.noci.oitc.OITC;
 
 public enum MapConfigPhase {

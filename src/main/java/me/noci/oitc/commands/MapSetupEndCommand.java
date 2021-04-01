@@ -2,7 +2,7 @@ package me.noci.oitc.commands;
 
 import me.noci.noclib.command.Command;
 import me.noci.noclib.command.CommandData;
-import me.noci.oitc.Game;
+import me.noci.oitc.gameutils.Game;
 import me.noci.oitc.OITC;
 import me.noci.oitc.mapmanager.MapConfigPhase;
 import me.noci.oitc.mapmanager.MapManager;
