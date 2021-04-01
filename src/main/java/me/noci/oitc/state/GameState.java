@@ -21,6 +21,7 @@ public class GameState extends State {
         timeRemaining = game.getGameDuration();
         for (UUID uuid : game.getPlayerSet()) {
             User user = NocAPI.getUser(uuid);
+            game.getPlayerData(user.getUUID()); //CREATE PLAYER DATA
 
             user.clearInventoryAndArmor();
             user.getBase().setFoodLevel(20);

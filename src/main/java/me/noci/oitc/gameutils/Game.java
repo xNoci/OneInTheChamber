@@ -30,6 +30,10 @@ public class Game {
         this.timeToStart = timeToStart;
     }
 
+    public void removePlayerData(UUID uuid) {
+        playerDataMap.remove(uuid);
+    }
+
     public PlayerData getPlayerData(UUID uuid) {
         if (playerDataMap.containsKey(uuid)) return playerDataMap.get(uuid);
         PlayerData playerData = new PlayerData(uuid);
