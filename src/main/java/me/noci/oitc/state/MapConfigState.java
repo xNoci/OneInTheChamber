@@ -85,7 +85,7 @@ public class MapConfigState extends State {
     }
 
     public boolean finishSetup(MapManager mapManager) {
-        if (map.getPlayerSpawns().size() < Game.MIN_PLAYER_SPAWNS || map.getSpectatorSpawn() == null || map.getMapName().equals(Map.DEFAULT_MAP_NAME))
+        if (!map.isValid())
             return false;
         switchPhase();
         mapManager.saveMap(map, (savedSuccessfully, reason) -> {
