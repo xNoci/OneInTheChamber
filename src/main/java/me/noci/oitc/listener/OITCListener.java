@@ -8,12 +8,16 @@ public abstract class OITCListener implements Listener {
 
     protected final StateManager stateManager;
 
-    protected OITCListener(StateManager stateManager) {
+    public OITCListener(StateManager stateManager) {
         this.stateManager = stateManager;
     }
 
     protected boolean isState(State state) {
         return stateManager.isState(state);
+    }
+
+    protected void updateScoreboard() {
+        stateManager.updateScoreboard();
     }
 
 }

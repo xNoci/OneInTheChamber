@@ -41,14 +41,18 @@ public class StateManager {
             public void run() {
                 if (currentState == null) return;
                 currentState.update();
-                NocAPI.getOnlineUsers().forEach(user -> {
-                    Scoreboard scoreboard = NocAPI.getScoreboard(user.getBase());
-                    scoreboard.removeLines();
-                    currentState.updatePlayerScoreboard(scoreboard, user);
-                });
+                updateScoreboard();
             }
         };
         bukkitRunnable.runTaskTimerAsynchronously(plugin, 0, 20);
+    }
+
+    public void updateScoreboard() {
+        NocAPI.getOnlineUsers().forEach(user -> {
+            Scoreboard scoreboard = NocAPI.getScoreboard(user.getBase());
+            scoreboard.removeLines();
+            currentState.updatePlayerScoreboard(scoreboard, user);
+        });
     }
 
     public void stop() {

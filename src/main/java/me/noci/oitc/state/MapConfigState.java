@@ -77,6 +77,7 @@ public class MapConfigState extends State {
         NocAPI.getUser(configurator).clearChat();
         this.phase = MapConfigPhase.getNextPhase(phase);
         this.phase.getPhaseInfo().sendInfo(configurator);
+        updateScoreboard();
     }
 
     public void addArmorStand(ArmorStand armorStand) {

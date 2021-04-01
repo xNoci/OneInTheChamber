@@ -17,6 +17,10 @@ public abstract class State {
         stateManager.changeState(state);
     }
 
+    protected void updateScoreboard() {
+        stateManager.updateScoreboard();
+    }
+
     abstract void start();
 
     abstract void stop();
