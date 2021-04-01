@@ -50,6 +50,19 @@ public class GameState extends State {
         scoreboard.updateLine(1, " §7Zeit");
         scoreboard.updateLine(2, String.format("  §8» §c%s", formatTime()));
         scoreboard.updateLine(3, "");
+
+        int line = 4;
+        List<PlayerData> sortedPlayerData = game.getPlayerDataSorted();
+
+        for (PlayerData playerData : sortedPlayerData) {
+            String content = String.format(" §c%s §7(%s) ", playerData.getUser().getName(), playerData.getScore());
+            if (content.length() > 30) content = content.substring(0, 30);
+
+            scoreboard.updateLine(line, content);
+            line++;
+        }
+
+        scoreboard.updateLine(line, "");
     }
 
     private String formatTime() {
