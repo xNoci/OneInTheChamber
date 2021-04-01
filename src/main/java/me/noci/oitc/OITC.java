@@ -7,6 +7,7 @@ import me.noci.oitc.commands.StartCommand;
 import me.noci.oitc.gameutils.Game;
 import me.noci.oitc.listener.ProtectionListener;
 import me.noci.oitc.listener.gamephase.GamePlayerDamageByPlayerListener;
+import me.noci.oitc.listener.lobbyphase.LobbyEntityDamageListener;
 import me.noci.oitc.listener.lobbyphase.LobbyPlayerConnectionListener;
 import me.noci.oitc.listener.mapconfigphase.MapArmorStandDamageListener;
 import me.noci.oitc.listener.mapconfigphase.MapAsyncPlayerChatListener;
@@ -56,6 +57,7 @@ public class OITC extends JavaPlugin {
         PluginManager pluginManager = getServer().getPluginManager();
         pluginManager.registerEvents(new ProtectionListener(), this);
         pluginManager.registerEvents(new LobbyPlayerConnectionListener(this, stateManager, game), this);
+        pluginManager.registerEvents(new LobbyEntityDamageListener(this, stateManager, game), this);
         pluginManager.registerEvents(new GamePlayerDamageByPlayerListener(this, stateManager, game), this);
         pluginManager.registerEvents(new MapAsyncPlayerChatListener(this, stateManager, game), this);
         pluginManager.registerEvents(new MapPlayerToggleSneakListener(this, stateManager, game), this);
