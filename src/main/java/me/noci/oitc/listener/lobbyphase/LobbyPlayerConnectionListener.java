@@ -7,6 +7,7 @@ import me.noci.oitc.gameutils.Game;
 import me.noci.oitc.listener.OITCListener;
 import me.noci.oitc.state.LobbyState;
 import me.noci.oitc.state.StateManager;
+import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -23,6 +24,11 @@ public class LobbyPlayerConnectionListener extends OITCListener {
         if (!isState(StateManager.LOBBY_STATE)) return;
         User user = NocAPI.getUser(event.getPlayer());
         LobbyState lobbyState = (LobbyState) stateManager.getCurrentState();
+
+        user.clearInventoryAndArmor();
+        user.getBase().setFoodLevel(20);
+        user.getBase().setHealth(user.getBase().getMaxHealth());
+        user.getBase().setGameMode(GameMode.SURVIVAL);
 
         event.setJoinMessage(String.format("%sDer Spieler §c%s §7hat das Spiel betreten.", OITC.PREFIX, user.getName()));
         game.getPlayerSet().add(user.getUUID());
