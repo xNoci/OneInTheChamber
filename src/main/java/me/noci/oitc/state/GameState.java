@@ -40,6 +40,11 @@ public class GameState extends State {
 
     @Override
     public void update() {
+        if (timeRemaining <= 0) {
+            changeState(StateManager.ENDING_STATE);
+            return;
+        }
+
         timeRemaining--;
     }
 
