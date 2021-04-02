@@ -8,6 +8,7 @@ import me.noci.oitc.gameutils.PlayerData;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 import java.util.UUID;
@@ -23,13 +24,21 @@ public class GameState extends State {
             User user = NocAPI.getUser(uuid);
             game.getPlayerData(user.getUUID()); //CREATE PLAYER DATA
 
-            user.clearInventoryAndArmor();
-            user.getBase().setFoodLevel(20);
-            user.getBase().setHealth(user.getBase().getMaxHealth());
-            user.getBase().setGameMode(GameMode.SURVIVAL);
-            user.getBase().getInventory().addItem(new AdvancedItemStack(Material.WOOD_SWORD).addItemFlags().setUnbreakable(true));
-            user.getBase().getInventory().addItem(new AdvancedItemStack(Material.BOW).addItemFlags().setUnsafeEnchantment(Enchantment.ARROW_INFINITE, 1).setUnbreakable(true));
-            user.getBase().getInventory().addItem(new AdvancedItemStack(Material.ARROW).addItemFlags());
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    user.clearInventoryAndArmor();
+                    user.removePotionEffects();
+                    user.getBase().spigot().setCollidesWithEntities(true);
+                    user.getBase().setAllowFlight(false);
+                    user.getBase().setFoodLevel(20);
+                    user.getBase().setHealth(user.getBase().getMaxHealth());
+                    user.getBase().setGameMode(GameMode.SURVIVAL);
+                    user.getBase().getInventory().addItem(new AdvancedItemStack(Material.WOOD_SWORD).addItemFlags().setUnbreakable(true));
+                    user.getBase().getInventory().addItem(new AdvancedItemStack(Material.BOW).addItemFlags().setUnsafeEnchantment(Enchantment.ARROW_INFINITE, 1).setUnbreakable(true));
+                    user.getBase().getInventory().addItem(new AdvancedItemStack(Material.ARROW).addItemFlags());
+                }
+            }.runTask(plugin);
         }
     }
 
