@@ -2,11 +2,12 @@ package me.noci.oitc.state;
 
 import com.google.common.collect.Sets;
 import lombok.Getter;
-import lombok.Setter;
 import me.noci.noclib.api.NocAPI;
 import me.noci.noclib.api.scoreboard.Scoreboard;
 import me.noci.noclib.api.user.User;
-import me.noci.oitc.gameutils.Game;
+import me.noci.noclib.packtes.utils.WrappedEnumScoreboardTeamAction;
+import me.noci.noclib.packtes.utils.WrappedScoreboardTeam;
+import me.noci.noclib.packtes.wrapper.server.WrappedServerScoreboardTeam;
 import me.noci.oitc.OITC;
 import me.noci.oitc.mapmanager.Map;
 import me.noci.oitc.mapmanager.MapConfigPhase;
@@ -21,25 +22,25 @@ public class MapConfigState extends State {
 
     private final Set<ArmorStand> armorStandSet = Sets.newHashSet();
     @Getter private MapConfigPhase phase;
-    @Setter private Player configurator;
     @Getter private Map map;
+    private Player configurator;
 
     @Override
-    void start() {
+    protected void start() {
         armorStandSet.clear();
         this.phase = MapConfigPhase.CONFIG_START;
         map = MapManager.createNewMap();
     }
 
     @Override
-    void stop() {
+    protected void stop() {
         NocAPI.getOnlineUsers().forEach(User::resetLevelValue);
         armorStandSet.forEach(Entity::remove);
         configurator = null;
     }
 
     @Override
-    void update() {
+    protected void update() {
         int currentPhase = phase.ordinal();
         int lastPhase = MapConfigPhase.values().length - 1;
         NocAPI.getOnlineUsers().forEach(user -> {
@@ -49,7 +50,25 @@ public class MapConfigState extends State {
     }
 
     @Override
-    void updatePlayerScoreboard(Scoreboard scoreboard, User user) {
+    protected void updateTabList(User user) {
+        for (User player : NocAPI.getOnlineUsers()) {
+            boolean configurator = isConfigurator(player.getBase());
+            String teamName = (configurator ? "001" : "002") + player.getUUID().toString().replaceAll("-", "");
+            if(teamName.length() > 16) teamName = teamName.substring(0, 16);
+
+            WrappedScoreboardTeam team = new WrappedScoreboardTeam(teamName);
+            team.setPrefix("§9Map §8| §7");
+            if (isConfigurator(player.getBase())) {
+                team.setSuffix("§8[§cSETUP§8]");
+            }
+            team.getEntries().add(player.getName());
+            user.sendPacket(new WrappedServerScoreboardTeam(team, WrappedEnumScoreboardTeamAction.REMOVE_TEAM));
+            user.sendPacket(new WrappedServerScoreboardTeam(team, WrappedEnumScoreboardTeamAction.CREATE_TEAM));
+        }
+    }
+
+    @Override
+    protected void updatePlayerScoreboard(Scoreboard scoreboard, User user) {
         scoreboard.updateTitle("     §9OITC     ");
         scoreboard.updateLine(0, "");
         scoreboard.updateLine(1, " §6Map einrichten ");
@@ -65,8 +84,13 @@ public class MapConfigState extends State {
         scoreboard.updateLine(11, "");
     }
 
+    public void setConfigurator(Player configurator) {
+        this.configurator = configurator;
+        updateTabList();
+    }
+
     public boolean isConfigurator(Player player) {
-        return player.getUniqueId().equals(configurator.getUniqueId());
+        return configurator != null && player.getUniqueId().equals(configurator.getUniqueId());
     }
 
     public boolean isPhase(MapConfigPhase phase) {

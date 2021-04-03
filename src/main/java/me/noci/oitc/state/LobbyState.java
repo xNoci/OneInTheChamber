@@ -3,6 +3,9 @@ package me.noci.oitc.state;
 import me.noci.noclib.api.NocAPI;
 import me.noci.noclib.api.scoreboard.Scoreboard;
 import me.noci.noclib.api.user.User;
+import me.noci.noclib.packtes.utils.WrappedEnumScoreboardTeamAction;
+import me.noci.noclib.packtes.utils.WrappedScoreboardTeam;
+import me.noci.noclib.packtes.wrapper.server.WrappedServerScoreboardTeam;
 import me.noci.oitc.OITC;
 import org.bukkit.Sound;
 
@@ -13,14 +16,14 @@ public class LobbyState extends State {
     private boolean forceStarted;
 
     @Override
-    public void start() {
+    protected void start() {
         this.remainingTime = game.getTimeToStart();
         this.starting = false;
         this.forceStarted = false;
     }
 
     @Override
-    public void stop() {
+    protected void stop() {
         this.remainingTime = game.getTimeToStart();
         this.starting = false;
         this.forceStarted = false;
@@ -28,7 +31,7 @@ public class LobbyState extends State {
     }
 
     @Override
-    public void update() {
+    protected void update() {
         if (starting) {
             if (remainingTime <= 0) {
                 changeState(StateManager.GAME_STATE);
@@ -51,7 +54,21 @@ public class LobbyState extends State {
     }
 
     @Override
-    public void updatePlayerScoreboard(Scoreboard scoreboard, User user) {
+    protected void updateTabList(User user) {
+        for (User player : NocAPI.getOnlineUsers()) {
+            String teamName = player.getUUID().toString().replaceAll("-", "");
+            if(teamName.length() > 16) teamName = teamName.substring(0, 16);
+
+            WrappedScoreboardTeam team = new WrappedScoreboardTeam(teamName);
+            team.setPrefix("§9User §8| §7");
+            team.getEntries().add(player.getName());
+            user.sendPacket(new WrappedServerScoreboardTeam(team, WrappedEnumScoreboardTeamAction.REMOVE_TEAM));
+            user.sendPacket(new WrappedServerScoreboardTeam(team, WrappedEnumScoreboardTeamAction.CREATE_TEAM));
+        }
+    }
+
+    @Override
+    protected void updatePlayerScoreboard(Scoreboard scoreboard, User user) {
         scoreboard.updateTitle("     §9OITC     ");
         scoreboard.updateLine(0, "");
         scoreboard.updateLine(1, " §7Map");

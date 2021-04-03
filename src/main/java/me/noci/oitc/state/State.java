@@ -2,6 +2,7 @@ package me.noci.oitc.state;
 
 import lombok.AccessLevel;
 import lombok.Setter;
+import me.noci.noclib.api.NocAPI;
 import me.noci.noclib.api.scoreboard.Scoreboard;
 import me.noci.noclib.api.user.User;
 import me.noci.oitc.gameutils.Game;
@@ -21,12 +22,18 @@ public abstract class State {
         stateManager.updateScoreboard();
     }
 
-    abstract void start();
+    protected abstract void start();
 
-    abstract void stop();
+    protected abstract void stop();
 
-    abstract void update();
+    protected abstract void update();
 
-    abstract void updatePlayerScoreboard(Scoreboard scoreboard, User user);
+    protected abstract void updateTabList(User user);
+
+    protected abstract void updatePlayerScoreboard(Scoreboard scoreboard, User user);
+
+    protected void updateTabList() {
+        NocAPI.getOnlineUsers().forEach(this::updateTabList);
+    }
 
 }

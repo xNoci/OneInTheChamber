@@ -3,6 +3,9 @@ package me.noci.oitc.state;
 import me.noci.noclib.api.NocAPI;
 import me.noci.noclib.api.scoreboard.Scoreboard;
 import me.noci.noclib.api.user.User;
+import me.noci.noclib.packtes.utils.WrappedEnumScoreboardTeamAction;
+import me.noci.noclib.packtes.utils.WrappedScoreboardTeam;
+import me.noci.noclib.packtes.wrapper.server.WrappedServerScoreboardTeam;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -10,7 +13,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class EndingState extends State {
 
     @Override
-    public void start() {
+    protected void start() {
         NocAPI.getOnlineUsers().forEach(user -> {
             new BukkitRunnable() {
                 @Override
@@ -30,17 +33,31 @@ public class EndingState extends State {
     }
 
     @Override
-    public void stop() {
+    protected void stop() {
 
     }
 
     @Override
-    public void update() {
+    protected void update() {
 
     }
 
     @Override
-    public void updatePlayerScoreboard(Scoreboard scoreboard, User user) {
+    protected void updateTabList(User user) {
+        for (User player : NocAPI.getOnlineUsers()) {
+            String teamName = player.getUUID().toString().replaceAll("-", "");
+            if (teamName.length() > 16) teamName = teamName.substring(0, 16);
+
+            WrappedScoreboardTeam team = new WrappedScoreboardTeam(teamName);
+            team.setPrefix("§9User §8| §7");
+            team.getEntries().add(player.getName());
+            user.sendPacket(new WrappedServerScoreboardTeam(team, WrappedEnumScoreboardTeamAction.REMOVE_TEAM));
+            user.sendPacket(new WrappedServerScoreboardTeam(team, WrappedEnumScoreboardTeamAction.CREATE_TEAM));
+        }
+    }
+
+    @Override
+    protected void updatePlayerScoreboard(Scoreboard scoreboard, User user) {
 
     }
 

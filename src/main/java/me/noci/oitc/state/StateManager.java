@@ -55,6 +55,10 @@ public class StateManager {
         });
     }
 
+    public void updateTabList() {
+        currentState.updateTabList();
+    }
+
     public void stop() {
         bukkitRunnable.cancel();
         currentState.stop();
@@ -69,6 +73,7 @@ public class StateManager {
         }
         this.currentState = state;
         currentState.start();
+        updateTabList();
     }
 
     public boolean isState(State state) {

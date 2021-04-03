@@ -26,4 +26,8 @@ public abstract class OITCListener implements Listener {
         stateManager.updateScoreboard();
     }
 
+    protected void updateTabList() {
+        stateManager.updateTabList();
+    }
+
 }
