@@ -9,7 +9,7 @@ public enum MapConfigPhase {
     CONFIG_START("Start"),
     MAP_NAME("Map Name", player -> player.sendMessage(String.format("%sBitte gebe den §cName §7der Map ein.", OITC.PREFIX))),
     BUILDER_NAME("Builder Name", player -> player.sendMessage(String.format("%sBitte gebe den §cName §7des Builder ein.", OITC.PREFIX))),
-    SPECTATOR_SPAWN("Lobby Spawn", player -> player.sendMessage(String.format("%sBitte setzt den §cSpectator-Spawn§7, indem du Sneakst.", OITC.PREFIX))),
+    SPECTATOR_SPAWN("Spectator Spawn", player -> player.sendMessage(String.format("%sBitte setzt den §cSpectator-Spawn§7, indem du Sneakst.", OITC.PREFIX))),
     PLAYER_SPAWNS("Player Spawns", player -> {
         player.sendMessage("");
         player.sendMessage(String.format("%sBitte setzt die §cSpieler-Spawn§7, indem du Sneakst.", OITC.PREFIX));
