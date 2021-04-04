@@ -29,7 +29,7 @@ public class OITC extends JavaPlugin {
     public OITC() {
         loadDefaultConfig();
 
-        game = new Game(12, 60);
+        game = Game.setupGame(this);
         stateManager = new StateManager(this, game);
         mapManager = new MapManager(this);
 
