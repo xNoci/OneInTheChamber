@@ -14,6 +14,7 @@ import me.noci.oitc.listener.mapconfigphase.MapPlayerToggleSneakListener;
 import me.noci.oitc.mapmanager.MapManager;
 import me.noci.oitc.state.StateManager;
 import org.bukkit.Bukkit;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -42,7 +43,7 @@ public class OITC extends JavaPlugin {
         stateManager.start(this);
         stateManager.changeState(StateManager.LOBBY_STATE);
 
-        registerListener();
+        registerListeners();
         registerCommands();
     }
 
@@ -52,29 +53,33 @@ public class OITC extends JavaPlugin {
         Bukkit.getOnlinePlayers().forEach(player -> player.kickPlayer(String.format("%s§cDer Server wurde geschlossen!", PREFIX)));
     }
 
-    private void registerListener() {
-        PluginManager pluginManager = getServer().getPluginManager();
-        pluginManager.registerEvents(new ProtectionListener(), this);
-        pluginManager.registerEvents(new LobbyPlayerConnectionListener(this, stateManager, game), this);
-        pluginManager.registerEvents(new LobbyEntityDamageListener(this, stateManager, game), this);
-        pluginManager.registerEvents(new GamePlayerDamageByPlayerListener(this, stateManager, game), this);
-        pluginManager.registerEvents(new GamePlayerDeathListener(this, stateManager, game), this);
-        pluginManager.registerEvents(new GamePlayerDamageListener(this, stateManager, game), this);
-        pluginManager.registerEvents(new GameSpectatorDamagedPlayerListener(this, stateManager, game), this);
-        pluginManager.registerEvents(new GameSpectatorDamageListener(this, stateManager, game), this);
-        pluginManager.registerEvents(new GameSpectatorInteractListener(this, stateManager, game), this);
-        pluginManager.registerEvents(new MapPlayerConnectionListener(this, stateManager, game), this);
-        pluginManager.registerEvents(new MapAsyncPlayerChatListener(this, stateManager, game), this);
-        pluginManager.registerEvents(new MapPlayerToggleSneakListener(this, stateManager, game), this);
-        pluginManager.registerEvents(new MapArmorStandDamageListener(this, stateManager, game), this);
-    }
-
     private void registerCommands() {
         NocAPI.registerCommand(new StartCommand(this, stateManager));
         NocAPI.registerCommand(new MapSetupCommand(this, stateManager));
         NocAPI.registerCommand(new MapSetupEndCommand(this, stateManager, mapManager));
         NocAPI.registerCommand(new WorldCommand(this, stateManager));
         NocAPI.registerCommand(new SetLobbySpawnCommand(this, stateManager, game));
+    }
+
+    private void registerListeners() {
+        registerListener(new ProtectionListener());
+        registerListener(new LobbyPlayerConnectionListener(this, stateManager, game));
+        registerListener(new LobbyEntityDamageListener(this, stateManager, game));
+        registerListener(new GamePlayerDamageByPlayerListener(this, stateManager, game));
+        registerListener(new GamePlayerDeathListener(this, stateManager, game));
+        registerListener(new GamePlayerDamageListener(this, stateManager, game));
+        registerListener(new GameSpectatorDamagedPlayerListener(this, stateManager, game));
+        registerListener(new GameSpectatorDamageListener(this, stateManager, game));
+        registerListener(new GameSpectatorInteractListener(this, stateManager, game));
+        registerListener(new MapPlayerConnectionListener(this, stateManager, game));
+        registerListener(new MapAsyncPlayerChatListener(this, stateManager, game));
+        registerListener(new MapPlayerToggleSneakListener(this, stateManager, game));
+        registerListener(new MapArmorStandDamageListener(this, stateManager, game));
+    }
+
+    private void registerListener(Listener listener) {
+        PluginManager pluginManager = getServer().getPluginManager();
+        pluginManager.registerEvents(listener, this);
     }
 
     private void loadDefaultConfig() {
