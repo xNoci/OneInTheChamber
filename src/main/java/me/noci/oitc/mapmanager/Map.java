@@ -5,7 +5,11 @@ import lombok.Getter;
 import lombok.Setter;
 import me.noci.oitc.gameutils.Game;
 import org.apache.commons.lang.StringUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.WorldCreator;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 
@@ -36,4 +40,12 @@ public class Map {
         return playerSpawns.size() >= Game.MIN_PLAYER_SPAWNS;
     }
 
+    public void createWorld(JavaPlugin plugin) {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                Bukkit.createWorld(WorldCreator.name(worldName));
+            }
+        }.runTask(plugin);
+    }
 }

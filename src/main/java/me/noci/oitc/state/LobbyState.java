@@ -47,6 +47,10 @@ public class LobbyState extends State {
                 }
             });
 
+            if(remainingTime == 10) {
+                game.getCurrentMap().createWorld(plugin);
+            }
+
             remainingTime--;
         } else {
             NocAPI.getOnlineUsers().forEach(user -> user.setLevelValue(game.getTimeToStart(), game.getTimeToStart()));
