@@ -77,4 +77,17 @@ public class Game {
                 .collect(Collectors.toList());
     }
 
+    private Location getLobbySpawn() {
+        return this.lobbySpawn == null ? Bukkit.getWorlds().get(0).getSpawnLocation() : this.lobbySpawn;
+    }
+
+    public void teleportToLobby(Player player) {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                Location location = getLobbySpawn();
+                player.teleport(location);
+            }
+        }.runTask(plugin);
+    }
 }
