@@ -9,10 +9,12 @@ import me.noci.noclib.packtes.wrapper.server.WrappedServerScoreboardTeam;
 import me.noci.noclib.utils.items.AdvancedItemStack;
 import me.noci.oitc.gameutils.PlayerData;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,6 +25,9 @@ public class GameState extends State {
     @Override
     protected void start() {
         timeRemaining = game.getGameDuration();
+
+        Iterator<Location> mapSpawns = game.getCurrentMap().getPlayerSpawns().iterator();
+        Location fallbackSpawn = game.getCurrentMap().getPlayerSpawns().get(0).clone();
 
         for (UUID uuid : game.getPlayerSet()) {
             User user = NocAPI.getUser(uuid);
@@ -41,6 +46,12 @@ public class GameState extends State {
                     user.getBase().getInventory().addItem(new AdvancedItemStack(Material.WOOD_SWORD).addItemFlags().setUnbreakable(true));
                     user.getBase().getInventory().addItem(new AdvancedItemStack(Material.BOW).addItemFlags().setUnsafeEnchantment(Enchantment.ARROW_INFINITE, 1).setUnbreakable(true));
                     user.getBase().getInventory().addItem(new AdvancedItemStack(Material.ARROW).addItemFlags());
+
+                    Location playerSpawn = fallbackSpawn;
+                    if(mapSpawns.hasNext()) {
+                        playerSpawn = mapSpawns.next();
+                    }
+                    user.getBase().teleport(playerSpawn);
                 }
             }.runTask(plugin);
         }
