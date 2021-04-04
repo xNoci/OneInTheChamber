@@ -33,6 +33,10 @@ public class LobbyPlayerConnectionListener extends OITCListener {
         event.setJoinMessage(String.format("%sDer Spieler §c%s §7hat das Spiel betreten.", OITC.PREFIX, user.getName()));
         game.getPlayerSet().add(user.getUUID());
         lobbyState.checkTimer();
+
+        updateTabList();
+
+        game.teleportToLobby(user.getBase());
     }
 
     @EventHandler
@@ -44,6 +48,8 @@ public class LobbyPlayerConnectionListener extends OITCListener {
         event.setQuitMessage(String.format("%sDer Spieler §c%s §7hat das Spiel verlassen.", OITC.PREFIX, user.getName()));
         game.getPlayerSet().remove(user.getUUID());
         lobbyState.checkTimer();
+
+        updateTabList();
     }
 
 }
