@@ -23,6 +23,7 @@ public class GameState extends State {
     @Override
     protected void start() {
         timeRemaining = game.getGameDuration();
+
         for (UUID uuid : game.getPlayerSet()) {
             User user = NocAPI.getUser(uuid);
             game.getPlayerData(user.getUUID()); //CREATE PLAYER DATA
@@ -64,11 +65,16 @@ public class GameState extends State {
     protected void updateTabList(User user) {
         for (User player : NocAPI.getOnlineUsers()) {
             String teamName = player.getUUID().toString().replaceAll("-", "");
-            if(teamName.length() > 16) teamName = teamName.substring(0, 16);
-
+            if (teamName.length() > 16) teamName = teamName.substring(0, 16);
             WrappedScoreboardTeam team = new WrappedScoreboardTeam(teamName);
-            team.setPrefix("§9User §8| §7");
             team.getEntries().add(player.getName());
+            team.setPrefix("§9User §8| §7");
+
+            if (game.getSpectatorSet().contains(player.getUUID())) {
+                team.setPrefix("§7");
+                team.setCanSeeFriendlyInvisibles(true);
+            }
+
             user.sendPacket(new WrappedServerScoreboardTeam(team, WrappedEnumScoreboardTeamAction.REMOVE_TEAM));
             user.sendPacket(new WrappedServerScoreboardTeam(team, WrappedEnumScoreboardTeamAction.CREATE_TEAM));
         }
