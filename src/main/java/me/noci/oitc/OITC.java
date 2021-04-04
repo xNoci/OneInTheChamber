@@ -62,6 +62,7 @@ public class OITC extends JavaPlugin {
         pluginManager.registerEvents(new GamePlayerDamageListener(this, stateManager, game), this);
         pluginManager.registerEvents(new GameSpectatorDamagedPlayerListener(this, stateManager, game), this);
         pluginManager.registerEvents(new GameSpectatorDamageListener(this, stateManager, game), this);
+        pluginManager.registerEvents(new GameSpectatorInteractListener(this, stateManager, game), this);
         pluginManager.registerEvents(new MapPlayerConnectionListener(this, stateManager, game), this);
         pluginManager.registerEvents(new MapAsyncPlayerChatListener(this, stateManager, game), this);
         pluginManager.registerEvents(new MapPlayerToggleSneakListener(this, stateManager, game), this);

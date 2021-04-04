@@ -28,8 +28,6 @@ public class EndingState extends State {
                     game.teleportToLobby(user.getBase());
                 }
             }.runTask(plugin);
-
-
         });
     }
 
