@@ -1,10 +1,7 @@
 package me.noci.oitc;
 
 import me.noci.noclib.api.NocAPI;
-import me.noci.oitc.commands.MapSetupCommand;
-import me.noci.oitc.commands.MapSetupEndCommand;
-import me.noci.oitc.commands.StartCommand;
-import me.noci.oitc.commands.WorldCommand;
+import me.noci.oitc.commands.*;
 import me.noci.oitc.gameutils.Game;
 import me.noci.oitc.listener.ProtectionListener;
 import me.noci.oitc.listener.gamephase.*;
@@ -30,7 +27,7 @@ public class OITC extends JavaPlugin {
     private final Game game;
 
     public OITC() {
-        getDataFolder().mkdirs();
+        loadDefaultConfig();
 
         game = new Game(12, 60);
         stateManager = new StateManager(this, game);
@@ -74,6 +71,13 @@ public class OITC extends JavaPlugin {
         NocAPI.registerCommand(new MapSetupCommand(this, stateManager));
         NocAPI.registerCommand(new MapSetupEndCommand(this, stateManager, mapManager));
         NocAPI.registerCommand(new WorldCommand(this, stateManager));
+        NocAPI.registerCommand(new SetLobbySpawnCommand(this, stateManager, game));
+    }
+
+    private void loadDefaultConfig() {
+        getDataFolder().mkdirs();
+        getConfig().options().copyDefaults(true);
+        saveDefaultConfig();
     }
 
 }
