@@ -25,6 +25,7 @@ public class EndingState extends State {
                     user.getBase().setGameMode(GameMode.SURVIVAL);
                     user.removePotionEffects();
                     user.getBase().spigot().setCollidesWithEntities(true);
+                    game.teleportToLobby(user.getBase());
                 }
             }.runTask(plugin);
 
