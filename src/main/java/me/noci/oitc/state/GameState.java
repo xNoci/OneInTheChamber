@@ -1,5 +1,6 @@
 package me.noci.oitc.state;
 
+import lombok.Getter;
 import me.noci.noclib.api.NocAPI;
 import me.noci.noclib.api.scoreboard.Scoreboard;
 import me.noci.noclib.api.user.User;
@@ -11,7 +12,7 @@ import me.noci.oitc.gameutils.PlayerData;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
+import org.bukkit.Sound;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Iterator;
@@ -20,11 +21,15 @@ import java.util.UUID;
 
 public class GameState extends State {
 
+    @Getter private boolean protectionTime;
+    private int remainingProtectionTime;
     private long timeRemaining;
 
     @Override
     protected void start() {
+        protectionTime = true;
         timeRemaining = game.getGameDuration();
+        remainingProtectionTime = game.getProtectionTime();
 
         Iterator<Location> mapSpawns = game.getCurrentMap().playerSpawnIterator();
         Location fallbackSpawn = game.getCurrentMap().getPlayerSpawns().get(0).clone();
@@ -48,7 +53,7 @@ public class GameState extends State {
                     user.getBase().getInventory().addItem(new AdvancedItemStack(Material.ARROW).addItemFlags());
 
                     Location playerSpawn = fallbackSpawn;
-                    if(mapSpawns.hasNext()) {
+                    if (mapSpawns.hasNext()) {
                         playerSpawn = mapSpawns.next();
                     }
                     user.getBase().teleport(playerSpawn);
@@ -61,22 +66,57 @@ public class GameState extends State {
     protected void stop() {
         PlayerData playerData = null;
         List<PlayerData> playerDataList = game.getPlayerDataSorted();
-        if(playerDataList.size() > 0) {
+        if (playerDataList.size() > 0) {
             playerData = playerDataList.get(0);
         }
 
-        if(playerData != null) {
+        if (playerData != null) {
             game.setWinner(playerData.getName());
         }
     }
 
     @Override
     protected void update() {
-        if (checkEnding()) {
-            return;
-        }
+        if (protectionTime) {
 
-        timeRemaining--;
+            switch (remainingProtectionTime) {
+                case 3:
+                    NocAPI.getOnlineUsers().forEach(user -> {
+                        user.sendTitle("§8| §cStartet §8|", String.format("§7... in §4%s", remainingProtectionTime), 0, 1, 0);
+                        user.playSound(Sound.CLICK, 2, 2);
+                    });
+                    break;
+                case 2:
+                    NocAPI.getOnlineUsers().forEach(user -> {
+                        user.sendTitle("§8| §cStartet §8|", String.format("§7... in §e%s", remainingProtectionTime), 0, 1, 0);
+                        user.playSound(Sound.CLICK, 2, 2);
+                    });
+
+                    break;
+                case 1:
+                    NocAPI.getOnlineUsers().forEach(user -> {
+                        user.sendTitle("§8| §cStartet §8|", String.format("§7... in §a%s", remainingProtectionTime), 0, 1, 0);
+                        user.playSound(Sound.CLICK, 2, 2);
+                    });
+                    break;
+            }
+
+            if (remainingProtectionTime <= 0) {
+                protectionTime = false;
+                NocAPI.getOnlineUsers().forEach(user -> {
+                    user.sendTitle("§8| §cGO §8|", "", 0, 1, 0);
+                    user.playSound(Sound.CLICK, 2, 2);
+                });
+                return;
+            }
+            remainingProtectionTime--;
+        } else {
+            if (checkEnding()) {
+                return;
+            }
+
+            timeRemaining--;
+        }
     }
 
     @Override
@@ -125,7 +165,7 @@ public class GameState extends State {
         boolean notEnoughPlayer = game.getPlayerSet().size() <= 1;
 
         boolean end = timeOver || notEnoughPlayer;
-        if(!end) return false;
+        if (!end) return false;
         changeState(StateManager.ENDING_STATE);
         return true;
     }
