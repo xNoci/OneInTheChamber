@@ -44,14 +44,22 @@ public class Map {
         return rawPlayerSpawns.size() >= Game.MIN_PLAYER_SPAWNS;
     }
 
-    public void createWorld(JavaPlugin plugin) {
+    public void setupWorld(JavaPlugin plugin) {
         new BukkitRunnable() {
             @Override
             public void run() {
                 Bukkit.createWorld(WorldCreator.name(worldName));
+                loadSpawns();
             }
         }.runTask(plugin);
     }
+
+    private void loadSpawns() {
+        List<Location> locations = rawPlayerSpawns.stream().map(LocationUtils::locationFromStringSilently).collect(Collectors.toList());
+        playerSpawns.clear();
+        playerSpawns.addAll(locations);
+    }
+
     public List<Location> getPlayerSpawns() {
         return Lists.newArrayList(this.playerSpawns);
     }

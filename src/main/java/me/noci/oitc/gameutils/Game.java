@@ -90,4 +90,7 @@ public class Game {
             }
         }.runTask(plugin);
     }
+    public void setupWorld() {
+        currentMap.setupWorld(plugin);
+    }
 }
