@@ -75,7 +75,7 @@ public class GameState extends State {
     @Override
     protected void updateTabList(User user) {
         for (User player : NocAPI.getOnlineUsers()) {
-            String teamName = player.getUUID().toString().replaceAll("-", "");
+            String teamName = (game.getPlayerSet().contains(player.getUUID()) ? "001" : "002") + player.getUUID().toString().replaceAll("-", "");
             if (teamName.length() > 16) teamName = teamName.substring(0, 16);
             WrappedScoreboardTeam team = new WrappedScoreboardTeam(teamName);
             team.getEntries().add(player.getName());
