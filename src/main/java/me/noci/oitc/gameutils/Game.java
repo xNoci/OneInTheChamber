@@ -15,7 +15,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -90,6 +89,11 @@ public class Game {
             }
         }.runTask(plugin);
     }
+
+    public String getMapName() {
+        return currentMap == null ? "Unknown" : currentMap.getMapName();
+    }
+
     public void setupWorld() {
         currentMap.setupWorld(plugin);
     }

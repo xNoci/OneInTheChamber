@@ -76,7 +76,7 @@ public class LobbyState extends State {
         scoreboard.updateTitle("     §9OITC     ");
         scoreboard.updateLine(0, "");
         scoreboard.updateLine(1, " §7Map");
-        scoreboard.updateLine(2, String.format("  §8» §c%s", mapName()));
+        scoreboard.updateLine(2, String.format("  §8» §c%s", game.getMapName()));
         scoreboard.updateLine(3, "");
     }
 
@@ -110,10 +110,6 @@ public class LobbyState extends State {
         } else {
             user.sendMessage("%sDas Spiel startet in §c%s §7Sekunde.", OITC.PREFIX, time);
         }
-    }
-
-    private String mapName() {
-        return game.getCurrentMap() == null ? "Unknown" : game.getCurrentMap().getMapName();
     }
 
 }
