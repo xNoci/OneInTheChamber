@@ -36,6 +36,8 @@ public class Game {
     @Getter @Setter(AccessLevel.PRIVATE) private int forceTime;
     @Setter private Location lobbySpawn;
 
+    @Getter @Setter private String winner = "Kein Gewinner";
+
     public static Game setupGame(JavaPlugin plugin) {
         FileConfiguration config = plugin.getConfig();
         Game game = new Game(plugin, config.getInt("maxPlayers", 12));

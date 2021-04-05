@@ -57,7 +57,11 @@ public class EndingState extends State {
 
     @Override
     protected void updatePlayerScoreboard(Scoreboard scoreboard, User user) {
-
+        scoreboard.updateTitle("     §9OITC     ");
+        scoreboard.updateLine(0, "");
+        scoreboard.updateLine(1, " §7Gewinner");
+        scoreboard.updateLine(2, String.format("  §8» §c%s", game.getWinner()));
+        scoreboard.updateLine(3, "");
     }
 
 }
