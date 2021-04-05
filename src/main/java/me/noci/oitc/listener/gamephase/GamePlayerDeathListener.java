@@ -1,11 +1,13 @@
 package me.noci.oitc.listener.gamephase;
 
+import me.noci.noclib.utils.items.AdvancedItemStack;
 import me.noci.oitc.OITC;
 import me.noci.oitc.gameutils.Game;
 import me.noci.oitc.listener.OITCListener;
 import me.noci.oitc.mapmanager.Map;
 import me.noci.oitc.state.StateManager;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -36,6 +38,7 @@ public class GamePlayerDeathListener extends OITCListener {
 
         if (killer != null) {
             game.getPlayerData(killer).changeScore(1);
+            killer.getInventory().addItem(new AdvancedItemStack(Material.ARROW).addItemFlags());
             killer.sendMessage(String.format("%sDu hast §c%s §7getötet.", OITC.PREFIX, player.getName()));
             player.sendMessage(String.format("%sDu wurdest von §c%s §7getötet.", OITC.PREFIX, killer.getName()));
         } else {

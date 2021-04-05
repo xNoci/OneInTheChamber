@@ -44,7 +44,7 @@ public class GameState extends State {
                     user.getBase().setHealth(user.getBase().getMaxHealth());
                     user.getBase().setGameMode(GameMode.SURVIVAL);
                     user.getBase().getInventory().addItem(new AdvancedItemStack(Material.WOOD_SWORD).addItemFlags().setUnbreakable(true));
-                    user.getBase().getInventory().addItem(new AdvancedItemStack(Material.BOW).addItemFlags().setUnsafeEnchantment(Enchantment.ARROW_INFINITE, 1).setUnbreakable(true));
+                    user.getBase().getInventory().addItem(new AdvancedItemStack(Material.BOW).addItemFlags().setUnbreakable(true));
                     user.getBase().getInventory().addItem(new AdvancedItemStack(Material.ARROW).addItemFlags());
 
                     Location playerSpawn = fallbackSpawn;
