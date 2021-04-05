@@ -1,8 +1,8 @@
-playersToStart: 12
+maxPlayers: 12
 #Time To Start in seconds
 timeToStart: 60
 #Force Time in seconds
 forceTime: 10
 #Game Duration in minutes
-gameDuartaion: 5
+gameDuration: 5
 lobbySpawn:

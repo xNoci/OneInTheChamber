@@ -33,19 +33,19 @@ public class Game {
     @Getter private final int maxPlayers;
     @Getter private final int playersNeeded;
     @Getter @Setter(AccessLevel.PRIVATE) private int timeToStart;
-    @Getter @Setter(AccessLevel.PRIVATE) private long gameDuration ;
+    @Getter @Setter(AccessLevel.PRIVATE) private long gameDuration;
     @Getter @Setter(AccessLevel.PRIVATE) private int forceTime;
     @Setter private Location lobbySpawn;
 
     public static Game setupGame(JavaPlugin plugin) {
         FileConfiguration config = plugin.getConfig();
-        Game game = new Game(plugin, config.getInt("playersToStart", 12));
+        Game game = new Game(plugin, config.getInt("maxPlayers", 12));
         game.setTimeToStart(config.getInt("timeToStart", 60));
         game.setGameDuration(TimeUnit.MINUTES.toSeconds(config.getInt("gameDuration", 5)));
         game.setForceTime(config.getInt("forceTime", 10));
 
         Location lobbySpawn = LocationUtils.locationFromStringSilently(config.getString("lobbySpawn", ""));
-        if(lobbySpawn != null) {
+        if (lobbySpawn != null) {
             game.setLobbySpawn(lobbySpawn);
         } else {
             Bukkit.getConsoleSender().sendMessage(String.format("%s§cEs wurde noch kein Lobby-Spawn gesetzt.", OITC.PREFIX));
