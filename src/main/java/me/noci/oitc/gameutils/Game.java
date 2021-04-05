@@ -62,9 +62,10 @@ public class Game {
         playerDataMap.remove(uuid);
     }
 
-    public PlayerData getPlayerData(UUID uuid) {
+    public PlayerData getPlayerData(Player player) {
+        UUID uuid = player.getUniqueId();
         if (playerDataMap.containsKey(uuid)) return playerDataMap.get(uuid);
-        PlayerData playerData = new PlayerData(uuid);
+        PlayerData playerData = new PlayerData(player);
         playerDataMap.put(uuid, playerData);
         return playerData;
     }

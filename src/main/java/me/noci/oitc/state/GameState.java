@@ -31,7 +31,7 @@ public class GameState extends State {
 
         for (UUID uuid : game.getPlayerSet()) {
             User user = NocAPI.getUser(uuid);
-            game.getPlayerData(user.getUUID()); //CREATE PLAYER DATA
+            game.getPlayerData(user.getBase()); //CREATE PLAYER DATA
 
             new BukkitRunnable() {
                 @Override
