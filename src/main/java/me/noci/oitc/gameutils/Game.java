@@ -34,6 +34,7 @@ public class Game {
     @Getter @Setter(AccessLevel.PRIVATE) private int timeToStart;
     @Getter @Setter(AccessLevel.PRIVATE) private long gameDuration;
     @Getter @Setter(AccessLevel.PRIVATE) private int forceTime;
+    @Getter @Setter(AccessLevel.PRIVATE) private int protectionTime;
     @Setter private Location lobbySpawn;
 
     @Getter @Setter private String winner = "Kein Gewinner";
@@ -44,6 +45,7 @@ public class Game {
         game.setTimeToStart(config.getInt("timeToStart", 60));
         game.setGameDuration(TimeUnit.MINUTES.toSeconds(config.getInt("gameDuration", 5)));
         game.setForceTime(config.getInt("forceTime", 10));
+        game.setProtectionTime(config.getInt("protectionTime",3));
 
         Location lobbySpawn = LocationUtils.locationFromStringSilently(config.getString("lobbySpawn", ""));
         if (lobbySpawn != null) {

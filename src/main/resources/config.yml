@@ -1,8 +1,8 @@
 maxPlayers: 12
-#Time To Start in seconds
+#In seconds
 timeToStart: 60
-#Force Time in seconds
 forceTime: 10
-#Game Duration in minutes
+protectionTime: 3
+#In minutes
 gameDuration: 5
 lobbySpawn:
