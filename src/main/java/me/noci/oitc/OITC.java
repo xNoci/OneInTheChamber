@@ -4,6 +4,7 @@ import me.noci.noclib.api.NocAPI;
 import me.noci.oitc.commands.*;
 import me.noci.oitc.gameutils.Game;
 import me.noci.oitc.listener.ProtectionListener;
+import me.noci.oitc.listener.ServerListPingListener;
 import me.noci.oitc.listener.gamephase.*;
 import me.noci.oitc.listener.lobbyphase.LobbyEntityDamageListener;
 import me.noci.oitc.listener.lobbyphase.LobbyPlayerConnectionListener;
@@ -61,6 +62,7 @@ public class OITC extends JavaPlugin {
 
     private void registerListeners() {
         registerListener(new ProtectionListener());
+        registerListener(new ServerListPingListener(this, stateManager, game));
         registerListener(new LobbyPlayerConnectionListener(this, stateManager, game));
         registerListener(new LobbyEntityDamageListener(this, stateManager, game));
         registerListener(new GamePlayerDamageByPlayerListener(this, stateManager, game));
