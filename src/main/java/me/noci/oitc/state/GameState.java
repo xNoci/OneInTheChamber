@@ -72,8 +72,7 @@ public class GameState extends State {
 
     @Override
     protected void update() {
-        if (timeRemaining <= 0) {
-            changeState(StateManager.ENDING_STATE);
+        if (checkEnding()) {
             return;
         }
 
@@ -119,6 +118,16 @@ public class GameState extends State {
         }
 
         scoreboard.updateLine(line, "");
+    }
+
+    public boolean checkEnding() {
+        boolean timeOver = timeRemaining <= 0;
+        boolean notEnoughPlayer = game.getPlayerSet().size() <= 1;
+
+        boolean end = timeOver || notEnoughPlayer;
+        if(!end) return false;
+        changeState(StateManager.ENDING_STATE);
+        return true;
     }
 
     private String formatTime() {

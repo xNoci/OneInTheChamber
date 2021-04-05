@@ -5,6 +5,7 @@ import me.noci.noclib.api.user.User;
 import me.noci.oitc.OITC;
 import me.noci.oitc.gameutils.Game;
 import me.noci.oitc.listener.OITCListener;
+import me.noci.oitc.state.GameState;
 import me.noci.oitc.state.StateManager;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -52,11 +53,13 @@ public class GamePlayerConnectionListener extends OITCListener {
     public void handlePlayerQuit(PlayerQuitEvent event) {
         if (!isState(StateManager.GAME_STATE)) return;
         User user = NocAPI.getUser(event.getPlayer());
+        GameState state = (GameState) stateManager.getCurrentState();
 
         if (game.getPlayerSet().contains(user.getUUID())) {
             event.setQuitMessage(String.format("%sDer Spieler §c%s §7hat das Spiel verlassen.", OITC.PREFIX, user.getName()));
             game.getPlayerSet().remove(user.getUUID());
             game.removePlayerData(user.getUUID());
+            state.checkEnding();
         } else {
             game.getSpectatorSet().remove(user.getUUID());
             user.removePotionEffects();
