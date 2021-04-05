@@ -6,11 +6,16 @@ import me.noci.noclib.api.user.User;
 import me.noci.noclib.packtes.utils.WrappedEnumScoreboardTeamAction;
 import me.noci.noclib.packtes.utils.WrappedScoreboardTeam;
 import me.noci.noclib.packtes.wrapper.server.WrappedServerScoreboardTeam;
+import me.noci.oitc.OITC;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Sound;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class EndingState extends State {
+
+    private static final int TIME = 15;
+    private int remainingTime;
 
     @Override
     protected void start() {
@@ -29,16 +34,31 @@ public class EndingState extends State {
                 }
             }.runTask(plugin);
         });
+
+        this.remainingTime = TIME;
     }
 
     @Override
     protected void stop() {
-
+        Bukkit.getServer().shutdown();
     }
 
     @Override
     protected void update() {
+        NocAPI.getOnlineUsers().forEach(user -> {
+            if (remainingTime == 15 || remainingTime == 10 || remainingTime <= 5) {
+                user.setLevelValue(remainingTime, TIME, Sound.NOTE_BASS, 1, 1);
+                sendRemainingTime(user, remainingTime);
+            } else {
+                user.setLevelValue(remainingTime, TIME);
+            }
+        });
 
+        if (remainingTime <= 0) {
+            stop();
+            return;
+        }
+        remainingTime--;
     }
 
     @Override
@@ -62,6 +82,14 @@ public class EndingState extends State {
         scoreboard.updateLine(1, " §7Gewinner");
         scoreboard.updateLine(2, String.format("  §8» §c%s", game.getWinner()));
         scoreboard.updateLine(3, "");
+    }
+
+    private void sendRemainingTime(User user, int time) {
+        if (time != 1) {
+            user.sendMessage("%sDer Server stoppt in §c%s §7Sekunden.", OITC.PREFIX, time);
+        } else {
+            user.sendMessage("%sDer Server stoppt in §c%s §7Sekunde.", OITC.PREFIX, time);
+        }
     }
 
 }
