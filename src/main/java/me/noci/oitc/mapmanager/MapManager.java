@@ -32,13 +32,13 @@ public class MapManager {
         String name = mapFileLoader.getString(MapFilePath.MAP_NAME);
         String builder = mapFileLoader.getString(MapFilePath.MAP_BUILDER, "Unknown");
         Location spectatorSpawn = mapFileLoader.getLocation(MapFilePath.SPECTATOR_SPAWN);
-        List<Location> playerSpawns = mapFileLoader.getLocationList(MapFilePath.PLAYER_SPAWNS);
+        List<String> rawPlayerSpawns = mapFileLoader.getStringList(MapFilePath.PLAYER_SPAWNS);
 
         Map map = new Map(name);
         map.setWorldName(worldName);
         map.setBuilderName(builder);
         map.setSpectatorSpawn(spectatorSpawn);
-        map.getPlayerSpawns().addAll(playerSpawns);
+        map.setRawPlayerSpawns(rawPlayerSpawns);
         return map;
     }
 
@@ -89,7 +89,7 @@ public class MapManager {
                     mapFileLoader.set(MapFilePath.MAP_NAME, map.getMapName());
                     mapFileLoader.set(MapFilePath.MAP_BUILDER, map.getBuilderName());
                     mapFileLoader.setLocation(MapFilePath.SPECTATOR_SPAWN, map.getSpectatorSpawn());
-                    mapFileLoader.setLocationList(MapFilePath.PLAYER_SPAWNS, map.getPlayerSpawns());
+                    mapFileLoader.set(MapFilePath.PLAYER_SPAWNS, map.getRawPlayerSpawns());
 
                     loadedMaps.add(map);
 

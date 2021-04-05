@@ -7,9 +7,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class MapFileLoader {
 
@@ -47,15 +46,12 @@ public class MapFileLoader {
         return location == null ? def : location;
     }
 
-    public List<Location> getLocationList(MapFilePath path) {
-        return getLocationList(path, Lists.newArrayList());
+    public List<String> getStringList(MapFilePath path) {
+        return getStringList(path, Lists.newArrayList());
     }
 
-    public List<Location> getLocationList(MapFilePath path, List<Location> def) {
-        List<String> rawList = getList(String.class, path, null);
-        if (rawList == null) return def;
-        return rawList.stream().map(LocationUtils::locationFromStringSilently)
-                .filter(Objects::nonNull).collect(Collectors.toList());
+    public List<String> getStringList(MapFilePath path, List<String> def) {
+        return getList(String.class, path, def);
     }
 
     public void set(MapFilePath path, Object object) {
@@ -65,12 +61,6 @@ public class MapFileLoader {
     public void setLocation(MapFilePath path, Location location) {
         String value = LocationUtils.locationToString(location);
         set(path, value);
-    }
-
-    public void setLocationList(MapFilePath path, List<Location> locations) {
-        List<String> locationStrings = Lists.newArrayList();
-        locations.stream().map(LocationUtils::locationToStringSilently).filter(Objects::nonNull).forEach(locationStrings::add);
-        setValue(path, locationStrings);
     }
 
     private <T> List<T> getList(Class<T> clazz, MapFilePath path, List<T> def) {
