@@ -26,7 +26,7 @@ public class GameState extends State {
     protected void start() {
         timeRemaining = game.getGameDuration();
 
-        Iterator<Location> mapSpawns = game.getCurrentMap().getPlayerSpawns().iterator();
+        Iterator<Location> mapSpawns = game.getCurrentMap().playerSpawnIterator();
         Location fallbackSpawn = game.getCurrentMap().getPlayerSpawns().get(0).clone();
 
         for (UUID uuid : game.getPlayerSet()) {

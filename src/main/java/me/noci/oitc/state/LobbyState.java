@@ -48,7 +48,7 @@ public class LobbyState extends State {
             });
 
             if(remainingTime == 10) {
-                game.getCurrentMap().createWorld(plugin);
+                game.setupWorld();
             }
 
             remainingTime--;
