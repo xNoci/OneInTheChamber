@@ -25,6 +25,7 @@ public class MapPlayerConnectionListener extends OITCListener {
         User user = NocAPI.getUser(event.getPlayer());
 
         user.clearInventoryAndArmor();
+        user.removePotionEffects();
         user.getBase().setFoodLevel(20);
         user.getBase().setHealth(user.getBase().getMaxHealth());
         user.getBase().setGameMode(GameMode.ADVENTURE);

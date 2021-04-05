@@ -29,6 +29,7 @@ public class GamePlayerConnectionListener extends OITCListener {
         game.getSpectatorSet().add(user.getUUID());
 
         user.clearInventoryAndArmor();
+        user.removePotionEffects();
         user.getBase().spigot().setCollidesWithEntities(false);
         user.getBase().setHealth(user.getBase().getMaxHealth());
         user.getBase().setFoodLevel(20);

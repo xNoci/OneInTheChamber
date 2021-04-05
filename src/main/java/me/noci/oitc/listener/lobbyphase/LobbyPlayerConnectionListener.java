@@ -26,6 +26,7 @@ public class LobbyPlayerConnectionListener extends OITCListener {
         LobbyState lobbyState = (LobbyState) stateManager.getCurrentState();
 
         user.clearInventoryAndArmor();
+        user.removePotionEffects();
         user.getBase().setFoodLevel(20);
         user.getBase().setHealth(user.getBase().getMaxHealth());
         user.getBase().setGameMode(GameMode.SURVIVAL);
