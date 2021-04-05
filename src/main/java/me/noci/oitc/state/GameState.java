@@ -82,20 +82,20 @@ public class GameState extends State {
             switch (remainingProtectionTime) {
                 case 3:
                     NocAPI.getOnlineUsers().forEach(user -> {
-                        user.sendTitle("§8| §cStartet §8|", String.format("§7... in §4%s", remainingProtectionTime), 0, 1, 0);
+                        user.sendTitle("§8| §cStartet §8|", String.format("§7... in §4%s", remainingProtectionTime), 0, 20, 0);
                         user.playSound(Sound.CLICK, 2, 2);
                     });
                     break;
                 case 2:
                     NocAPI.getOnlineUsers().forEach(user -> {
-                        user.sendTitle("§8| §cStartet §8|", String.format("§7... in §e%s", remainingProtectionTime), 0, 1, 0);
+                        user.sendTitle("§8| §cStartet §8|", String.format("§7... in §e%s", remainingProtectionTime), 0, 20, 0);
                         user.playSound(Sound.CLICK, 2, 2);
                     });
 
                     break;
                 case 1:
                     NocAPI.getOnlineUsers().forEach(user -> {
-                        user.sendTitle("§8| §cStartet §8|", String.format("§7... in §a%s", remainingProtectionTime), 0, 1, 0);
+                        user.sendTitle("§8| §cStartet §8|", String.format("§7... in §a%s", remainingProtectionTime), 0, 20, 0);
                         user.playSound(Sound.CLICK, 2, 2);
                     });
                     break;
@@ -104,7 +104,7 @@ public class GameState extends State {
             if (remainingProtectionTime <= 0) {
                 protectionTime = false;
                 NocAPI.getOnlineUsers().forEach(user -> {
-                    user.sendTitle("§8| §cGO §8|", "", 0, 1, 0);
+                    user.sendTitle("§8| §cGO §8|", "", 0, 20, 0);
                     user.playSound(Sound.CLICK, 2, 2);
                 });
                 return;
