@@ -73,6 +73,7 @@ public class OITC extends JavaPlugin {
         registerListener(new GamePlayerConnectionListener(this, stateManager, game));
         registerListener(new GamePlayerMoveListener(this, stateManager, game));
         registerListener(new GameEntityShootBowListener(this, stateManager, game));
+        registerListener(new GameEntityDamageListener(this, stateManager, game));
         registerListener(new GameSpectatorDamagedPlayerListener(this, stateManager, game));
         registerListener(new GameSpectatorDamageListener(this, stateManager, game));
         registerListener(new GameSpectatorInteractListener(this, stateManager, game));
