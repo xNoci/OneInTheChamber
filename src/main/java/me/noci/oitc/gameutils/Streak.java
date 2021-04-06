@@ -11,10 +11,10 @@ public enum Streak {
         public void announce(Player player) {
         }
     },
-    STREAK_5(5) {
+    STREAK_5(5, false) {
         @Override
         public void announce(Player player) {
-            Bukkit.broadcastMessage(String.format("%sDer Spieler §c%s §7hat eine §c5. Streak §7erreicht.", OITC.PREFIX, player.getName()));
+            player.sendMessage(String.format("%sDu hast eine §c5. Streak §7erreicht.", OITC.PREFIX));
         }
     },
     STREAK_10(10) {
@@ -26,7 +26,7 @@ public enum Streak {
     STREAK_15(15) {
         @Override
         public void announce(Player player) {
-            Bukkit.broadcastMessage(String.format("%sDer Spieler §c§l%s §r§7hat eine §c§l15. Streak §r§7erreicht.", OITC.PREFIX, player.getName()));
+            player.sendMessage(String.format("%sDu hast eine §c§l15. Streak §r§7erreicht.", OITC.PREFIX));
         }
     },
     STREAK_20(20) {
