@@ -42,6 +42,8 @@ public class GamePlayerDeathListener extends OITCListener {
 
         if (killer != null) {
             killer.getInventory().addItem(new AdvancedItemStack(Material.ARROW).addItemFlags());
+            killer.setHealth(killer.getMaxHealth());
+
             killer.sendMessage(String.format("%sDu hast §c%s §7getötet.", OITC.PREFIX, player.getName()));
             player.sendMessage(String.format("%sDu wurdest von §c%s §7getötet.", OITC.PREFIX, killer.getName()));
 
