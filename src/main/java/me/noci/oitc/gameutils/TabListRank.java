@@ -1,21 +1,24 @@
 package me.noci.oitc.gameutils;
 
 import lombok.Getter;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public enum TabListRank {
 
-    ADMIN('a', "§4Admin §8| §7"),
-    USER('b', "§9User §8| §7"),
-    SPECTATOR('c', "§7");
+    ADMIN('a', "§4Admin §8| §7", ChatColor.DARK_RED),
+    USER('b', "§9User §8| §7", ChatColor.GRAY),
+    SPECTATOR('c', "§7", ChatColor.GRAY);
 
 
     private final char priority;
     @Getter private final String prefix;
+    @Getter private final ChatColor rankColor;
 
-    TabListRank(char priority, String prefix) {
+    TabListRank(char priority, String prefix, ChatColor rankColor) {
         this.priority = priority;
         this.prefix = prefix;
+        this.rankColor = rankColor;
     }
 
     public String getTeamName(Player player) {
