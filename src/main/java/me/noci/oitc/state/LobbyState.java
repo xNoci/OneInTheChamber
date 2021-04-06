@@ -1,5 +1,6 @@
 package me.noci.oitc.state;
 
+import lombok.Getter;
 import me.noci.noclib.api.NocAPI;
 import me.noci.noclib.api.scoreboard.Scoreboard;
 import me.noci.noclib.api.user.User;
@@ -12,7 +13,7 @@ import org.bukkit.Sound;
 
 public class LobbyState extends State {
 
-    private int remainingTime;
+    @Getter private int remainingTime;
     private boolean starting;
     private boolean forceStarted;
 
