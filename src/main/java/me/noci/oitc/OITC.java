@@ -60,6 +60,7 @@ public class OITC extends JavaPlugin {
         NocAPI.registerCommand(new MapSetupEndCommand(this, stateManager, mapManager));
         NocAPI.registerCommand(new WorldCommand(this, stateManager));
         NocAPI.registerCommand(new SetLobbySpawnCommand(this, stateManager, game));
+        NocAPI.registerCommand(new ForceMapCommand(this, stateManager, game, mapManager));
     }
 
     private void registerListeners() {
