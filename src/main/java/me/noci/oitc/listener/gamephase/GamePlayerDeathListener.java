@@ -3,6 +3,7 @@ package me.noci.oitc.listener.gamephase;
 import me.noci.noclib.utils.items.AdvancedItemStack;
 import me.noci.oitc.OITC;
 import me.noci.oitc.gameutils.Game;
+import me.noci.oitc.gameutils.PlayerData;
 import me.noci.oitc.listener.OITCListener;
 import me.noci.oitc.mapmanager.Map;
 import me.noci.oitc.state.StateManager;
@@ -36,11 +37,18 @@ public class GamePlayerDeathListener extends OITCListener {
         Player player = event.getEntity();
         Player killer = getKiller(player);
 
+        PlayerData playerData = game.getPlayerData(player);
+        playerData.resetStreak(killer);
+
         if (killer != null) {
-            game.getPlayerData(killer).changeScore(1);
             killer.getInventory().addItem(new AdvancedItemStack(Material.ARROW).addItemFlags());
             killer.sendMessage(String.format("%sDu hast §c%s §7getötet.", OITC.PREFIX, player.getName()));
             player.sendMessage(String.format("%sDu wurdest von §c%s §7getötet.", OITC.PREFIX, killer.getName()));
+
+
+            PlayerData killerData = game.getPlayerData(killer);
+            killerData.changeScore(1);
+            killerData.changeStreak(1, null);
         } else {
             player.sendMessage(String.format("%sDu bist gestorben.", OITC.PREFIX));
         }
