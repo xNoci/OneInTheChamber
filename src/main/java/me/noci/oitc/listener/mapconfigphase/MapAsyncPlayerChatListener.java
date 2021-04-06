@@ -35,7 +35,7 @@ public class MapAsyncPlayerChatListener extends OITCListener {
             }
 
             if (args[0].length() > 16) {
-                player.sendMessage(String.format("%s§cDie Map darf nur 16 Zeichen lang sein.", OITC.PREFIX));
+                player.sendMessage(String.format("%s§cDer Map-Name darf nur 16 Zeichen lang sein.", OITC.PREFIX));
                 return;
             }
             state.getMap().setMapName(args[0]);
