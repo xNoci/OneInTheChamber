@@ -149,7 +149,9 @@ public class GameState extends State {
         List<PlayerData> sortedPlayerData = game.getPlayerDataSorted();
 
         for (PlayerData playerData : sortedPlayerData) {
-            String content = String.format(" §c%s §7(%s) ", playerData.getUser().getName(), playerData.getScore());
+            User other = playerData.getUser();
+            TabListRank rank = TabListRank.getData(other.getBase(), game, false);
+            String content = String.format("%s%s §7(%s)", rank.getRankColor(), other.getName(), playerData.getScore());
             if (content.length() > 30) content = content.substring(0, 30);
 
             scoreboard.updateLine(line, content);
