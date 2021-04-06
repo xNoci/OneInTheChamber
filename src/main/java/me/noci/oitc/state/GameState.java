@@ -9,6 +9,7 @@ import me.noci.noclib.packtes.utils.WrappedScoreboardTeam;
 import me.noci.noclib.packtes.wrapper.server.WrappedServerScoreboardTeam;
 import me.noci.noclib.utils.items.AdvancedItemStack;
 import me.noci.oitc.gameutils.PlayerData;
+import me.noci.oitc.gameutils.TabListRank;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -122,14 +123,12 @@ public class GameState extends State {
     @Override
     protected void updateTabList(User user) {
         for (User player : NocAPI.getOnlineUsers()) {
-            String teamName = (game.getPlayerSet().contains(player.getUUID()) ? "001" : "002") + player.getUUID().toString().replaceAll("-", "");
-            if (teamName.length() > 16) teamName = teamName.substring(0, 16);
-            WrappedScoreboardTeam team = new WrappedScoreboardTeam(teamName);
+            TabListRank data = TabListRank.getData(player.getBase(), game, true);
+            WrappedScoreboardTeam team = new WrappedScoreboardTeam(data.getTeamName(player.getBase()));
             team.getEntries().add(player.getName());
-            team.setPrefix("§9User §8| §7");
+            team.setPrefix(data.getPrefix());
 
             if (game.getSpectatorSet().contains(player.getUUID())) {
-                team.setPrefix("§7");
                 team.setCanSeeFriendlyInvisibles(true);
             }
 

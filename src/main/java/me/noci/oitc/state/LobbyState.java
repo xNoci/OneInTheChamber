@@ -7,6 +7,7 @@ import me.noci.noclib.packtes.utils.WrappedEnumScoreboardTeamAction;
 import me.noci.noclib.packtes.utils.WrappedScoreboardTeam;
 import me.noci.noclib.packtes.wrapper.server.WrappedServerScoreboardTeam;
 import me.noci.oitc.OITC;
+import me.noci.oitc.gameutils.TabListRank;
 import org.bukkit.Sound;
 
 public class LobbyState extends State {
@@ -47,7 +48,7 @@ public class LobbyState extends State {
                 }
             });
 
-            if(remainingTime == 10) {
+            if (remainingTime == 10) {
                 game.setupWorld();
             }
 
@@ -60,12 +61,11 @@ public class LobbyState extends State {
     @Override
     protected void updateTabList(User user) {
         for (User player : NocAPI.getOnlineUsers()) {
-            String teamName = player.getUUID().toString().replaceAll("-", "");
-            if(teamName.length() > 16) teamName = teamName.substring(0, 16);
-
-            WrappedScoreboardTeam team = new WrappedScoreboardTeam(teamName);
-            team.setPrefix("§9User §8| §7");
+            TabListRank data = TabListRank.getData(player.getBase(), game, false);
+            WrappedScoreboardTeam team = new WrappedScoreboardTeam(data.getTeamName(player.getBase()));
             team.getEntries().add(player.getName());
+            team.setPrefix(data.getPrefix());
+
             user.sendPacket(new WrappedServerScoreboardTeam(team, WrappedEnumScoreboardTeamAction.REMOVE_TEAM));
             user.sendPacket(new WrappedServerScoreboardTeam(team, WrappedEnumScoreboardTeamAction.CREATE_TEAM));
         }

@@ -9,6 +9,7 @@ import me.noci.noclib.packtes.utils.WrappedEnumScoreboardTeamAction;
 import me.noci.noclib.packtes.utils.WrappedScoreboardTeam;
 import me.noci.noclib.packtes.wrapper.server.WrappedServerScoreboardTeam;
 import me.noci.oitc.OITC;
+import me.noci.oitc.gameutils.TabListRank;
 import me.noci.oitc.mapmanager.Map;
 import me.noci.oitc.mapmanager.MapConfigPhase;
 import me.noci.oitc.mapmanager.MapManager;
@@ -52,16 +53,15 @@ public class MapConfigState extends State {
     @Override
     protected void updateTabList(User user) {
         for (User player : NocAPI.getOnlineUsers()) {
-            boolean configurator = isConfigurator(player.getBase());
-            String teamName = (configurator ? "001" : "002") + player.getUUID().toString().replaceAll("-", "");
-            if(teamName.length() > 16) teamName = teamName.substring(0, 16);
-
-            WrappedScoreboardTeam team = new WrappedScoreboardTeam(teamName);
-            team.setPrefix("§9Map §8| §7");
-            if (isConfigurator(player.getBase())) {
-                team.setSuffix("§8[§cSETUP§8]");
-            }
+            TabListRank data = TabListRank.getData(player.getBase(), game, false);
+            WrappedScoreboardTeam team = new WrappedScoreboardTeam(data.getTeamName(player.getBase()));
             team.getEntries().add(player.getName());
+            team.setPrefix(data.getPrefix());
+
+            if (isConfigurator(player.getBase())) {
+                team.setSuffix(" §8| §9Setup");
+            }
+
             user.sendPacket(new WrappedServerScoreboardTeam(team, WrappedEnumScoreboardTeamAction.REMOVE_TEAM));
             user.sendPacket(new WrappedServerScoreboardTeam(team, WrappedEnumScoreboardTeamAction.CREATE_TEAM));
         }
