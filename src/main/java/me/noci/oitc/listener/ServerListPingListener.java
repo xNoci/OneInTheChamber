@@ -18,7 +18,7 @@ public class ServerListPingListener extends OITCListener {
         event.setMaxPlayers(game.getMaxPlayers());
         if(isState(StateManager.MAP_CONFIG_STATE)) {
             event.setMaxPlayers(-1);
-            motd = "Configure Map";
+            motd = "Map Einrichtung";
         }
         event.setMotd(motd);
     }
