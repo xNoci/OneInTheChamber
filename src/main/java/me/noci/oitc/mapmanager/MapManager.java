@@ -9,9 +9,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.function.BiConsumer;
 
 public class MapManager {
@@ -110,4 +108,9 @@ public class MapManager {
         Collections.shuffle(maps);
         return maps.get(0);
     }
+
+    public Iterator<String> getLoadedMapNames() {
+        return loadedMaps.stream().map(Map::getMapName).iterator();
+    }
+
 }
