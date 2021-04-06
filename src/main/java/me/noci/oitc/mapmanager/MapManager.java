@@ -113,4 +113,7 @@ public class MapManager {
         return loadedMaps.stream().map(Map::getMapName).iterator();
     }
 
+    public Optional<Map> getMap(String mapName) {
+        return loadedMaps.stream().filter(map -> map.getMapName().equalsIgnoreCase(mapName)).findFirst();
+    }
 }
