@@ -4,7 +4,7 @@ import lombok.Getter;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-public enum TabListRank {
+public enum OITCRank {
 
     ADMIN('a', "§4Admin §8| §7", ChatColor.DARK_RED),
     USER('b', "§9User §8| §7", ChatColor.GRAY),
@@ -15,7 +15,7 @@ public enum TabListRank {
     @Getter private final String prefix;
     @Getter private final ChatColor rankColor;
 
-    TabListRank(char priority, String prefix, ChatColor rankColor) {
+    OITCRank(char priority, String prefix, ChatColor rankColor) {
         this.priority = priority;
         this.prefix = prefix;
         this.rankColor = rankColor;
@@ -27,7 +27,7 @@ public enum TabListRank {
         return name;
     }
 
-    public static TabListRank getData(Player player, Game game, boolean allowSpectator) {
+    public static OITCRank getData(Player player, Game game, boolean allowSpectator) {
         boolean shouldSpectator = !game.getPlayerSet().contains(player.getUniqueId()) || game.getSpectatorSet().contains(player.getUniqueId());
         if (shouldSpectator && allowSpectator) return SPECTATOR;
         return player.isOp() ? ADMIN : USER;
