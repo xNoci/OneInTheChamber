@@ -38,6 +38,7 @@ public class Game {
     @Setter private Location lobbySpawn;
 
     @Getter @Setter private String winner = "Kein Gewinner";
+    @Getter private boolean mapLoaded = false;
 
     public static Game setupGame(JavaPlugin plugin) {
         FileConfiguration config = plugin.getConfig();
@@ -101,5 +102,6 @@ public class Game {
 
     public void setupWorld() {
         currentMap.setupWorld(plugin);
+        this.mapLoaded = true;
     }
 }
