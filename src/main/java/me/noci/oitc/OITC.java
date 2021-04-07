@@ -27,17 +27,17 @@ public class OITC extends JavaPlugin {
     public static final String PREFIX_ACTIONBAR = "§9OITC §8| §7";
     public static final String NO_PERMISSION = "§cI'm sorry, but you do not have permission to perform this command. Please contact the server administrators if you believe that this is in error.";
 
-    private StateManager stateManager;
     private MapManager mapManager;
     private Game game;
+    private StateManager stateManager;
 
     @Override
     public void onEnable() {
         loadDefaultConfig();
 
-        game = Game.setupGame(this);
-        stateManager = new StateManager(this, game);
         mapManager = new MapManager(this);
+        game = Game.setupGame(this, mapManager);
+        stateManager = new StateManager(this, game);
 
         game.setCurrentMap(mapManager.getRandomMap());
 

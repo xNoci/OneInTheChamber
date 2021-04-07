@@ -8,6 +8,7 @@ import lombok.Setter;
 import me.noci.noclib.utils.LocationUtils;
 import me.noci.oitc.OITC;
 import me.noci.oitc.mapmanager.Map;
+import me.noci.oitc.mapmanager.MapManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -25,6 +26,7 @@ public class Game {
 
     private final HashMap<UUID, PlayerData> playerDataMap = Maps.newHashMap();
     private final JavaPlugin plugin;
+    private final MapManager mapManager;
 
     @Getter @Setter private Map currentMap;
     @Getter private final Set<UUID> playerSet = Sets.newHashSet();
@@ -40,13 +42,13 @@ public class Game {
     @Getter @Setter private String winner = "Kein Gewinner";
     @Getter private boolean mapLoaded = false;
 
-    public static Game setupGame(JavaPlugin plugin) {
+    public static Game setupGame(JavaPlugin plugin, MapManager mapManager) {
         FileConfiguration config = plugin.getConfig();
-        Game game = new Game(plugin, config.getInt("maxPlayers", 12));
+        Game game = new Game(plugin, mapManager, config.getInt("maxPlayers", 12));
         game.setTimeToStart(config.getInt("timeToStart", 60));
         game.setGameDuration(TimeUnit.MINUTES.toSeconds(config.getInt("gameDuration", 5)));
         game.setForceTime(config.getInt("forceTime", 10));
-        game.setProtectionTime(config.getInt("protectionTime",3));
+        game.setProtectionTime(config.getInt("protectionTime", 3));
 
         Location lobbySpawn = LocationUtils.locationFromStringSilently(config.getString("lobbySpawn", ""));
         if (lobbySpawn != null) {
@@ -57,8 +59,9 @@ public class Game {
         return game;
     }
 
-    private Game(JavaPlugin plugin, int maxPlayers) {
+    private Game(JavaPlugin plugin, MapManager mapManager, int maxPlayers) {
         this.plugin = plugin;
+        this.mapManager = mapManager;
         this.maxPlayers = maxPlayers;
         this.playersNeeded = Math.max((int) (maxPlayers * 0.3), 3);
     }
@@ -101,6 +104,7 @@ public class Game {
     }
 
     public void setupWorld() {
+        mapManager.copyWorld(currentMap.getWorldName());
         currentMap.setupWorld(plugin);
         this.mapLoaded = true;
     }
