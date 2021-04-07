@@ -76,12 +76,11 @@ public class MapManager {
             @Override
             public void run() {
                 File file = new File(rootFolder, map.getMapName().toLowerCase() + "." + MAP_FILE_TYPE);
-                if (file.exists()) {
-                    savedSuccessful.accept(false, String.format("Eine Map mit dem Namen %s existiert bereits.", map.getMapName()));
-                    return;
-                }
                 try {
-                    file.createNewFile();
+                    if(file.exists() || !file.createNewFile()) {
+                        savedSuccessful.accept(false, String.format("Eine Map mit dem Namen %s existiert bereits.", map.getMapName()));
+                        return;
+                    }
                     MapFileLoader mapFileLoader = new MapFileLoader(file);
                     mapFileLoader.set(MapFilePath.WORLD_NAME, map.getWorldName());
                     mapFileLoader.set(MapFilePath.MAP_NAME, map.getMapName());
@@ -95,7 +94,7 @@ public class MapManager {
                     savedSuccessful.accept(true, "");
 
                 } catch (IOException e) {
-                    savedSuccessful.accept(false, "Ein fehler beim erstellen der Datei für die Map '%s' ist aufgetreten.");
+                    savedSuccessful.accept(false, String.format("Ein fehler beim erstellen der Datei für die Map '%s' ist aufgetreten.", map.getMapName()));
                     e.printStackTrace();
                 }
             }
