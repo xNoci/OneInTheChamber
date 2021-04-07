@@ -3,12 +3,15 @@ package me.noci.oitc.mapmanager;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.common.io.Files;
+import me.noci.oitc.utils.FileUtils;
 import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.*;
 import java.util.function.BiConsumer;
 
@@ -18,6 +21,7 @@ public class MapManager {
 
     private final JavaPlugin plugin;
     private final File rootFolder;
+    private final File mapWorldLocations;
     private final Set<Map> loadedMaps = Sets.newHashSet();
 
     public static Map createNewMap() {
@@ -55,8 +59,12 @@ public class MapManager {
     public MapManager(JavaPlugin plugin) {
         this.plugin = plugin;
         this.rootFolder = new File(plugin.getDataFolder(), "/maps");
-        if (!rootFolder.exists()) {
-            rootFolder.mkdirs();
+        if (!this.rootFolder.exists()) {
+            this.rootFolder.mkdirs();
+        }
+        this.mapWorldLocations = new File(plugin.getConfig().getString("worldFolderPath", plugin.getServer().getWorldContainer().getPath()));
+        if (!this.mapWorldLocations.exists()) {
+            this.mapWorldLocations.mkdirs();
         }
         loadMaps();
     }
@@ -77,7 +85,7 @@ public class MapManager {
             public void run() {
                 File file = new File(rootFolder, map.getMapName().toLowerCase() + "." + MAP_FILE_TYPE);
                 try {
-                    if(file.exists() || !file.createNewFile()) {
+                    if (file.exists() || !file.createNewFile()) {
                         savedSuccessful.accept(false, String.format("Eine Map mit dem Namen %s existiert bereits.", map.getMapName()));
                         return;
                     }
@@ -114,5 +122,12 @@ public class MapManager {
 
     public Optional<Map> getMap(String mapName) {
         return loadedMaps.stream().filter(map -> map.getMapName().equalsIgnoreCase(mapName)).findFirst();
+    }
+
+    public void copyWorld(String worldName) {
+        Path src = new File(mapWorldLocations, worldName).toPath();
+        Path dest = new File(plugin.getServer().getWorldContainer(), worldName).toPath();
+
+        FileUtils.copyDir(src, dest);
     }
 }
