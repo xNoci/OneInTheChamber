@@ -65,13 +65,9 @@ public class GameState extends State {
 
     @Override
     protected void stop() {
-        PlayerData playerData = null;
         List<PlayerData> playerDataList = game.getPlayerDataSorted();
         if (playerDataList.size() > 0) {
-            playerData = playerDataList.get(0);
-        }
-
-        if (playerData != null) {
+            PlayerData playerData = playerDataList.get(0);
             game.setWinner(playerData.getName());
         }
     }
