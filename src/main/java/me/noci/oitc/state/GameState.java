@@ -1,5 +1,6 @@
 package me.noci.oitc.state;
 
+import de.dytanic.cloudnet.bridge.CloudServer;
 import lombok.Getter;
 import me.noci.noclib.api.NocAPI;
 import me.noci.noclib.api.scoreboard.Scoreboard;
@@ -8,8 +9,8 @@ import me.noci.noclib.packtes.utils.WrappedEnumScoreboardTeamAction;
 import me.noci.noclib.packtes.utils.WrappedScoreboardTeam;
 import me.noci.noclib.packtes.wrapper.server.WrappedServerScoreboardTeam;
 import me.noci.noclib.utils.items.AdvancedItemStack;
-import me.noci.oitc.gameutils.PlayerData;
 import me.noci.oitc.gameutils.OITCRank;
+import me.noci.oitc.gameutils.PlayerData;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -28,6 +29,11 @@ public class GameState extends State {
 
     @Override
     protected void start() {
+        try {
+            CloudServer.getInstance().changeToIngame();
+        } catch (NoClassDefFoundError | Exception e) {
+        }
+
         protectionTime = true;
         timeRemaining = game.getGameDuration();
         remainingProtectionTime = game.getProtectionTime();

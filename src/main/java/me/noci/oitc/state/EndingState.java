@@ -1,5 +1,7 @@
 package me.noci.oitc.state;
 
+import de.dytanic.cloudnet.bridge.CloudServer;
+import de.dytanic.cloudnet.lib.server.ServerState;
 import me.noci.noclib.api.NocAPI;
 import me.noci.noclib.api.scoreboard.Scoreboard;
 import me.noci.noclib.api.user.User;
@@ -20,6 +22,11 @@ public class EndingState extends State {
 
     @Override
     protected void start() {
+        try {
+            CloudServer.getInstance().setServerStateAndUpdate(ServerState.OFFLINE);
+        } catch (NoClassDefFoundError | Exception e) {
+        }
+        
         NocAPI.getOnlineUsers().forEach(user -> {
             new BukkitRunnable() {
                 @Override
