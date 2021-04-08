@@ -8,18 +8,21 @@ version '1.0-SNAPSHOT'
 repositories {
     mavenCentral()
     mavenLocal()
+    maven {
+        url "https://cloudnetservice.eu/repositories/"
+    }
 }
 
 compileJava.options.encoding = 'UTF-8'
 
 dependencies {
+    compileOnly "de.dytanic.cloudnet:cloudnet-api-bridge:2.1.17"
+    compileOnly "de.dytanic.cloudnet:cloudnet-core:2.1.17"
     compileOnly "me.noci.api:NocLib:1.0-SNAPSHOT"
     compileOnly "org.spigotmc:spigot:1.8.8-R0.1-SNAPSHOT"
     compileOnly "org.projectlombok:lombok:1.18.18"
     annotationProcessor "org.projectlombok:lombok:1.18.18"
 }
-
-
 
 test {
     useJUnitPlatform()
