@@ -1,5 +1,6 @@
 maxPlayers: 12
-worldFolderPath: "/home/tokyo/Tokyo-Build/BauserverMaptests/Wrapper/local/templates/OITC/Maps"
+mapWorldFolder: "/home/tokyo/Tokyo-Build/BauserverMaptests/Wrapper/local/templates/OITC/Maps"
+mapConfigFolder: "/home/tokyo/Tokyo-Build/BauserverMaptests/Wrapper/local/templates/OITC/default/plugins/OneInTheChamber/maps"
 #In seconds
 timeToStart: 60
 forceTime: 10
