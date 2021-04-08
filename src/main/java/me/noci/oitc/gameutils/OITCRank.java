@@ -27,7 +27,7 @@ public enum OITCRank {
         return name;
     }
 
-    public static OITCRank getData(Player player, Game game, boolean allowSpectator) {
+    public static OITCRank getRank(Player player, Game game, boolean allowSpectator) {
         boolean shouldSpectator = !game.getPlayerSet().contains(player.getUniqueId()) || game.getSpectatorSet().contains(player.getUniqueId());
         if (shouldSpectator && allowSpectator) return SPECTATOR;
         return player.isOp() ? ADMIN : USER;

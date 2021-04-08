@@ -62,7 +62,7 @@ public class LobbyState extends State {
     @Override
     protected void updateTabList(User user) {
         for (User player : NocAPI.getOnlineUsers()) {
-            OITCRank rank = OITCRank.getData(player.getBase(), game, false);
+            OITCRank rank = OITCRank.getRank(player.getBase(), game, false);
             WrappedScoreboardTeam team = new WrappedScoreboardTeam(rank.getTeamName(player.getBase()));
             team.getEntries().add(player.getName());
             team.setPrefix(rank.getPrefix());

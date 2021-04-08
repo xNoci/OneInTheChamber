@@ -125,7 +125,7 @@ public class GameState extends State {
     @Override
     protected void updateTabList(User user) {
         for (User player : NocAPI.getOnlineUsers()) {
-            OITCRank rank = OITCRank.getData(player.getBase(), game, true);
+            OITCRank rank = OITCRank.getRank(player.getBase(), game, true);
             WrappedScoreboardTeam team = new WrappedScoreboardTeam(rank.getTeamName(player.getBase()));
             team.getEntries().add(player.getName());
             team.setPrefix(rank.getPrefix());
@@ -152,7 +152,7 @@ public class GameState extends State {
 
         for (PlayerData playerData : sortedPlayerData) {
             User other = playerData.getUser();
-            OITCRank rank = OITCRank.getData(other.getBase(), game, false);
+            OITCRank rank = OITCRank.getRank(other.getBase(), game, false);
             String content = String.format("%s%s §7(%s)", rank.getRankColor(), other.getName(), playerData.getScore());
             if (content.length() > 30) content = content.substring(0, 30);
 

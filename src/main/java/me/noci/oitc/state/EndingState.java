@@ -26,7 +26,7 @@ public class EndingState extends State {
             CloudServer.getInstance().setServerStateAndUpdate(ServerState.OFFLINE);
         } catch (NoClassDefFoundError | Exception e) {
         }
-        
+
         NocAPI.getOnlineUsers().forEach(user -> {
             new BukkitRunnable() {
                 @Override
@@ -72,7 +72,7 @@ public class EndingState extends State {
     @Override
     protected void updateTabList(User user) {
         for (User player : NocAPI.getOnlineUsers()) {
-            OITCRank rank = OITCRank.getData(player.getBase(), game, false);
+            OITCRank rank = OITCRank.getRank(player.getBase(), game, false);
             WrappedScoreboardTeam team = new WrappedScoreboardTeam(rank.getTeamName(player.getBase()));
             team.getEntries().add(player.getName());
             team.setPrefix(rank.getPrefix());
