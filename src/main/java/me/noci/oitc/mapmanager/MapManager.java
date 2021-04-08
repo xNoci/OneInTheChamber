@@ -11,7 +11,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.util.*;
 import java.util.function.BiConsumer;
 
@@ -21,7 +20,8 @@ public class MapManager {
 
     private final JavaPlugin plugin;
     private final File rootFolder;
-    private final File mapWorldLocations;
+    private final File mapWorldFolder;
+    private final File mapConfigFolder;
     private final Set<Map> loadedMaps = Sets.newHashSet();
 
     public static Map createNewMap() {
@@ -58,13 +58,17 @@ public class MapManager {
 
     public MapManager(JavaPlugin plugin) {
         this.plugin = plugin;
-        this.rootFolder = new File(plugin.getDataFolder(), "/maps");
+        this.rootFolder = new File(plugin.getDataFolder().getAbsolutePath(), "/maps");
         if (!this.rootFolder.exists()) {
             this.rootFolder.mkdirs();
         }
-        this.mapWorldLocations = new File(plugin.getConfig().getString("worldFolderPath", plugin.getServer().getWorldContainer().getPath()));
-        if (!this.mapWorldLocations.exists()) {
-            this.mapWorldLocations.mkdirs();
+        this.mapWorldFolder = new File(plugin.getConfig().getString("mapWorldFolder", plugin.getServer().getWorldContainer().getPath()));
+        if (!this.mapWorldFolder.exists()) {
+            this.mapWorldFolder.mkdirs();
+        }
+        this.mapConfigFolder = new File(plugin.getConfig().getString("mapConfigFolder", plugin.getServer().getWorldContainer().getPath()));
+        if (!this.mapConfigFolder.exists()) {
+            this.mapConfigFolder.mkdirs();
         }
         loadMaps();
     }
@@ -83,7 +87,8 @@ public class MapManager {
         new BukkitRunnable() {
             @Override
             public void run() {
-                File file = new File(rootFolder, map.getMapName().toLowerCase() + "." + MAP_FILE_TYPE);
+                String fileName = map.getMapName().toLowerCase() + "." + MAP_FILE_TYPE;
+                File file = new File(rootFolder, fileName);
                 try {
                     if (file.exists() || !file.createNewFile()) {
                         savedSuccessful.accept(false, String.format("Eine Map mit dem Namen %s existiert bereits.", map.getMapName()));
@@ -95,12 +100,21 @@ public class MapManager {
                     mapFileLoader.set(MapFilePath.MAP_BUILDER, map.getBuilderName());
                     mapFileLoader.setLocation(MapFilePath.SPECTATOR_SPAWN, map.getSpectatorSpawn());
                     mapFileLoader.set(MapFilePath.PLAYER_SPAWNS, map.getRawPlayerSpawns());
+                    mapFileLoader.save();
+
+
+                    Path worldSrc = new File(plugin.getServer().getWorldContainer(), map.getWorldName()).toPath();
+                    Path worldDest = new File(mapWorldFolder, map.getWorldName()).toPath();
+                    Path configFileSrc = file.toPath();
+                    Path configFileDest = new File(mapConfigFolder, fileName).toPath();
+
+                    if (!FileUtils.copyDir(worldSrc, worldDest) || !FileUtils.moveFile(configFileSrc, configFileDest)) {
+                        savedSuccessful.accept(false, "Ein Fehler beim Kopieren der Welt ist aufgetreten.");
+                        return;
+                    }
 
                     loadedMaps.add(map);
-
-                    mapFileLoader.save();
                     savedSuccessful.accept(true, "");
-
                 } catch (IOException e) {
                     savedSuccessful.accept(false, String.format("Ein fehler beim erstellen der Datei für die Map '%s' ist aufgetreten.", map.getMapName()));
                     e.printStackTrace();
@@ -125,7 +139,7 @@ public class MapManager {
     }
 
     public void copyWorld(String worldName) {
-        Path src = new File(mapWorldLocations, worldName).toPath();
+        Path src = new File(mapWorldFolder, worldName).toPath();
         Path dest = new File(plugin.getServer().getWorldContainer(), worldName).toPath();
 
         FileUtils.copyDir(src, dest);
