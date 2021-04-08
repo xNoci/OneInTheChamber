@@ -63,7 +63,7 @@ public class Game {
         this.plugin = plugin;
         this.mapManager = mapManager;
         this.maxPlayers = maxPlayers;
-        this.playersNeeded = Math.max((int) (maxPlayers * 0.3), 3);
+        this.playersNeeded = Math.max((int) (maxPlayers * 0.4), 2);
     }
 
     public void removePlayerData(UUID uuid) {
