@@ -1,5 +1,7 @@
 package me.noci.oitc.listener.gamephase;
 
+import me.noci.noclib.api.NocAPI;
+import me.noci.noclib.api.user.User;
 import me.noci.noclib.utils.items.AdvancedItemStack;
 import me.noci.oitc.OITC;
 import me.noci.oitc.gameutils.Game;
@@ -9,6 +11,7 @@ import me.noci.oitc.mapmanager.Map;
 import me.noci.oitc.state.StateManager;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -38,6 +41,8 @@ public class GamePlayerDeathListener extends OITCListener {
         Player killer = getKiller(player);
 
         if (killer != null) {
+            User uKiller = NocAPI.getUser(killer);
+            uKiller.playSound(Sound.NOTE_PLING, 1, 1);
             killer.getInventory().addItem(new AdvancedItemStack(Material.ARROW).addItemFlags());
             killer.setHealth(killer.getMaxHealth());
 
