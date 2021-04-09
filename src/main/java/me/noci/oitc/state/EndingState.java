@@ -56,6 +56,10 @@ public class EndingState extends State {
 
     @Override
     protected void update() {
+        if (remainingTime <= 0) {
+            stop();
+            return;
+        }
         NocAPI.getOnlineUsers().forEach(user -> {
             if (remainingTime == 15 || remainingTime == 10 || remainingTime <= 5) {
                 user.setLevelValue(remainingTime, TIME, Sound.NOTE_BASS, 1, 1);
@@ -64,11 +68,6 @@ public class EndingState extends State {
                 user.setLevelValue(remainingTime, TIME);
             }
         });
-
-        if (remainingTime <= 0) {
-            stop();
-            return;
-        }
         remainingTime--;
     }
 
