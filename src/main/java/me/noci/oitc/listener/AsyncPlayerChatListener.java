@@ -4,6 +4,7 @@ import de.dytanic.cloudnet.api.CloudAPI;
 import de.dytanic.cloudnet.bridge.CloudServer;
 import de.dytanic.cloudnet.lib.player.permission.PermissionGroup;
 import me.noci.oitc.events.PlayerSendChatMessageEvent;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -23,6 +24,7 @@ public class AsyncPlayerChatListener implements Listener {
         }
 
         PlayerSendChatMessageEvent chatEvent = new PlayerSendChatMessageEvent(player, message, event.getFormat(), event.isCancelled());
+        Bukkit.getPluginManager().callEvent(chatEvent);
 
         String display = ChatColor.translateAlternateColorCodes('&', permissionGroup.getDisplay());
         String format = String.format("%s%s§8: §7%s", display, player.getName(), chatEvent.getMessage());
