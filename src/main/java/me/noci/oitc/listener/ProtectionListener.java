@@ -58,6 +58,10 @@ public class ProtectionListener implements Listener {
         event.setCancelled(true);
     }
 
+    @EventHandler
+    public void handleProjectileHit(ProjectileHitEvent event) {
+        event.getEntity().remove();
+    }
 
     @EventHandler
     public void handleBowSh0ot(EntityShootBowEvent event) {
