@@ -10,7 +10,7 @@ public enum OITCRank {
     CHAMP('b', "prefix.champ", "§6§lChamp §8┃ §7", ChatColor.GOLD),
     VIP('c', "prefix.vip", "§e§lVIP §8┃ §7", ChatColor.YELLOW),
     PLAYER('d', "§7Spieler §8┃ §7", ChatColor.GRAY),
-    SPECTATOR('e', "§7", ChatColor.GRAY);
+    SPECTATOR('e', "§8§l", ChatColor.DARK_GRAY);
 
     private final char priority;
     private final String permission;
