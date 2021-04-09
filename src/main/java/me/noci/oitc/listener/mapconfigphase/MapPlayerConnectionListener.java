@@ -5,7 +5,6 @@ import me.noci.noclib.api.user.User;
 import me.noci.oitc.OITC;
 import me.noci.oitc.gameutils.Game;
 import me.noci.oitc.listener.OITCListener;
-import me.noci.oitc.state.LobbyState;
 import me.noci.oitc.state.StateManager;
 import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
@@ -32,6 +31,8 @@ public class MapPlayerConnectionListener extends OITCListener {
 
         event.setJoinMessage(String.format("%sDer Spieler §c%s §7hat das Spiel betreten.", OITC.PREFIX, user.getName()));
         updateTabList();
+
+        game.teleportToLobby(user.getBase());
     }
 
     @EventHandler
