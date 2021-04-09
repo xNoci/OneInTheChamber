@@ -37,23 +37,22 @@ public class GamePlayerDeathListener extends OITCListener {
         Player player = event.getEntity();
         Player killer = getKiller(player);
 
-        PlayerData playerData = game.getPlayerData(player);
-        playerData.resetStreak(killer);
-
         if (killer != null) {
             killer.getInventory().addItem(new AdvancedItemStack(Material.ARROW).addItemFlags());
             killer.setHealth(killer.getMaxHealth());
 
-            killer.sendMessage(String.format("%sDu hast §c%s §7getötet.", OITC.PREFIX, player.getName()));
-            player.sendMessage(String.format("%sDu wurdest von §c%s §7getötet.", OITC.PREFIX, killer.getName()));
-
-
             PlayerData killerData = game.getPlayerData(killer);
             killerData.changeScore(1);
             killerData.changeStreak(1, null);
+
+            killer.sendMessage(String.format("%sDu hast §c%s §7getötet.", OITC.PREFIX, player.getName()));
+            player.sendMessage(String.format("%sDu wurdest von §c%s §7getötet.", OITC.PREFIX, killer.getName()));
         } else {
             player.sendMessage(String.format("%sDu bist gestorben.", OITC.PREFIX));
         }
+
+        PlayerData playerData = game.getPlayerData(player);
+        playerData.resetStreak(killer);
 
         updateScoreboard();
         new BukkitRunnable() {
