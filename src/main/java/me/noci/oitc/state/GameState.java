@@ -10,6 +10,7 @@ import me.noci.noclib.packtes.utils.WrappedEnumScoreboardTeamAction;
 import me.noci.noclib.packtes.utils.WrappedScoreboardTeam;
 import me.noci.noclib.packtes.wrapper.server.WrappedServerScoreboardTeam;
 import me.noci.noclib.utils.items.AdvancedItemStack;
+import me.noci.oitc.gameutils.Game;
 import me.noci.oitc.gameutils.OITCRank;
 import me.noci.oitc.gameutils.PlayerData;
 import org.bukkit.GameMode;
@@ -56,9 +57,8 @@ public class GameState extends State {
                     user.getBase().setFoodLevel(20);
                     user.getBase().setHealth(user.getBase().getMaxHealth());
                     user.getBase().setGameMode(GameMode.SURVIVAL);
-                    user.getBase().getInventory().addItem(new AdvancedItemStack(Material.WOOD_SWORD).addItemFlags().setUnbreakable(true));
-                    user.getBase().getInventory().addItem(new AdvancedItemStack(Material.BOW).addItemFlags().setUnbreakable(true));
-                    user.getBase().getInventory().addItem(new AdvancedItemStack(Material.ARROW).addItemFlags());
+
+                    Game.giveItems(user.getBase());
 
                     Location playerSpawn = fallbackSpawn;
                     if (mapSpawns.hasNext()) {

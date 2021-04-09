@@ -66,6 +66,14 @@ public class Game {
         this.playersNeeded = Math.max((int) (maxPlayers * 0.4), 2);
     }
 
+    public static void giveItems(Player player) {
+        player.getInventory().clear();
+        player.getInventory().addItem(new AdvancedItemStack(Material.WOOD_SWORD).addItemFlags().setUnbreakable(true));
+        player.getInventory().addItem(new AdvancedItemStack(Material.BOW).addItemFlags().setUnbreakable(true));
+        player.getInventory().addItem(new AdvancedItemStack(Material.ARROW).addItemFlags());
+        player.updateInventory();
+    }
+
     public void removePlayerData(UUID uuid) {
         playerDataMap.remove(uuid);
     }
