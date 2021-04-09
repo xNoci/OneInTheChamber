@@ -1,5 +1,6 @@
 package me.noci.oitc.state;
 
+import com.google.common.collect.Lists;
 import de.dytanic.cloudnet.bridge.CloudServer;
 import lombok.Getter;
 import me.noci.noclib.api.NocAPI;
@@ -141,26 +142,24 @@ public class GameState extends State {
 
     @Override
     protected void updatePlayerScoreboard(Scoreboard scoreboard, User user) {
-        scoreboard.updateTitle("     §9OITC     ");
-        scoreboard.updateLine(0, "");
-        scoreboard.updateLine(1, " §7Zeit");
-        scoreboard.updateLine(2, String.format("  §8» §c%s", formatTime()));
-        scoreboard.updateLine(3, "");
+        List<String> lines = Lists.newArrayList();
+        lines.add("");
+        lines.add(" §7Zeit");
+        lines.add(String.format("  §8» §c%s", formatTime()));
+        lines.add("");
 
-        int line = 4;
         List<PlayerData> sortedPlayerData = game.getPlayerDataSorted();
-
         for (PlayerData playerData : sortedPlayerData) {
             User other = playerData.getUser();
             OITCRank rank = OITCRank.getRank(other.getBase(), game, false);
             String content = String.format("%s%s §7(%s)", rank.getRankColor(), other.getName(), playerData.getScore());
             if (content.length() > 30) content = content.substring(0, 30);
 
-            scoreboard.updateLine(line, content);
-            line++;
+            lines.add(content);
         }
 
-        scoreboard.updateLine(line, "");
+        lines.add("");
+        scoreboard.updateLines(lines);
     }
 
     public boolean checkEnding() {

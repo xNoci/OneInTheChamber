@@ -50,7 +50,7 @@ public class StateManager {
     public void updateScoreboard() {
         NocAPI.getOnlineUsers().forEach(user -> {
             Scoreboard scoreboard = NocAPI.getScoreboard(user.getBase());
-            scoreboard.removeLines();
+            scoreboard.updateTitle("     §9OITC     ");
             currentState.updatePlayerScoreboard(scoreboard, user);
         });
     }

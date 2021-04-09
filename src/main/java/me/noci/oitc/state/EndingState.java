@@ -1,5 +1,6 @@
 package me.noci.oitc.state;
 
+import com.google.common.collect.Lists;
 import de.dytanic.cloudnet.bridge.CloudServer;
 import de.dytanic.cloudnet.lib.server.ServerState;
 import me.noci.noclib.api.NocAPI;
@@ -14,6 +15,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.List;
 
 public class EndingState extends State {
 
@@ -76,7 +79,7 @@ public class EndingState extends State {
             WrappedScoreboardTeam team = new WrappedScoreboardTeam(rank.getTeamName(player.getBase()));
             team.getEntries().add(player.getName());
             team.setPrefix(rank.getPrefix());
-            
+
             user.sendPacket(new WrappedServerScoreboardTeam(team, WrappedEnumScoreboardTeamAction.REMOVE_TEAM));
             user.sendPacket(new WrappedServerScoreboardTeam(team, WrappedEnumScoreboardTeamAction.CREATE_TEAM));
         }
@@ -84,11 +87,12 @@ public class EndingState extends State {
 
     @Override
     protected void updatePlayerScoreboard(Scoreboard scoreboard, User user) {
-        scoreboard.updateTitle("     §9OITC     ");
-        scoreboard.updateLine(0, "");
-        scoreboard.updateLine(1, " §7Gewinner");
-        scoreboard.updateLine(2, String.format("  §8» §c%s", game.getWinner()));
-        scoreboard.updateLine(3, "");
+        List<String> lines = Lists.newArrayList();
+        lines.add("");
+        lines.add(" §7Gewinner");
+        lines.add(String.format("  §8» §c%s", game.getWinner()));
+        lines.add("");
+        scoreboard.updateLines(lines);
     }
 
     private void sendRemainingTime(User user, int time) {

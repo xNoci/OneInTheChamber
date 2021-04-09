@@ -1,5 +1,6 @@
 package me.noci.oitc.state;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import lombok.Getter;
 import me.noci.noclib.api.NocAPI;
@@ -17,6 +18,7 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
+import java.util.List;
 import java.util.Set;
 
 public class MapConfigState extends State {
@@ -69,19 +71,20 @@ public class MapConfigState extends State {
 
     @Override
     protected void updatePlayerScoreboard(Scoreboard scoreboard, User user) {
-        scoreboard.updateTitle("     §9OITC     ");
-        scoreboard.updateLine(0, "");
-        scoreboard.updateLine(1, " §6Map einrichten ");
-        scoreboard.updateLine(2, "");
-        scoreboard.updateLine(3, " §7Configurator ");
-        scoreboard.updateLine(4, String.format(" §8» §c%s ", configurator == null ? "Unknown" : configurator.getName()));
-        scoreboard.updateLine(5, "");
-        scoreboard.updateLine(6, " §7Map");
-        scoreboard.updateLine(7, String.format(" §8» §c%s ", map.getMapName()));
-        scoreboard.updateLine(8, "");
-        scoreboard.updateLine(9, " §7Phase");
-        scoreboard.updateLine(10, String.format(" §8» §c%s ", phase.getPhaseName()));
-        scoreboard.updateLine(11, "");
+        List<String> lines = Lists.newArrayList();
+        lines.add("");
+        lines.add(" §6Map einrichten ");
+        lines.add("");
+        lines.add(" §7Configurator ");
+        lines.add(String.format(" §8» §c%s ", configurator == null ? "Unknown" : configurator.getName()));
+        lines.add("");
+        lines.add(" §7Map");
+        lines.add(String.format(" §8» §c%s ", map.getMapName()));
+        lines.add("");
+        lines.add(" §7Phase");
+        lines.add(String.format(" §8» §c%s ", phase.getPhaseName()));
+        lines.add("");
+        scoreboard.updateLines(lines);
     }
 
     public void setConfigurator(Player configurator) {

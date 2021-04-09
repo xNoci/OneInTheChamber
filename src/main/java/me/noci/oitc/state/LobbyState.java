@@ -1,5 +1,6 @@
 package me.noci.oitc.state;
 
+import com.google.common.collect.Lists;
 import lombok.Getter;
 import me.noci.noclib.api.NocAPI;
 import me.noci.noclib.api.scoreboard.Scoreboard;
@@ -10,6 +11,8 @@ import me.noci.noclib.packtes.wrapper.server.WrappedServerScoreboardTeam;
 import me.noci.oitc.OITC;
 import me.noci.oitc.gameutils.OITCRank;
 import org.bukkit.Sound;
+
+import java.util.List;
 
 public class LobbyState extends State {
 
@@ -74,11 +77,12 @@ public class LobbyState extends State {
 
     @Override
     protected void updatePlayerScoreboard(Scoreboard scoreboard, User user) {
-        scoreboard.updateTitle("     §9OITC     ");
-        scoreboard.updateLine(0, "");
-        scoreboard.updateLine(1, " §7Map");
-        scoreboard.updateLine(2, String.format("  §8» §c%s", game.getMapName()));
-        scoreboard.updateLine(3, "");
+        List<String> lines = Lists.newArrayList();
+        lines.add("");
+        lines.add(" §7Map");
+        lines.add(String.format("  §8» §c%s", game.getMapName()));
+        lines.add("");
+        scoreboard.updateLines(lines);
     }
 
     public void checkTimer() {
