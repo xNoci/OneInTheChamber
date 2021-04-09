@@ -60,7 +60,7 @@ public class ForceMapCommand extends Command {
 
             if (game.getCurrentMap().getMapName().equalsIgnoreCase(mapName)) {
                 user.playSound(Sound.ANVIL_BREAK, 1, 1);
-                user.sendMessage("%s§cDieser Map ist bereist ausgewählt.", OITC.PREFIX);
+                user.sendMessage("%s§cDiese Map ist bereist ausgewählt.", OITC.PREFIX);
                 return;
             }
 
