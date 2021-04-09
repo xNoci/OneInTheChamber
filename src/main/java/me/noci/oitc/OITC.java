@@ -13,8 +13,8 @@ import me.noci.oitc.listener.gamephase.*;
 import me.noci.oitc.listener.lobbyphase.LobbyEntityDamageListener;
 import me.noci.oitc.listener.lobbyphase.LobbyPlayerConnectionListener;
 import me.noci.oitc.listener.mapconfigphase.MapArmorStandDamageListener;
-import me.noci.oitc.listener.mapconfigphase.MapPlayerSendChatMessageListener;
 import me.noci.oitc.listener.mapconfigphase.MapPlayerConnectionListener;
+import me.noci.oitc.listener.mapconfigphase.MapPlayerSendChatMessageListener;
 import me.noci.oitc.listener.mapconfigphase.MapPlayerToggleSneakListener;
 import me.noci.oitc.mapmanager.MapManager;
 import me.noci.oitc.state.StateManager;
@@ -70,23 +70,28 @@ public class OITC extends JavaPlugin {
         registerListener(new ProtectionListener());
         registerListener(new AsyncPlayerChatListener());
         registerListener(new ServerListPingListener(this, stateManager, game));
+
         registerListener(new LobbyPlayerConnectionListener(this, stateManager, game));
         registerListener(new LobbyEntityDamageListener(this, stateManager, game));
+
         registerListener(new GamePlayerDamageByPlayerListener(this, stateManager, game));
         registerListener(new GamePlayerSendChatMessageListener(this, stateManager, game));
         registerListener(new GamePlayerDeathListener(this, stateManager, game));
         registerListener(new GamePlayerDamageListener(this, stateManager, game));
         registerListener(new GamePlayerConnectionListener(this, stateManager, game));
         registerListener(new GamePlayerMoveListener(this, stateManager, game));
+        registerListener(new GamePlayerRespawnListener(this, stateManager, game));
         registerListener(new GamePlayerStreakChangeListener(this, stateManager, game));
         registerListener(new GameEntityShootBowListener(this, stateManager, game));
         registerListener(new GameEntityDamageListener(this, stateManager, game));
         registerListener(new GameSpectatorDamagedPlayerListener(this, stateManager, game));
         registerListener(new GameSpectatorDamageListener(this, stateManager, game));
         registerListener(new GameSpectatorInteractListener(this, stateManager, game));
+
         registerListener(new EndPlayerSendChatMessageListener(this, stateManager, game));
         registerListener(new EndPlayerConnectionListener(this, stateManager, game));
         registerListener(new EndEntityDamageListener(this, stateManager, game));
+
         registerListener(new MapPlayerConnectionListener(this, stateManager, game));
         registerListener(new MapPlayerSendChatMessageListener(this, stateManager, game));
         registerListener(new MapPlayerToggleSneakListener(this, stateManager, game));
