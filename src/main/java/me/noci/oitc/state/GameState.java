@@ -146,8 +146,7 @@ public class GameState extends State {
         lines.add(" §7Zeit");
         lines.add(String.format("  §8» §c%s", formatTime()));
         lines.add("");
-        lines.add(" §7Streak");
-        lines.add(String.format("  §8» §c%s", playerData.getStreak()));
+        lines.add(String.format(" §7Streak§8: §c%s", playerData.getStreak()));
         lines.add("");
 
         List<PlayerData> sortedPlayerData = game.getPlayerDataSorted();
