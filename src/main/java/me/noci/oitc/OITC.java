@@ -67,7 +67,6 @@ public class OITC extends JavaPlugin {
     private void registerListeners() {
         registerListener(new ProtectionListener());
         registerListener(new AsyncPlayerChatListener());
-        registerListener(new EntityShootBowListener());
         registerListener(new ProjectileHitListener());
         registerListener(new ServerListPingListener(this, stateManager, game));
 

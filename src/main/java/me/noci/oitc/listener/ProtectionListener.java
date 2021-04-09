@@ -58,6 +58,12 @@ public class ProtectionListener implements Listener {
         event.setCancelled(true);
     }
 
+
+    @EventHandler
+    public void handleBowSh0ot(EntityShootBowEvent event) {
+        event.getProjectile().setVelocity(event.getProjectile().getVelocity()); //ARROW VISUAL FIX
+    }
+
     @EventHandler
     public void handlePlayerRightClickBlock(PlayerInteractEvent event) {
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
