@@ -9,13 +9,11 @@ import me.noci.noclib.api.user.User;
 import me.noci.noclib.packtes.utils.WrappedEnumScoreboardTeamAction;
 import me.noci.noclib.packtes.utils.WrappedScoreboardTeam;
 import me.noci.noclib.packtes.wrapper.server.WrappedServerScoreboardTeam;
-import me.noci.noclib.utils.items.AdvancedItemStack;
 import me.noci.oitc.gameutils.Game;
 import me.noci.oitc.gameutils.OITCRank;
 import me.noci.oitc.gameutils.PlayerData;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -142,17 +140,21 @@ public class GameState extends State {
 
     @Override
     protected void updatePlayerScoreboard(Scoreboard scoreboard, User user) {
+        PlayerData playerData = game.getPlayerData(user.getBase());
         List<String> lines = Lists.newArrayList();
         lines.add("");
         lines.add(" §7Zeit");
         lines.add(String.format("  §8» §c%s", formatTime()));
         lines.add("");
+        lines.add(" §7Streak");
+        lines.add(String.format("  §8» §c%s", playerData.getStreak()));
+        lines.add("");
 
         List<PlayerData> sortedPlayerData = game.getPlayerDataSorted();
-        for (PlayerData playerData : sortedPlayerData) {
-            User other = playerData.getUser();
+        for (PlayerData sortedData : sortedPlayerData) {
+            User other = sortedData.getUser();
             OITCRank rank = OITCRank.getRank(other.getBase(), game, false);
-            String content = String.format("%s%s §7(%s)", rank.getRankColor(), other.getName(), playerData.getScore());
+            String content = String.format("%s%s §7(%s)", rank.getRankColor(), other.getName(), sortedData.getScore());
             if (content.length() > 30) content = content.substring(0, 30);
 
             lines.add(content);
