@@ -11,6 +11,7 @@ import me.noci.noclib.packtes.utils.WrappedScoreboardTeam;
 import me.noci.noclib.packtes.wrapper.server.WrappedServerScoreboardTeam;
 import me.noci.oitc.OITC;
 import me.noci.oitc.gameutils.OITCRank;
+import me.noci.oitc.gameutils.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
@@ -88,8 +89,12 @@ public class EndingState extends State {
     protected void updatePlayerScoreboard(Scoreboard scoreboard, User user) {
         List<String> lines = Lists.newArrayList();
         lines.add("");
-        lines.add(" §7Gewinner");
-        lines.add(String.format("  §8» §c%s", game.getWinner()));
+        lines.add(" §7Rangliste");
+        int place = 1;
+        for (PlayerData data : game.getPlayerDataSorted()) {
+            lines.add(String.format("§c%s§8. §7%s", place, data.getName()));
+            place++;
+        }
         lines.add("");
         scoreboard.updateLines(lines);
     }
