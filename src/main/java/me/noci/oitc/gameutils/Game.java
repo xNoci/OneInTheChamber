@@ -118,4 +118,13 @@ public class Game {
         currentMap.setupWorld(plugin);
         this.mapLoaded = true;
     }
+
+    private static final SplittableRandom RANDOM = new SplittableRandom();
+
+    public void spawnPlayer(Player player) {
+        Map map = currentMap;
+        List<Location> spawns = map.getPlayerSpawns();
+        Location location = spawns.get(RANDOM.nextInt(spawns.size()));
+        player.teleport(location);
+    }
 }

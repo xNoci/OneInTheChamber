@@ -25,8 +25,6 @@ import java.util.SplittableRandom;
 
 public class GamePlayerDeathListener extends OITCListener {
 
-    private static final SplittableRandom RANDOM = new SplittableRandom();
-
     public GamePlayerDeathListener(JavaPlugin plugin, StateManager stateManager, Game game) {
         super(plugin, stateManager, game);
     }
@@ -66,10 +64,7 @@ public class GamePlayerDeathListener extends OITCListener {
             public void run() {
                 player.spigot().respawn();
                 Game.giveItems(player);
-                Map map = game.getCurrentMap();
-                List<Location> spawns = map.getPlayerSpawns();
-                Location location = spawns.get(RANDOM.nextInt(spawns.size()));
-                player.teleport(location);
+                game.spawnPlayer(player);
             }
         }.runTaskLater(plugin, 2);
     }
