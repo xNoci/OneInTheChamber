@@ -99,7 +99,7 @@ public class MapConfigState extends State {
     public void switchPhase() {
         NocAPI.getUser(configurator).clearChat();
         this.phase = MapConfigPhase.getNextPhase(phase);
-        this.phase.getPhaseInfo().sendInfo(configurator);
+        this.phase.sendInfo(configurator);
         updateScoreboard();
     }
 
