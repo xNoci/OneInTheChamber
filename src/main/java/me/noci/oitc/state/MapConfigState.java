@@ -1,10 +1,8 @@
 package me.noci.oitc.state;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import lombok.Getter;
 import me.noci.noclib.api.NocAPI;
-import me.noci.noclib.api.scoreboard.Scoreboard;
 import me.noci.noclib.api.user.User;
 import me.noci.noclib.packtes.utils.WrappedEnumScoreboardTeamAction;
 import me.noci.noclib.packtes.utils.WrappedScoreboardTeam;
@@ -70,8 +68,7 @@ public class MapConfigState extends State {
     }
 
     @Override
-    protected void updatePlayerScoreboard(Scoreboard scoreboard, User user) {
-        List<String> lines = Lists.newArrayList();
+    protected void updateScoreboardLines(List<String> lines, User user) {
         lines.add("");
         lines.add(" §6Map einrichten ");
         lines.add("");
@@ -84,7 +81,6 @@ public class MapConfigState extends State {
         lines.add(" §7Phase");
         lines.add(String.format(" §8» §c%s ", phase.getPhaseName()));
         lines.add("");
-        scoreboard.updateLines(lines);
     }
 
     public void setConfigurator(Player configurator) {

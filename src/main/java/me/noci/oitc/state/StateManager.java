@@ -1,11 +1,14 @@
 package me.noci.oitc.state;
 
+import com.google.common.collect.Lists;
 import lombok.Getter;
 import me.noci.noclib.api.NocAPI;
 import me.noci.noclib.api.scoreboard.Scoreboard;
 import me.noci.oitc.gameutils.Game;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.List;
 
 public class StateManager {
 
@@ -50,8 +53,10 @@ public class StateManager {
     public void updateScoreboard() {
         NocAPI.getOnlineUsers().forEach(user -> {
             Scoreboard scoreboard = NocAPI.getScoreboard(user.getBase());
+            List<String> lines = Lists.newArrayList();
+            currentState.updateScoreboardLines(lines, user);
             scoreboard.updateTitle("    §9§lTokyo§r    ");
-            currentState.updatePlayerScoreboard(scoreboard, user);
+            scoreboard.updateLines(lines);
         });
     }
 

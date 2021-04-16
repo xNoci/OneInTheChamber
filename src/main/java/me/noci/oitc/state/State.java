@@ -3,10 +3,11 @@ package me.noci.oitc.state;
 import lombok.AccessLevel;
 import lombok.Setter;
 import me.noci.noclib.api.NocAPI;
-import me.noci.noclib.api.scoreboard.Scoreboard;
 import me.noci.noclib.api.user.User;
 import me.noci.oitc.gameutils.Game;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.List;
 
 public abstract class State {
 
@@ -30,7 +31,7 @@ public abstract class State {
 
     protected abstract void updateTabList(User user);
 
-    protected abstract void updatePlayerScoreboard(Scoreboard scoreboard, User user);
+    protected abstract void updateScoreboardLines(List<String> lines, User user);
 
     protected void updateTabList() {
         NocAPI.getOnlineUsers().forEach(this::updateTabList);

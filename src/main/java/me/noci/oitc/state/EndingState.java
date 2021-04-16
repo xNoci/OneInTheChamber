@@ -1,10 +1,8 @@
 package me.noci.oitc.state;
 
-import com.google.common.collect.Lists;
 import de.dytanic.cloudnet.bridge.CloudServer;
 import de.dytanic.cloudnet.lib.server.ServerState;
 import me.noci.noclib.api.NocAPI;
-import me.noci.noclib.api.scoreboard.Scoreboard;
 import me.noci.noclib.api.user.User;
 import me.noci.noclib.packtes.utils.WrappedEnumScoreboardTeamAction;
 import me.noci.noclib.packtes.utils.WrappedScoreboardTeam;
@@ -86,8 +84,7 @@ public class EndingState extends State {
     }
 
     @Override
-    protected void updatePlayerScoreboard(Scoreboard scoreboard, User user) {
-        List<String> lines = Lists.newArrayList();
+    protected void updateScoreboardLines(List<String> lines, User user) {
         lines.add("");
         lines.add(" §7Rangliste");
         int place = 1;
@@ -96,7 +93,6 @@ public class EndingState extends State {
             place++;
         }
         lines.add("");
-        scoreboard.updateLines(lines);
     }
 
     private void sendRemainingTime(User user, int time) {
