@@ -40,8 +40,6 @@ public class Game {
     @Getter @Setter(AccessLevel.PRIVATE) private int forceTime;
     @Getter @Setter(AccessLevel.PRIVATE) private int protectionTime;
     @Setter private Location lobbySpawn;
-
-    @Getter @Setter private String winner = "Kein Gewinner";
     @Getter private boolean mapLoaded = false;
 
     public static Game setupGame(JavaPlugin plugin, MapManager mapManager) {

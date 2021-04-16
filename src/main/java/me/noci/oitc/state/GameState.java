@@ -70,11 +70,6 @@ public class GameState extends State {
 
     @Override
     protected void stop() {
-        List<PlayerData> playerDataList = game.getPlayerDataSorted();
-        if (playerDataList.size() > 0) {
-            PlayerData playerData = playerDataList.get(0);
-            game.setWinner(playerData.getName());
-        }
     }
 
     @Override
@@ -93,7 +88,6 @@ public class GameState extends State {
                         user.sendTitle("§8| §cStartet §8|", String.format("§7... in §e%s", remainingProtectionTime), 0, 20, 0);
                         user.playSound(Sound.CLICK, 2, 2);
                     });
-
                     break;
                 case 1:
                     NocAPI.getOnlineUsers().forEach(user -> {
@@ -111,12 +105,12 @@ public class GameState extends State {
                 });
                 return;
             }
+
             remainingProtectionTime--;
         } else {
             if (checkEnding()) {
                 return;
             }
-
             timeRemaining--;
         }
     }
