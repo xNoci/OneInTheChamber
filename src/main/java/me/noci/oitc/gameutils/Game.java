@@ -10,6 +10,7 @@ import me.noci.noclib.utils.items.AdvancedItemStack;
 import me.noci.oitc.OITC;
 import me.noci.oitc.mapmanager.Map;
 import me.noci.oitc.mapmanager.MapManager;
+import me.noci.oitc.mapmanager.settings.MapData;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -108,11 +109,11 @@ public class Game {
     }
 
     public String getMapName() {
-        return currentMap == null ? "Unknown" : currentMap.getMapName();
+        return currentMap == null ? "Unknown" : currentMap.get(MapData.MAP_NAME, String.class);
     }
 
     public void setupWorld() {
-        mapManager.copyWorldToServer(currentMap.getWorldName());
+        mapManager.copyWorldToServer(currentMap.get(MapData.WORLD_NAME, String.class));
         currentMap.setupWorld(plugin);
         this.mapLoaded = true;
     }
