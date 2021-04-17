@@ -27,11 +27,11 @@ public class Map {
     @Setter private List<String> rawPlayerSpawns = Lists.newArrayList();
     private final List<Location> playerSpawns = Lists.newArrayList();
 
-    protected Map() {
+    public Map() {
         this(null);
     }
 
-    protected Map(String mapName) {
+    public Map(String mapName) {
         if (StringUtils.isNotBlank(mapName)) {
             this.mapName = mapName;
         }
