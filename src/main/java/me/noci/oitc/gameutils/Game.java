@@ -112,7 +112,7 @@ public class Game {
     }
 
     public void setupWorld() {
-        mapManager.copyWorld(currentMap.getWorldName());
+        mapManager.copyWorldToServer(currentMap.getWorldName());
         currentMap.setupWorld(plugin);
         this.mapLoaded = true;
     }

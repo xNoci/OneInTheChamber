@@ -138,10 +138,9 @@ public class MapManager {
         return loadedMaps.stream().filter(map -> map.getMapName().equalsIgnoreCase(mapName)).findFirst();
     }
 
-    public void copyWorld(String worldName) {
+    public void copyWorldToServer(String worldName) {
         Path src = new File(mapWorldFolder, worldName).toPath();
         Path dest = new File(plugin.getServer().getWorldContainer(), worldName).toPath();
-
         FileUtils.copyDir(src, dest);
     }
 }
