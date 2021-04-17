@@ -60,19 +60,19 @@ public class Game {
         return game;
     }
 
-    private Game(JavaPlugin plugin, MapManager mapManager, int maxPlayers) {
-        this.plugin = plugin;
-        this.mapManager = mapManager;
-        this.maxPlayers = maxPlayers;
-        this.playersNeeded = Math.max((int) (maxPlayers * 0.2), 2);
-    }
-
     public static void giveItems(Player player) {
         player.getInventory().clear();
         player.getInventory().addItem(new AdvancedItemStack(Material.WOOD_SWORD).addItemFlags().setUnbreakable(true));
         player.getInventory().addItem(new AdvancedItemStack(Material.BOW).addItemFlags().setUnbreakable(true));
         player.getInventory().addItem(new AdvancedItemStack(Material.ARROW).addItemFlags());
         player.updateInventory();
+    }
+
+    private Game(JavaPlugin plugin, MapManager mapManager, int maxPlayers) {
+        this.plugin = plugin;
+        this.mapManager = mapManager;
+        this.maxPlayers = maxPlayers;
+        this.playersNeeded = Math.max((int) (maxPlayers * 0.2), 2);
     }
 
     public void removePlayerData(UUID uuid) {
