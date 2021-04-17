@@ -8,6 +8,7 @@ import me.noci.noclib.packtes.utils.WrappedScoreboardTeam;
 import me.noci.noclib.packtes.wrapper.server.WrappedServerScoreboardTeam;
 import me.noci.oitc.OITC;
 import me.noci.oitc.gameutils.OITCRank;
+import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 
 import java.util.List;
@@ -23,6 +24,7 @@ public class LobbyState extends State {
         this.remainingTime = game.getTimeToStart();
         this.starting = false;
         this.forceStarted = false;
+        Bukkit.getOnlinePlayers().forEach(game::teleportToLobby);
     }
 
     @Override
