@@ -4,6 +4,7 @@ import me.noci.oitc.OITC;
 import me.noci.oitc.gameutils.Game;
 import me.noci.oitc.listener.OITCListener;
 import me.noci.oitc.mapmanager.MapConfigPhase;
+import me.noci.oitc.mapmanager.settings.MapData;
 import me.noci.oitc.state.MapConfigState;
 import me.noci.oitc.state.StateManager;
 import org.bukkit.Location;
@@ -30,7 +31,7 @@ public class MapPlayerToggleSneakListener extends OITCListener {
 
         if (state.isPhase(MapConfigPhase.SPECTATOR_SPAWN)) {
             Location location = player.getLocation().clone();
-            state.getMap().setSpectatorSpawn(location);
+            state.getMap().set(MapData.SPECTATOR_SPAWN, location);
             state.switchPhase();
 
             ArmorStand armorStand = spawnLocationStand(location, String.format("%sSpectator-Spawn", OITC.PREFIX_ACTIONBAR));
@@ -41,9 +42,9 @@ public class MapPlayerToggleSneakListener extends OITCListener {
         if (state.isPhase(MapConfigPhase.PLAYER_SPAWNS)) {
             Location location = player.getLocation().clone();
             state.getMap().addRawPlayerSpawn(location);
-            state.getMap().setWorldName(location.getWorld().getName());
+            state.getMap().set(MapData.WORLD_NAME, location.getWorld().getName());
 
-            ArmorStand armorStand = spawnLocationStand(location, String.format("%sSpieler-Spawn §8» §c%s", OITC.PREFIX_ACTIONBAR, state.getMap().getRawPlayerSpawns().size()));
+            ArmorStand armorStand = spawnLocationStand(location, String.format("%sSpieler-Spawn §8» §c%s", OITC.PREFIX_ACTIONBAR, state.getMap().getList(MapData.PLAYER_SPAWNS, String.class).size()));
             state.addArmorStand(armorStand);
             return;
         }

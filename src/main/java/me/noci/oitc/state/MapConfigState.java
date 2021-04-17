@@ -12,6 +12,7 @@ import me.noci.oitc.gameutils.OITCRank;
 import me.noci.oitc.mapmanager.Map;
 import me.noci.oitc.mapmanager.MapConfigPhase;
 import me.noci.oitc.mapmanager.MapManager;
+import me.noci.oitc.mapmanager.settings.MapData;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -76,7 +77,7 @@ public class MapConfigState extends State {
         lines.add(String.format(" §8» §c%s ", configurator == null ? "Unknown" : configurator.getName()));
         lines.add("");
         lines.add(" §7Map");
-        lines.add(String.format(" §8» §c%s ", map.getMapName()));
+        lines.add(String.format(" §8» §c%s ", map.get(MapData.MAP_NAME, String.class)));
         lines.add("");
         lines.add(" §7Phase");
         lines.add(String.format(" §8» §c%s ", phase.getPhaseName()));
@@ -113,9 +114,9 @@ public class MapConfigState extends State {
         switchPhase();
         mapManager.saveMap(map, (savedSuccessfully, reason) -> {
             if (savedSuccessfully) {
-                configurator.sendMessage(String.format("%s§aDie Map '%s' wurde erfolgreich gespeichert.", OITC.PREFIX, map.getMapName()));
+                configurator.sendMessage(String.format("%s§aDie Map '%s' wurde erfolgreich gespeichert.", OITC.PREFIX, map.get(MapData.MAP_NAME, String.class)));
             } else {
-                configurator.sendMessage(String.format("%s§cEin Fehler beim Speichern der Map '%s' ist aufgetreten.", OITC.PREFIX, map.getMapName()));
+                configurator.sendMessage(String.format("%s§cEin Fehler beim Speichern der Map '%s' ist aufgetreten.", OITC.PREFIX, map.get(MapData.MAP_NAME, String.class)));
                 configurator.sendMessage(String.format("%s§cGrund§8: §7%s", OITC.PREFIX, reason));
             }
 

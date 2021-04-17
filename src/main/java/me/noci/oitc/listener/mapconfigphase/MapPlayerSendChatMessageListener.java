@@ -5,6 +5,7 @@ import me.noci.oitc.events.PlayerSendChatMessageEvent;
 import me.noci.oitc.gameutils.Game;
 import me.noci.oitc.listener.OITCListener;
 import me.noci.oitc.mapmanager.MapConfigPhase;
+import me.noci.oitc.mapmanager.settings.MapData;
 import me.noci.oitc.state.MapConfigState;
 import me.noci.oitc.state.StateManager;
 import org.bukkit.entity.Player;
@@ -38,7 +39,7 @@ public class MapPlayerSendChatMessageListener extends OITCListener {
                 player.sendMessage(String.format("%s§cDer Map-Name darf nur 16 Zeichen lang sein.", OITC.PREFIX));
                 return;
             }
-            state.getMap().setMapName(args[0]);
+            state.getMap().set(MapData.MAP_NAME, args[0]);
             state.switchPhase();
             return;
         }
@@ -47,7 +48,7 @@ public class MapPlayerSendChatMessageListener extends OITCListener {
             event.setCancelled(true);
             String message = event.getMessage();
 
-            state.getMap().setBuilderName(message);
+            state.getMap().set(MapData.MAP_BUILDER, message);
             state.switchPhase();
             return;
         }

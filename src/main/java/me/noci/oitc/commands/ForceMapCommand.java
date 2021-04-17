@@ -12,6 +12,7 @@ import me.noci.oitc.OITC;
 import me.noci.oitc.gameutils.Game;
 import me.noci.oitc.mapmanager.Map;
 import me.noci.oitc.mapmanager.MapManager;
+import me.noci.oitc.mapmanager.settings.MapData;
 import me.noci.oitc.state.LobbyState;
 import me.noci.oitc.state.StateManager;
 import org.bukkit.Material;
@@ -58,20 +59,21 @@ public class ForceMapCommand extends Command {
             User user = NocAPI.getUser(event.getPlayer());
             user.getBase().closeInventory();
 
-            if (game.getCurrentMap().getMapName().equalsIgnoreCase(mapName)) {
+            if (game.getCurrentMap().get(MapData.MAP_NAME, String.class).equalsIgnoreCase(mapName)) {
                 user.playSound(Sound.ANVIL_BREAK, 1, 1);
                 user.sendMessage("%s§cDiese Map ist bereist ausgewählt.", OITC.PREFIX);
                 return;
             }
 
-            Optional<Map> map = mapManager.getMap(mapName);
-            if (!map.isPresent()) {
+            Optional<Map> mapOptional = mapManager.getMap(mapName);
+            if (!mapOptional.isPresent()) {
                 user.playSound(Sound.ANVIL_BREAK, 1, 1);
                 user.sendMessage("%s§cEin Fehler ist aufgetreten.", OITC.PREFIX);
                 return;
             }
-            game.setCurrentMap(map.get());
-            user.sendMessage("%s§aDu hast die Map zu %s geändert.", OITC.PREFIX, map.get().getMapName());
+            Map map = mapOptional.get();
+            game.setCurrentMap(map);
+            user.sendMessage("%s§aDu hast die Map zu %s geändert.", OITC.PREFIX, map.get(MapData.MAP_NAME, String.class));
             user.playSound(Sound.LEVEL_UP, 1, 1);
             mapForced = true;
         });

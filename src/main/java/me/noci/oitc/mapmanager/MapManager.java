@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import me.noci.oitc.mapmanager.loader.FileMapLoader;
 import me.noci.oitc.mapmanager.loader.MapLoader;
+import me.noci.oitc.mapmanager.settings.MapData;
 import me.noci.oitc.utils.FileUtils;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -36,12 +37,12 @@ public class MapManager {
     }
 
     private boolean existsMap(String name) {
-        return loadedMaps.stream().map(Map::getMapName).anyMatch(mapName -> mapName.equalsIgnoreCase(name));
+        return loadedMaps.stream().map(map -> map.get(MapData.MAP_NAME, String.class)).anyMatch(mapName -> mapName.equalsIgnoreCase(name));
     }
 
     private boolean copyWorldToFolder(Map toCopy) {
-        Path worldSrc = new File(plugin.getServer().getWorldContainer(), toCopy.getWorldName()).toPath();
-        Path worldDest = new File(mapWorldFolder, toCopy.getWorldName()).toPath();
+        Path worldSrc = new File(plugin.getServer().getWorldContainer(), toCopy.get(MapData.WORLD_NAME, String.class)).toPath();
+        Path worldDest = new File(mapWorldFolder, toCopy.get(MapData.WORLD_NAME, String.class)).toPath();
         return FileUtils.copyDir(worldSrc, worldDest);
     }
 
@@ -53,8 +54,10 @@ public class MapManager {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (existsMap(map.getMapName())) {
-                    savedSuccessful.accept(false, String.format("Eine Map mit dem Namen %s existiert bereits.", map.getMapName()));
+                String mapName = map.get(MapData.MAP_NAME, String.class);
+
+                if (existsMap(mapName)) {
+                    savedSuccessful.accept(false, String.format("Eine Map mit dem Namen %s existiert bereits.", mapName));
                     return;
                 }
 
@@ -82,11 +85,11 @@ public class MapManager {
     }
 
     public Iterator<String> getLoadedMapNames() {
-        return loadedMaps.stream().map(Map::getMapName).iterator();
+        return loadedMaps.stream().map(map -> map.get(MapData.MAP_NAME, String.class)).iterator();
     }
 
     public Optional<Map> getMap(String mapName) {
-        return loadedMaps.stream().filter(map -> map.getMapName().equalsIgnoreCase(mapName)).findFirst();
+        return loadedMaps.stream().filter(map -> map.get(MapData.MAP_NAME, String.class).equalsIgnoreCase(mapName)).findFirst();
     }
 
     public void copyWorldToServer(String worldName) {

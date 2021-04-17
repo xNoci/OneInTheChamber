@@ -5,6 +5,7 @@ import com.google.common.io.Files;
 import me.noci.noclib.utils.LocationUtils;
 import me.noci.oitc.mapmanager.Map;
 import me.noci.oitc.mapmanager.MapFilePath;
+import me.noci.oitc.mapmanager.settings.MapData;
 import me.noci.oitc.utils.FileUtils;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -36,7 +37,7 @@ public class FileMapLoader implements MapLoader {
     @Override
     public boolean saveMap(Map map) {
         try {
-            String fileName = map.getMapName().toLowerCase() + "." + MAP_FILE_TYPE;
+            String fileName = map.get(MapData.MAP_NAME, String.class).toLowerCase() + "." + MAP_FILE_TYPE;
             File file = new File(mapRootFolder, fileName);
 
             if (file.exists() || !file.createNewFile()) {
@@ -44,11 +45,11 @@ public class FileMapLoader implements MapLoader {
             }
 
             FileHandler fileHandler = new FileHandler(file);
-            fileHandler.set(MapFilePath.WORLD_NAME, map.getWorldName());
-            fileHandler.set(MapFilePath.MAP_NAME, map.getMapName());
-            fileHandler.set(MapFilePath.MAP_BUILDER, map.getBuilderName());
-            fileHandler.setLocation(MapFilePath.SPECTATOR_SPAWN, map.getSpectatorSpawn());
-            fileHandler.set(MapFilePath.PLAYER_SPAWNS, map.getRawPlayerSpawns());
+            fileHandler.set(MapFilePath.WORLD_NAME, map.get(MapData.WORLD_NAME, String.class));
+            fileHandler.set(MapFilePath.MAP_NAME, map.get(MapData.MAP_NAME, String.class));
+            fileHandler.set(MapFilePath.MAP_BUILDER, map.get(MapData.MAP_BUILDER, String.class));
+            fileHandler.setLocation(MapFilePath.SPECTATOR_SPAWN, map.get(MapData.SPECTATOR_SPAWN, Location.class));
+            fileHandler.set(MapFilePath.PLAYER_SPAWNS, map.getList(MapData.PLAYER_SPAWNS, String.class));
             fileHandler.save();
 
             Path configFileSrc = file.toPath();
@@ -83,11 +84,12 @@ public class FileMapLoader implements MapLoader {
         Location spectatorSpawn = mapFileLoader.getLocation(MapFilePath.SPECTATOR_SPAWN);
         List<String> rawPlayerSpawns = mapFileLoader.getStringList(MapFilePath.PLAYER_SPAWNS);
 
-        Map map = new Map(name);
-        map.setWorldName(worldName);
-        map.setBuilderName(builder);
-        map.setSpectatorSpawn(spectatorSpawn);
-        map.setRawPlayerSpawns(rawPlayerSpawns);
+        Map map = new Map();
+        map.set(MapData.WORLD_NAME, worldName);
+        map.set(MapData.MAP_NAME, name);
+        map.set(MapData.MAP_BUILDER, builder);
+        map.set(MapData.SPECTATOR_SPAWN, spectatorSpawn);
+        map.set(MapData.PLAYER_SPAWNS, rawPlayerSpawns);
         return map;
     }
 
