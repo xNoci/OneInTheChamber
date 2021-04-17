@@ -39,8 +39,10 @@ public class WorldCommand extends Command {
         }
 
         String worldName = args[0];
+        player.sendMessage(String.format("%s§aDie Welt %s wird importiert/erstellt...", OITC.PREFIX, worldName));
         World world = Bukkit.createWorld(WorldCreator.name(worldName));
         player.teleport(world.getSpawnLocation());
+        player.sendMessage(String.format("%s§aDie Welt %s wurde erfolgreich importiert/erstellt.", OITC.PREFIX, world));
     }
 
     @Override
