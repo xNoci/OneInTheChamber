@@ -13,6 +13,9 @@ import me.noci.oitc.mapmanager.Map;
 import me.noci.oitc.mapmanager.MapConfigPhase;
 import me.noci.oitc.mapmanager.MapManager;
 import me.noci.oitc.mapmanager.settings.MapData;
+import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
+import org.bukkit.World;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -37,7 +40,6 @@ public class MapConfigState extends State {
     @Override
     protected void stop() {
         NocAPI.getOnlineUsers().forEach(User::resetLevelValue);
-        armorStandSet.forEach(Entity::remove);
         configurator = null;
     }
 
@@ -112,6 +114,16 @@ public class MapConfigState extends State {
         if (!map.isValid())
             return false;
         switchPhase();
+
+        armorStandSet.forEach(Entity::remove);
+        World mapWorld = Bukkit.getWorld(map.get(MapData.WORLD_NAME, String.class));
+
+        if(mapWorld != null) {
+            for (Chunk loadedChunk : mapWorld.getLoadedChunks()) {
+                loadedChunk.unload(true);
+            }
+        }
+
         mapManager.saveMap(map, (savedSuccessfully, reason) -> {
             if (savedSuccessfully) {
                 configurator.sendMessage(String.format("%s§aDie Map '%s' wurde erfolgreich gespeichert.", OITC.PREFIX, map.get(MapData.MAP_NAME, String.class)));
