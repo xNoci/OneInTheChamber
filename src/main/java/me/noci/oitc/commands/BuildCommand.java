@@ -35,10 +35,10 @@ public class BuildCommand extends Command {
         if (args.length == 0) {
             if (BuildManager.toggleBuild(user.getUUID())) {
                 user.getBase().setGameMode(GameMode.CREATIVE);
-                user.sendTitle("§a§l✔", "§7Baumodus aktivert.", 0, 20, 0);
+                user.sendTitle("§a§l✔", "§7Baumodus aktiviert.", 0, 20, 0);
             } else {
                 user.getBase().setGameMode(GameMode.SURVIVAL);
-                user.sendTitle("§c§l✘", "§7Baumodus deaktivert.", 0, 20, 0);
+                user.sendTitle("§c§l✘", "§7Baumodus deaktiviert.", 0, 20, 0);
             }
             return;
         }
@@ -54,11 +54,11 @@ public class BuildCommand extends Command {
 
         if (BuildManager.toggleBuild(targetUser.getUUID())) {
             targetUser.getBase().setGameMode(GameMode.CREATIVE);
-            targetUser.sendTitle("§a§l✔", "§7Baumodus aktivert.", 0, 20, 0);
+            targetUser.sendTitle("§a§l✔", "§7Baumodus aktiviert.", 0, 20, 0);
             user.sendMessage("%sDer Spieler §6%s §7kann §anun §7bauen.", OITC.PREFIX, targetUser.getName());
         } else {
             targetUser.getBase().setGameMode(GameMode.SURVIVAL);
-            targetUser.sendTitle("§c§l✘", "§7Baumodus deaktivert.", 0, 20, 0);
+            targetUser.sendTitle("§c§l✘", "§7Baumodus deaktiviert.", 0, 20, 0);
             user.sendMessage("%sDer Spieler §6%s §7kann nun §cnicht mehr §7bauen.", OITC.PREFIX, targetUser.getName());
         }
     }
