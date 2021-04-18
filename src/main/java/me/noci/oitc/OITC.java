@@ -4,6 +4,7 @@ import me.noci.noclib.api.NocAPI;
 import me.noci.oitc.commands.*;
 import me.noci.oitc.gameutils.Game;
 import me.noci.oitc.listener.AsyncPlayerChatListener;
+import me.noci.oitc.listener.BuildListener;
 import me.noci.oitc.listener.ProtectionListener;
 import me.noci.oitc.listener.ServerListPingListener;
 import me.noci.oitc.listener.endingphase.EndEntityDamageListener;
@@ -64,12 +65,14 @@ public class OITC extends JavaPlugin {
         NocAPI.registerCommand(new WorldCommand(this, stateManager));
         NocAPI.registerCommand(new SetLobbySpawnCommand(this, stateManager, game));
         NocAPI.registerCommand(new ForceMapCommand(this, stateManager, game, mapManager));
+        NocAPI.registerCommand(new BuildCommand(this));
     }
 
     private void registerListeners() {
         registerListener(new ProtectionListener());
         registerListener(new AsyncPlayerChatListener());
         registerListener(new ServerListPingListener(this, stateManager, game));
+        registerListener(new BuildListener());
 
         registerListener(new LobbyPlayerConnectionListener(this, stateManager, game));
         registerListener(new LobbyEntityDamageListener(this, stateManager, game));
