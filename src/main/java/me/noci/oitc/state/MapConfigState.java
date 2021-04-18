@@ -116,8 +116,8 @@ public class MapConfigState extends State {
         switchPhase();
 
         armorStandSet.forEach(Entity::remove);
-        World mapWorld = Bukkit.getWorld(map.get(MapData.WORLD_NAME, String.class));
 
+        World mapWorld = Bukkit.getWorld(map.get(MapData.WORLD_NAME, String.class));
         if(mapWorld != null) {
             for (Chunk loadedChunk : mapWorld.getLoadedChunks()) {
                 loadedChunk.unload(true);
