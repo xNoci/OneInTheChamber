@@ -66,6 +66,7 @@ public class StateManager {
 
     public void stop() {
         bukkitRunnable.cancel();
+        if (currentState == null) return;
         currentState.stop();
         currentState = null;
     }
