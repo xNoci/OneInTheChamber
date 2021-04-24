@@ -16,6 +16,7 @@ repositories {
 compileJava.options.encoding = 'UTF-8'
 
 dependencies {
+    compileOnly "net.atophia:AtophiaAPI:1.0-SNAPSHOT"
     compileOnly "de.dytanic.cloudnet:cloudnet-api-bridge:2.1.17"
     compileOnly "de.dytanic.cloudnet:cloudnet-core:2.1.17"
     compileOnly "me.noci.api:NocLib:1.0-SNAPSHOT"
