@@ -35,7 +35,7 @@ public class LobbyPlayerConnectionListener extends OITCListener {
 
 
         Bukkit.getOnlinePlayers().forEach(player -> {
-            player.sendMessage(LanguageAPI.format(player.getUniqueId(), "lobby.player.join", user.getName()));
+            LanguageAPI.send(player,  "lobby.player.join", user.getName());
         });
 
         game.getPlayerSet().add(user.getUUID());
@@ -54,7 +54,7 @@ public class LobbyPlayerConnectionListener extends OITCListener {
         LobbyState lobbyState = (LobbyState) stateManager.getCurrentState();
 
         Bukkit.getOnlinePlayers().forEach(player -> {
-            player.sendMessage(LanguageAPI.format(player.getUniqueId(), "lobby.player.quit", user.getName()));
+            LanguageAPI.send(player,  "lobby.player.quit", user.getName());
         });
         game.getPlayerSet().remove(user.getUUID());
         lobbyState.checkTimer();

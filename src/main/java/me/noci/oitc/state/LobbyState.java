@@ -79,8 +79,8 @@ public class LobbyState extends State {
     @Override
     protected void updateScoreboardLines(List<String> lines, User user) {
         lines.add("");
-        lines.add(LanguageAPI.format(user.getUUID(), "lobby.state.scoreboard.map"));
-        lines.add(LanguageAPI.format(user.getUUID(), "lobby.state.scoreboard.map.name", game.getMapName()));
+        lines.add(LanguageAPI.getFormatted(user.getUUID(), "lobby.state.scoreboard.map"));
+        lines.add(LanguageAPI.getFormatted(user.getUUID(), "lobby.state.scoreboard.map.name", game.getMapName()));
         lines.add("");
     }
 
@@ -110,9 +110,9 @@ public class LobbyState extends State {
 
     private void sendRemainingTime(User user, int time) {
         if (time != 1) {
-            user.sendMessage(LanguageAPI.format(user.getUUID(), "lobby.state.update.remaining_time", time));
+            LanguageAPI.send(user.getBase(), "lobby.state.update.remaining_time", time);
         } else {
-            user.sendMessage(LanguageAPI.format(user.getUUID(), "lobby.state.update.remaining_time.second_one", time));
+            LanguageAPI.send(user.getBase(), "lobby.state.update.remaining_time.second_one", time);
         }
     }
 
