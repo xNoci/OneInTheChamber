@@ -19,6 +19,7 @@ import me.noci.oitc.listener.mapconfigphase.MapPlayerSendChatMessageListener;
 import me.noci.oitc.listener.mapconfigphase.MapPlayerToggleSneakListener;
 import me.noci.oitc.mapmanager.MapManager;
 import me.noci.oitc.state.StateManager;
+import net.atophia.atophiaapi.language.LocaleHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
@@ -46,6 +47,9 @@ public class OITC extends JavaPlugin {
 
         stateManager.start(this);
         stateManager.changeState(StateManager.LOBBY_STATE);
+
+
+        LocaleHandler.loadLocales("OITC");
 
         registerListeners();
         registerCommands();
