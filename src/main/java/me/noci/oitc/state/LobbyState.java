@@ -8,6 +8,7 @@ import me.noci.noclib.packtes.utils.WrappedScoreboardTeam;
 import me.noci.noclib.packtes.wrapper.server.WrappedServerScoreboardTeam;
 import me.noci.oitc.OITC;
 import me.noci.oitc.gameutils.OITCRank;
+import net.atophia.atophiaapi.language.LanguageAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 
@@ -78,8 +79,8 @@ public class LobbyState extends State {
     @Override
     protected void updateScoreboardLines(List<String> lines, User user) {
         lines.add("");
-        lines.add(" §7Map");
-        lines.add(String.format("  §8» §c%s", game.getMapName()));
+        lines.add(LanguageAPI.format(user.getUUID(), "lobby.state.scoreboard.map"));
+        lines.add(LanguageAPI.format(user.getUUID(), "lobby.state.scoreboard.map.name", game.getMapName()));
         lines.add("");
     }
 
@@ -109,9 +110,9 @@ public class LobbyState extends State {
 
     private void sendRemainingTime(User user, int time) {
         if (time != 1) {
-            user.sendMessage("%sDas Spiel startet in §c%s §7Sekunden.", OITC.PREFIX, time);
+            user.sendMessage(LanguageAPI.format(user.getUUID(), "lobby.state.update.remaining_time", time));
         } else {
-            user.sendMessage("%sDas Spiel startet in §c%s §7Sekunde.", OITC.PREFIX, time);
+            user.sendMessage(LanguageAPI.format(user.getUUID(), "lobby.state.update.remaining_time.second_one", time));
         }
     }
 

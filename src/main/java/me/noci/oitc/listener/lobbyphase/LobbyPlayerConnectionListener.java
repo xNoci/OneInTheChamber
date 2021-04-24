@@ -2,11 +2,12 @@ package me.noci.oitc.listener.lobbyphase;
 
 import me.noci.noclib.api.NocAPI;
 import me.noci.noclib.api.user.User;
-import me.noci.oitc.OITC;
 import me.noci.oitc.gameutils.Game;
 import me.noci.oitc.listener.OITCListener;
 import me.noci.oitc.state.LobbyState;
 import me.noci.oitc.state.StateManager;
+import net.atophia.atophiaapi.language.LanguageAPI;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -22,6 +23,7 @@ public class LobbyPlayerConnectionListener extends OITCListener {
     @EventHandler
     public void handlePlayerJoin(PlayerJoinEvent event) {
         if (!isState(StateManager.LOBBY_STATE)) return;
+        event.setJoinMessage(null);
         User user = NocAPI.getUser(event.getPlayer());
         LobbyState lobbyState = (LobbyState) stateManager.getCurrentState();
 
@@ -31,7 +33,11 @@ public class LobbyPlayerConnectionListener extends OITCListener {
         user.getBase().setHealth(user.getBase().getMaxHealth());
         user.getBase().setGameMode(GameMode.SURVIVAL);
 
-        event.setJoinMessage(String.format("%sDer Spieler §c%s §7hat das Spiel betreten.", OITC.PREFIX, user.getName()));
+
+        Bukkit.getOnlinePlayers().forEach(player -> {
+            player.sendMessage(LanguageAPI.format(player.getUniqueId(), "lobby.player.join", user.getName()));
+        });
+
         game.getPlayerSet().add(user.getUUID());
         lobbyState.checkTimer();
 
@@ -43,10 +49,13 @@ public class LobbyPlayerConnectionListener extends OITCListener {
     @EventHandler
     public void handlePlayerQuit(PlayerQuitEvent event) {
         if (!isState(StateManager.LOBBY_STATE)) return;
+        event.setQuitMessage(null);
         User user = NocAPI.getUser(event.getPlayer());
         LobbyState lobbyState = (LobbyState) stateManager.getCurrentState();
 
-        event.setQuitMessage(String.format("%sDer Spieler §c%s §7hat das Spiel verlassen.", OITC.PREFIX, user.getName()));
+        Bukkit.getOnlinePlayers().forEach(player -> {
+            player.sendMessage(LanguageAPI.format(player.getUniqueId(), "lobby.player.quit", user.getName()));
+        });
         game.getPlayerSet().remove(user.getUUID());
         lobbyState.checkTimer();
 

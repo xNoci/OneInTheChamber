@@ -6,6 +6,7 @@ import me.noci.noclib.command.Command;
 import me.noci.noclib.command.CommandData;
 import me.noci.oitc.BuildManager;
 import me.noci.oitc.OITC;
+import net.atophia.atophiaapi.language.LanguageAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.command.ConsoleCommandSender;
@@ -28,17 +29,17 @@ public class BuildCommand extends Command {
         }
 
         if (args.length > 1) {
-            user.sendMessage("%s§cBenutze: /build [Name]", OITC.PREFIX);
+            LanguageAPI.send(user.getBase(), "command.build.usage");
             return;
         }
 
         if (args.length == 0) {
             if (BuildManager.toggleBuild(user.getUUID())) {
                 user.getBase().setGameMode(GameMode.CREATIVE);
-                user.sendTitle("§a§l✔", "§7Baumodus aktiviert.", 0, 20, 0);
+                sendTitle(user, true);
             } else {
                 user.getBase().setGameMode(GameMode.SURVIVAL);
-                user.sendTitle("§c§l✘", "§7Baumodus deaktiviert.", 0, 20, 0);
+                sendTitle(user, false);
             }
             return;
         }
@@ -46,7 +47,7 @@ public class BuildCommand extends Command {
 
         Player targetPlayer = Bukkit.getPlayer(args[0]);
         if (targetPlayer == null) {
-            user.sendMessage("%s§cDieser Spieler wurde nicht gefunden.");
+            LanguageAPI.send(user.getBase(), "command.user_not_found");
             return;
         }
 
@@ -54,17 +55,25 @@ public class BuildCommand extends Command {
 
         if (BuildManager.toggleBuild(targetUser.getUUID())) {
             targetUser.getBase().setGameMode(GameMode.CREATIVE);
-            targetUser.sendTitle("§a§l✔", "§7Baumodus aktiviert.", 0, 20, 0);
-            user.sendMessage("%sDer Spieler §6%s §7kann §anun §7bauen.", OITC.PREFIX, targetUser.getName());
+            sendTitle(targetUser, true);
+            LanguageAPI.send(user.getBase(), "command.build.change_other.activated", targetUser.getName());
         } else {
             targetUser.getBase().setGameMode(GameMode.SURVIVAL);
-            targetUser.sendTitle("§c§l✘", "§7Baumodus deaktiviert.", 0, 20, 0);
-            user.sendMessage("%sDer Spieler §6%s §7kann nun §cnicht mehr §7bauen.", OITC.PREFIX, targetUser.getName());
+            sendTitle(targetUser, false);
+            LanguageAPI.send(user.getBase(), "command.build.change_other.deactivated", targetUser.getName());
         }
     }
 
     @Override
     public void onConsoleExecute(ConsoleCommandSender sender, String command, String[] args) {
-        sender.sendMessage("§cThis command is only available for a player.");
+        sender.sendMessage(LanguageAPI.getFormatted("command.console.only_available_for_player"));
+    }
+
+    private static void sendTitle(User user, boolean activated) {
+        if (activated) {
+            user.sendTitle(LanguageAPI.getFormatted(user.getUUID(), "command.build.title.activated.title"), LanguageAPI.getFormatted(user.getUUID(), "command.build.title.activated.subtitle"), 0, 20, 0);
+        } else {
+            user.sendTitle(LanguageAPI.getFormatted(user.getUUID(), "command.build.title.deactivated.title"), LanguageAPI.getFormatted(user.getUUID(), "command.build.title.deactivated.subtitle"), 0, 20, 0);
+        }
     }
 }
