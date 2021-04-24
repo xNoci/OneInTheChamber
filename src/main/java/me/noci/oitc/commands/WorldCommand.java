@@ -4,6 +4,7 @@ import me.noci.noclib.command.Command;
 import me.noci.noclib.command.CommandData;
 import me.noci.oitc.OITC;
 import me.noci.oitc.state.StateManager;
+import net.atophia.atophiaapi.language.LanguageAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
@@ -29,24 +30,24 @@ public class WorldCommand extends Command {
         }
 
         if (!stateManager.isState(StateManager.LOBBY_STATE)) {
-            player.sendMessage(String.format("%s§cDieser Command funktioniert nur während der Lobby-Phase.", OITC.PREFIX));
+            LanguageAPI.send(player, "command.available_during.lobby_state");
             return;
         }
 
         if (args.length != 1) {
-            player.sendMessage(String.format("%s§cBenutze: /world [Name]", OITC.PREFIX));
+            LanguageAPI.send(player, "command.world.usage");
             return;
         }
 
         String worldName = args[0];
-        player.sendMessage(String.format("%s§aDie Welt %s wird importiert/erstellt...", OITC.PREFIX, worldName));
+        LanguageAPI.send(player, "command.world.import.start", worldName);
         World world = Bukkit.createWorld(WorldCreator.name(worldName));
         player.teleport(world.getSpawnLocation());
-        player.sendMessage(String.format("%s§aDie Welt %s wurde erfolgreich importiert/erstellt.", OITC.PREFIX, world.getName()));
+        LanguageAPI.send(player, "command.world.import.finished", world.getName());
     }
 
     @Override
     public void onConsoleExecute(ConsoleCommandSender sender, String command, String[] args) {
-        sender.sendMessage("§cThis command is only available for a player.");
+        sender.sendMessage(LanguageAPI.getFormatted("command.console.only_available_for_player"));
     }
 }
