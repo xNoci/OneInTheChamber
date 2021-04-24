@@ -6,6 +6,7 @@ import me.noci.oitc.OITC;
 import me.noci.oitc.gameutils.Game;
 import me.noci.oitc.state.LobbyState;
 import me.noci.oitc.state.StateManager;
+import net.atophia.atophiaapi.language.LanguageAPI;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -30,25 +31,25 @@ public class StartCommand extends Command {
         }
 
         if (!stateManager.isState(StateManager.LOBBY_STATE)) {
-            player.sendMessage(String.format("%s§cDieser Command funktioniert nur während der Lobby-Phase.", OITC.PREFIX));
+            LanguageAPI.send(player, "command.available_during.lobby_state");
             return;
         }
 
         if (game.getPlayerSet().size() < game.getPlayersNeeded()) {
-            player.sendMessage(String.format("%s§cEs müssen %s Spieler online sein, um das Spiel zu starten.", OITC.PREFIX, game.getPlayersNeeded()));
+            LanguageAPI.send(player, "command.start.not_enough_player", game.getPlayersNeeded());
             return;
         }
 
         LobbyState lobbyState = (LobbyState) stateManager.getCurrentState();
         if (lobbyState.forceStart()) {
-            player.sendMessage(String.format("%sDu hast die Runde gestartet.", OITC.PREFIX));
+            LanguageAPI.send(player, "command.start.round_started");
         } else {
-            player.sendMessage(String.format("%s§cDie Runde wurde bereits gestartet.", OITC.PREFIX));
+            LanguageAPI.send(player, "command.start.round_already_started");
         }
     }
 
     @Override
     public void onConsoleExecute(ConsoleCommandSender sender, String command, String[] args) {
-        sender.sendMessage("§cThis command is only available for a player.");
+        sender.sendMessage(LanguageAPI.getFormatted("command.console.only_available_for_player"));
     }
 }
