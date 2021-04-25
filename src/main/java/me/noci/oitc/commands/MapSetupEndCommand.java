@@ -6,6 +6,7 @@ import me.noci.oitc.OITC;
 import me.noci.oitc.mapmanager.MapManager;
 import me.noci.oitc.state.MapConfigState;
 import me.noci.oitc.state.StateManager;
+import net.atophia.atophiaapi.language.LanguageAPI;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -30,24 +31,24 @@ public class MapSetupEndCommand extends Command {
         }
 
         if (!stateManager.isState(StateManager.MAP_CONFIG_STATE)) {
-            player.sendMessage(String.format("%s§cDieser Command funktioniert nur während der Map-Configurations Phase.", OITC.PREFIX));
+            LanguageAPI.send(player, "command.available_during.map_config_state");
             return;
         }
 
         MapConfigState state = (MapConfigState) stateManager.getCurrentState();
         if (!state.getMap().isValid()) {
-            player.sendMessage(String.format("%s§cDu musst das Setup erst beenden.", OITC.PREFIX));
+            LanguageAPI.send(player, "command.setupend.map_invalid");
             return;
         }
 
         if (!state.finishSetup(mapManager)) {
-            player.sendMessage(String.format("%s§cEin unerwarteter Fehler ist aufgetreten.", OITC.PREFIX));
+            LanguageAPI.send(player, "command.setupend.unknown_error");
         }
     }
 
     @Override
     public void onConsoleExecute(ConsoleCommandSender sender, String command, String[] args) {
-        sender.sendMessage("§cThis command is only available for a player.");
+        sender.sendMessage(LanguageAPI.getFormatted("command.console.only_available_for_player"));
     }
 
 }
