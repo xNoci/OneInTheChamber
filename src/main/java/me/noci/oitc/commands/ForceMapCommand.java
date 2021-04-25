@@ -15,6 +15,7 @@ import me.noci.oitc.mapmanager.MapManager;
 import me.noci.oitc.mapmanager.settings.MapData;
 import me.noci.oitc.state.LobbyState;
 import me.noci.oitc.state.StateManager;
+import net.atophia.atophiaapi.language.LanguageAPI;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.command.ConsoleCommandSender;
@@ -89,7 +90,7 @@ public class ForceMapCommand extends Command {
         }
 
         if (!stateManager.isState(StateManager.LOBBY_STATE)) {
-            player.sendMessage(String.format("%s§cDieser Command funktioniert nur während der Lobby-Phase.", OITC.PREFIX));
+            LanguageAPI.send(player, "command.available_during.lobby_state");
             return;
         }
 
@@ -108,6 +109,6 @@ public class ForceMapCommand extends Command {
 
     @Override
     public void onConsoleExecute(ConsoleCommandSender sender, String command, String[] args) {
-        sender.sendMessage("§cThis command is only available for a player.");
+        sender.sendMessage(LanguageAPI.getFormatted("command.console.only_available_for_player"));
     }
 }
