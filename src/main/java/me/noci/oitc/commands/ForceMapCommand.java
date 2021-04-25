@@ -40,13 +40,13 @@ public class ForceMapCommand extends Command {
         this.game = game;
         this.stateManager = stateManager;
 
-        GuiBuilder builder = GuiBuilder.create("§c§lForcemap", 9 * 3);
+        GuiBuilder builder = GuiBuilder.create(LanguageAPI.getFormatted("gui.forcemap.inventory_name"), 9 * 3);
         builder.onGuiCreate((inventory, player, objects) -> {
             Iterator<String> loadedMap = mapManager.getLoadedMapNames();
             while (loadedMap.hasNext()) {
                 String name = loadedMap.next();
                 AdvancedItemStack map = new AdvancedItemStack(MAP_ITEM.clone());
-                map.setDisplayName(String.format("§8● §6%s", name));
+                map.setDisplayName(LanguageAPI.getFormatted(player.getUniqueId(), "gui.forcemap.item.map.name", name));
                 map.setNBTTag("MapName", name);
                 map.addItemFlags();
                 inventory.addItem(map);
@@ -62,19 +62,19 @@ public class ForceMapCommand extends Command {
 
             if (game.getCurrentMap().get(MapData.MAP_NAME, String.class).equalsIgnoreCase(mapName)) {
                 user.playSound(Sound.ANVIL_BREAK, 1, 1);
-                user.sendMessage("%s§cDiese Map ist bereist ausgewählt.", OITC.PREFIX);
+                LanguageAPI.send(user.getBase(), "gui.forcemap.map_already_chosen");
                 return;
             }
 
             Optional<Map> mapOptional = mapManager.getMap(mapName);
             if (!mapOptional.isPresent()) {
                 user.playSound(Sound.ANVIL_BREAK, 1, 1);
-                user.sendMessage("%s§cEin Fehler ist aufgetreten.", OITC.PREFIX);
+                LanguageAPI.send(user.getBase(), "gui.forcemap.error.map_chosen");
                 return;
             }
             Map map = mapOptional.get();
             game.setCurrentMap(map);
-            user.sendMessage("%s§aDu hast die Map zu %s geändert.", OITC.PREFIX, map.get(MapData.MAP_NAME, String.class));
+            LanguageAPI.send(user.getBase(), "gui.forcemap.map_changed", map.get(MapData.MAP_NAME, String.class));
             user.playSound(Sound.LEVEL_UP, 1, 1);
             mapForced = true;
         });
@@ -95,13 +95,13 @@ public class ForceMapCommand extends Command {
         }
 
         if (mapForced) {
-            player.sendMessage(String.format("%sEs wurde bereits eine andere §cMap §7ausgewählt.", OITC.PREFIX));
+            LanguageAPI.send(player, "command.forcemap.already_forced");
             return;
         }
 
         LobbyState state = (LobbyState) stateManager.getCurrentState();
         if (state.getRemainingTime() <= 10 || game.isMapLoaded()) {
-            player.sendMessage(String.format("%s§cDie Map kann nicht mehr geändert werden.", OITC.PREFIX));
+            LanguageAPI.send(player, "command.forcemap.cannot_change_map");
             return;
         }
         NocAPI.getGuiManager().openGui("forcemap", player);
