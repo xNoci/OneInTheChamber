@@ -6,6 +6,7 @@ import me.noci.noclib.utils.LocationUtils;
 import me.noci.oitc.OITC;
 import me.noci.oitc.gameutils.Game;
 import me.noci.oitc.state.StateManager;
+import net.atophia.atophiaapi.language.LanguageAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -34,7 +35,7 @@ public class SetLobbySpawnCommand extends Command {
         }
 
         if (!stateManager.isState(StateManager.LOBBY_STATE)) {
-            player.sendMessage(String.format("%s§cDieser Command funktioniert nur während der Lobby-Phase.", OITC.PREFIX));
+            LanguageAPI.send(player, "command.available_during.lobby_state");
             return;
         }
 
@@ -43,11 +44,11 @@ public class SetLobbySpawnCommand extends Command {
         game.setLobbySpawn(lobbySpawn);
         getPlugin().getConfig().set("lobbySpawn", LocationUtils.locationToStringSilently(lobbySpawn));
         getPlugin().saveConfig();
-        player.sendMessage(String.format("%s§aDu hast den Lobby-Spawn erfolgreich gesetzt.", OITC.PREFIX));
+        LanguageAPI.send(player, "command.setlobby.success");
     }
 
     @Override
     public void onConsoleExecute(ConsoleCommandSender sender, String command, String[] args) {
-        sender.sendMessage("§cThis command is only available for a player.");
+        sender.sendMessage(LanguageAPI.getFormatted("command.console.only_available_for_player"));
     }
 }
