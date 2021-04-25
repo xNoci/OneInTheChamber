@@ -5,6 +5,7 @@ import me.noci.noclib.command.CommandData;
 import me.noci.oitc.OITC;
 import me.noci.oitc.state.MapConfigState;
 import me.noci.oitc.state.StateManager;
+import net.atophia.atophiaapi.language.LanguageAPI;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -28,18 +29,18 @@ public class MapSetupCommand extends Command {
         }
 
         if (!stateManager.isState(StateManager.LOBBY_STATE)) {
-            player.sendMessage(String.format("%s§cDieser Command funktioniert nur während der Lobby-Phase.", OITC.PREFIX));
+            LanguageAPI.send(player, "command.available_during.lobby_state");
             return;
         }
 
         if (stateManager.isState(StateManager.MAP_CONFIG_STATE)) {
-            player.sendMessage(String.format("%s§cEs wird bereits eine Map konfiguriert.", OITC.PREFIX));
+            LanguageAPI.send(player, "command.mapsetup.already_started");
             return;
         }
 
         stateManager.changeState(StateManager.MAP_CONFIG_STATE);
         MapConfigState state = (MapConfigState) stateManager.getCurrentState();
-        player.sendMessage(String.format("%s§aDu kannst nun eine Map einrichten.", OITC.PREFIX));
+        LanguageAPI.send(player, "command.mapsetup.start_configuration");
         player.sendMessage("");
 
         state.setConfigurator(player);
@@ -54,6 +55,6 @@ public class MapSetupCommand extends Command {
 
     @Override
     public void onConsoleExecute(ConsoleCommandSender sender, String command, String[] args) {
-        sender.sendMessage("§cThis command is only available for a player.");
+        sender.sendMessage(LanguageAPI.getFormatted("command.console.only_available_for_player"));
     }
 }
