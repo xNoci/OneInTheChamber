@@ -41,6 +41,7 @@ public class ForceMapCommand extends Command {
         this.stateManager = stateManager;
 
         GuiBuilder builder = GuiBuilder.create(LanguageAPI.getFormatted("gui.forcemap.inventory_name"), 9 * 3);
+        builder.setTitle(player -> LanguageAPI.getFormatted(player.getUniqueId(), "gui.forcemap.inventory_name"));
         builder.onGuiCreate((inventory, player, objects) -> {
             Iterator<String> loadedMap = mapManager.getLoadedMapNames();
             while (loadedMap.hasNext()) {
