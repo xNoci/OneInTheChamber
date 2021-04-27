@@ -152,7 +152,7 @@ public class ProtectionListener implements Listener {
     }
 
     @EventHandler
-    public void handleInventoryPickupItem   (InventoryPickupItemEvent event) {
+    public void handleInventoryPickupItem(InventoryPickupItemEvent event) {
         event.setCancelled(true);
     }
 
