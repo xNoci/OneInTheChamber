@@ -10,6 +10,7 @@ import org.bukkit.event.entity.*;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.hanging.HangingBreakEvent;
 import org.bukkit.event.hanging.HangingPlaceEvent;
+import org.bukkit.event.inventory.InventoryPickupItemEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.event.vehicle.VehicleEnterEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
@@ -147,6 +148,11 @@ public class ProtectionListener implements Listener {
 
     @EventHandler
     public void handleItemMerge(ItemMergeEvent event) {
+        event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void handleInventoryPickupItem   (InventoryPickupItemEvent event) {
         event.setCancelled(true);
     }
 
