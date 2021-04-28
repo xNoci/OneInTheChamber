@@ -1,0 +1,3 @@
+files:
+  - source: /src/main/resources/languages/oitc_de.properties
+    translation: /src/main/resources/languages/oitc_%locale%.properties
