@@ -1,3 +1,0 @@
-files:
-  - source: /src/main/resources/i18n/de/*.properties
-    translation: /src/main/resources/i18n/%locale_with_underscore%/%original_file_name%
