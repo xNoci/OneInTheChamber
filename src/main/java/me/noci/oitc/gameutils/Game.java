@@ -36,18 +36,21 @@ public class Game {
     @Getter private final Set<UUID> spectatorSet = Sets.newHashSet();
     @Getter private final int maxPlayers;
     @Getter private final int playersNeeded;
-    @Getter @Setter(AccessLevel.PRIVATE) private int timeToStart;
-    @Getter @Setter(AccessLevel.PRIVATE) private long gameDuration;
-    @Getter @Setter(AccessLevel.PRIVATE) private int forceTime;
-    @Getter @Setter(AccessLevel.PRIVATE) private int protectionTime;
     @Setter private Location lobbySpawn;
     @Getter private boolean mapLoaded = false;
+
+    @Getter @Setter(AccessLevel.PRIVATE) private int ffaServerDuration;
+    @Getter @Setter(AccessLevel.PRIVATE) private int gameDuration;
+    @Getter @Setter(AccessLevel.PRIVATE) private int timeToStart;
+    @Getter @Setter(AccessLevel.PRIVATE) private int forceTime;
+    @Getter @Setter(AccessLevel.PRIVATE) private int protectionTime;
 
     public static Game setupGame(JavaPlugin plugin, MapManager mapManager) {
         FileConfiguration config = plugin.getConfig();
         Game game = new Game(plugin, mapManager, config.getInt("maxPlayers", 12));
+        game.setFfaServerDuration(getConfigSeconds(config, TimeUnit.MINUTES, "ffaGameDuration", 60));
+        game.setGameDuration(getConfigSeconds(config, TimeUnit.MINUTES, "gameDuration", 5));
         game.setTimeToStart(config.getInt("timeToStart", 60));
-        game.setGameDuration(TimeUnit.MINUTES.toSeconds(config.getInt("gameDuration", 5)));
         game.setForceTime(config.getInt("forceTime", 10));
         game.setProtectionTime(config.getInt("protectionTime", 3));
 
@@ -67,6 +70,12 @@ public class Game {
         player.getInventory().addItem(new AdvancedItemStack(Material.ARROW).addItemFlags());
         player.updateInventory();
     }
+
+    private static int getConfigSeconds(FileConfiguration config, TimeUnit timeUnit, String configPath, int def) {
+        int value = config.getInt(configPath, def);
+        return ((Long) timeUnit.toSeconds(value)).intValue();
+    }
+
 
     private Game(JavaPlugin plugin, MapManager mapManager, int maxPlayers) {
         this.plugin = plugin;
