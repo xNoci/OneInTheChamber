@@ -10,7 +10,7 @@ import me.noci.noclib.utils.items.AdvancedItemStack;
 import me.noci.oitc.OITC;
 import me.noci.oitc.mapmanager.Map;
 import me.noci.oitc.mapmanager.MapManager;
-import me.noci.oitc.mapmanager.settings.MapData;
+import me.noci.oitc.mapmanager.MapData;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;

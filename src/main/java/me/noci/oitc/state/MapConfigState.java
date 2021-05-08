@@ -12,7 +12,7 @@ import me.noci.oitc.gameutils.OITCRank;
 import me.noci.oitc.mapmanager.Map;
 import me.noci.oitc.mapmanager.MapConfigPhase;
 import me.noci.oitc.mapmanager.MapManager;
-import me.noci.oitc.mapmanager.settings.MapData;
+import me.noci.oitc.mapmanager.MapData;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.World;

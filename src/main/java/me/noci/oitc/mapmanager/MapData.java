@@ -1,4 +1,4 @@
-package me.noci.oitc.mapmanager.settings;
+package me.noci.oitc.mapmanager;
 
 import lombok.Getter;
 import org.bukkit.Location;

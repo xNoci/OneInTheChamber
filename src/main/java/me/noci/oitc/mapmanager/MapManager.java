@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import me.noci.oitc.mapmanager.loader.MapLoader;
 import me.noci.oitc.mapmanager.loader.file.FileMapLoader;
-import me.noci.oitc.mapmanager.settings.MapData;
 import me.noci.oitc.utils.FileUtils;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;

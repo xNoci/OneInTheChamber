@@ -2,9 +2,8 @@ package me.noci.oitc.mapmanager;
 
 import com.google.common.collect.Lists;
 import me.noci.noclib.utils.LocationUtils;
+import me.noci.noclib.utils.SettingMap;
 import me.noci.oitc.gameutils.Game;
-import me.noci.oitc.mapmanager.settings.MapData;
-import me.noci.oitc.mapmanager.settings.MapSetting;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.WorldCreator;
@@ -21,7 +20,7 @@ public class Map {
     public static final String DEFAULT_MAP_NAME = "Unknown";
     public static final String DEFAULT_BUILDER_NAME = DEFAULT_MAP_NAME;
 
-    private final MapSetting setting = new MapSetting();
+    private final SettingMap<MapData> setting = new SettingMap<>();
     private final List<Location> playerSpawns = Lists.newArrayList();
 
     public Map() {

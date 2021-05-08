@@ -5,7 +5,7 @@ import me.noci.oitc.events.PlayerSendChatMessageEvent;
 import me.noci.oitc.gameutils.Game;
 import me.noci.oitc.listener.OITCListener;
 import me.noci.oitc.mapmanager.MapConfigPhase;
-import me.noci.oitc.mapmanager.settings.MapData;
+import me.noci.oitc.mapmanager.MapData;
 import me.noci.oitc.state.MapConfigState;
 import me.noci.oitc.state.StateManager;
 import org.bukkit.entity.Player;

@@ -5,7 +5,7 @@ import com.google.common.io.Files;
 import me.noci.oitc.mapmanager.Map;
 import me.noci.oitc.mapmanager.loader.MapLoader;
 import me.noci.oitc.mapmanager.loader.file.config.MapFileConfig;
-import me.noci.oitc.mapmanager.settings.MapData;
+import me.noci.oitc.mapmanager.MapData;
 import me.noci.oitc.utils.FileUtils;
 import org.bukkit.plugin.java.JavaPlugin;
 
