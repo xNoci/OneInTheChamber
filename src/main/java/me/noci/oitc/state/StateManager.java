@@ -73,7 +73,7 @@ public class StateManager {
 
     public void changeState(State state) {
         if (currentState == state)
-            throw new IllegalStateException(String.format("Tried to change %s to %s.", currentState.getClass().getName(), state.getClass().getName()));
+            throw new UnsupportedOperationException(String.format("Tried to change the current state to the same type (%s).", state.getClass().getName()));
         if (currentState != null) {
             currentState.stop();
         }
