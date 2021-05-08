@@ -7,4 +7,5 @@ forceTime: 10
 protectionTime: 3
 #In minutes
 gameDuration: 5
+ffaGameDuration: 60
 lobbySpawn:
