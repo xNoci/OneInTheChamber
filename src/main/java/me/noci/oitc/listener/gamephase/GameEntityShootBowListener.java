@@ -21,9 +21,8 @@ public class GameEntityShootBowListener extends OITCListener {
         GameState state = (GameState) stateManager.getCurrentState();
         if (!state.isProtectionTime()) return;
         event.setCancelled(true);
-        if(event.getEntity() instanceof Player) {
-            ((Player) event.getEntity()).updateInventory();
-        }
+        if (!(event.getEntity() instanceof Player)) return;
+        ((Player) event.getEntity()).updateInventory();
     }
 
 }

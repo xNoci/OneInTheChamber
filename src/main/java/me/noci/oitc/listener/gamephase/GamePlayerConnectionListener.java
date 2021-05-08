@@ -55,6 +55,10 @@ public class GamePlayerConnectionListener extends OITCListener {
         User user = NocAPI.getUser(event.getPlayer());
         GameState state = (GameState) stateManager.getCurrentState();
 
+        user.removePotionEffects();
+        user.getBase().setAllowFlight(false);
+        user.getBase().spigot().setCollidesWithEntities(true);
+
         if (game.getPlayerSet().contains(user.getUUID())) {
             event.setQuitMessage(String.format("%sDer Spieler §c%s §7hat das Spiel verlassen.", OITC.PREFIX, user.getName()));
             game.getPlayerSet().remove(user.getUUID());
@@ -62,9 +66,6 @@ public class GamePlayerConnectionListener extends OITCListener {
             state.checkEnding();
         } else {
             game.getSpectatorSet().remove(user.getUUID());
-            user.removePotionEffects();
-            user.getBase().setAllowFlight(false);
-            user.getBase().spigot().setCollidesWithEntities(true);
         }
 
         updateTabList();
