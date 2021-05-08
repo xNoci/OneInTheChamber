@@ -12,10 +12,10 @@ import me.noci.oitc.OITC;
 import me.noci.oitc.gameutils.Game;
 import me.noci.oitc.mapmanager.Map;
 import me.noci.oitc.mapmanager.MapManager;
-import me.noci.oitc.mapmanager.settings.MapData;
 import me.noci.oitc.state.LobbyState;
 import me.noci.oitc.state.StateManager;
 import net.atophia.atophiaapi.language.LanguageAPI;
+import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.command.ConsoleCommandSender;
@@ -29,7 +29,7 @@ import java.util.Optional;
 @CommandData(name = "forcemap", aliases = {"fm"})
 public class ForceMapCommand extends Command {
 
-    private static final AdvancedItemStack MAP_ITEM = SkullUtils.getSkull("http://textures.minecraft.net/texture/b8140ad7da87de28491f48da190781b28ce05248fcc48176188fb6cecf5b5096");
+    private static final AdvancedItemStack MAP_ITEM = SkullUtils.getSkull("http://textures.minecraft.net/texture/b8140ad7da87de28491f48da190781b28ce05248fcc48176188fb6cecf5b5096").addItemFlags();
 
     private final Game game;
     private final StateManager stateManager;
@@ -44,24 +44,25 @@ public class ForceMapCommand extends Command {
         builder.setTitle(player -> LanguageAPI.getFormatted(player.getUniqueId(), "gui.forcemap.inventory_name"));
         builder.onGuiCreate((inventory, player, objects) -> {
             Iterator<String> loadedMap = mapManager.getLoadedMapNames();
+
             while (loadedMap.hasNext()) {
                 String name = loadedMap.next();
-                AdvancedItemStack map = new AdvancedItemStack(MAP_ITEM.clone());
-                map.setDisplayName(LanguageAPI.getFormatted(player.getUniqueId(), "gui.forcemap.item.map.name", name));
+                AdvancedItemStack map = new AdvancedItemStack(MAP_ITEM.clone())
+                        .setDisplayName(LanguageAPI.getFormatted(player.getUniqueId(), "gui.forcemap.item.map.name", name));
                 map.setNBTTag("MapName", name);
-                map.addItemFlags();
                 inventory.addItem(map);
             }
         });
         builder.onGuiClick(event -> {
             event.setCancelled(true);
+
             if (event.getClickedItem() == null || event.getClickedItem().getType() != Material.SKULL_ITEM) return;
-            String mapName = NBTTagQuery.getNBTTagString(event.getClickedItem(), "MapName");
-            if (mapName == null) return;
             User user = NocAPI.getUser(event.getPlayer());
             user.getBase().closeInventory();
 
-            if (game.getCurrentMap().get(MapData.MAP_NAME, String.class).equalsIgnoreCase(mapName)) {
+            String mapName = NBTTagQuery.getNBTTagString(event.getClickedItem(), "MapName");
+            if (StringUtils.isEmpty(mapName)) return;
+            if (game.getMapName().equalsIgnoreCase(mapName)) {
                 user.playSound(Sound.ANVIL_BREAK, 1, 1);
                 LanguageAPI.send(user.getBase(), "gui.forcemap.map_already_chosen");
                 return;
@@ -73,11 +74,13 @@ public class ForceMapCommand extends Command {
                 LanguageAPI.send(user.getBase(), "gui.forcemap.error.map_chosen");
                 return;
             }
+
             Map map = mapOptional.get();
             game.setCurrentMap(map);
-            LanguageAPI.send(user.getBase(), "gui.forcemap.map_changed", map.get(MapData.MAP_NAME, String.class));
-            user.playSound(Sound.LEVEL_UP, 1, 1);
             mapForced = true;
+
+            user.playSound(Sound.LEVEL_UP, 1, 1);
+            LanguageAPI.send(user.getBase(), "gui.forcemap.map_changed", game.getMapName());
         });
 
         NocAPI.getGuiManager().registerGui("forcemap", builder);
