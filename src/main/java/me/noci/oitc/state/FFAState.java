@@ -20,7 +20,7 @@ public class FFAState extends State {
 
     @Override
     protected void start() {
-        timeRemaining = game.getFfaServerTime();
+        timeRemaining = game.getFfaServerDuration();
     }
 
     @Override
